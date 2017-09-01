@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<head text-align="center">
+<title>Flexpoint Test</title>
+<script type="text/javascript" src="javacode/wz_jsgraphics.js"></script>
+<script type="text/javascript" src="javacode/java_brioude_wrf2.js"></script>
+<script type="text/javascript" src="error_checker.js"></script>
+<script type="text/javascript" src="jquery.tools.min.js"></script>
+<link rel="stylesheet" type="text/css"
+     href="skin1.css"/>
+</head>
+<style>
+p.sansserif{font-family:Arial,Verdana,Sans-serif}
+h5 { cursor: crosshair; }
+html{
+  background-color: white;
+}
+DIV#loader {
+           border: 1px solid #ccc;
+           width: 600px;
+           height: 500px;
+           overflow: hidden;
+       }
+
+       DIV#loader.loading {
+           background: url(loading.gif) no-repeat center center;
+       }
+   -->
+</style>
+
+<body align="center">
+<p class="sansserif">
+       <font size=5>FLEXPART output interactive map<br></font>
+
+       This webpage is developed by and maintained by Jerome Brioude, CIRES/NOAA ESRL, Boulder and Naren Dasan .<br /><em>Please direct all inquiries to 
+       <a href="mailto:jerome.brioude@noaa.gov">Jerome Brioude</a>. Please have Javascript enabled. In case of problems please send the values you have entered on the interactive webpage.</em>
+       <hr />
+
+       <form name="createmap" method="post" action="response.html">
+<p class="sansserif">
+       <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1">
+<tr>
+<td>
+<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+<td>
+<div style="display:none">directory:
+    
+     <input type="text" name="file_name" size="18" value="'+ form["file_name"].value + '"/>
+     <input type="text" name="nbr" size="18" value="'+ nbr + '"/>
+
+</div>
+</td>
+<td>
+       <li>Domain type: <select name="nest">
+
+               <option value=1>nested</option>
+               <option value=0>big</option>
+    
+       </select>
+
+</td>
+<td>
+        <input type="submit" value="Load the file" name="Submit" />
+</td>
+</table>
+</td>
+</tr>
+<td align="center">
+<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+<td align="center">
+<font color="red">Select the type of coordinate, and then click on "Load the file"</font>
+</td>
+</table>
+</td>
+</table>
+
+       </form>
+       <hr />
+
+       <form name="pointform" method="get" action="response.php" target='frame1' onsubmit="return checkform()" >
+<p class="sansserif">
+       <table width="100%" align="center" border="0" cellspacing="1" cellpadding="1">
+           <td align="left" valign="top" width=50%>
+
+     <div style="display:none">
+     <input type="text" name="miny" value="15.25" />
+     <input type="text" name="maxy" value="50.75" />
+     <input type="text" name="minx" value="-124.75" />
+     <input type="text" name="maxx" value="-69.25" />
+     </div>
+     <div style="display:none">
+    <select name="file_name" size="12">
+       <option value="/home/flexpart/public_html/forecasrsystem_data/PRODUCT_ARCHIVE/DC3/FLEXPART_NA_CONTINUOS">CO-NA</option>
+       <option value="/home/flexpart/public_html/forecasrsystem_data/PRODUCT_ARCHIVE/DC3/FLEXPART_BB_CONTINUOS">BB-CO</option>
+       <option value="/home/flexpart/public_html/forecasrsystem_data/PRODUCT_ARCHIVE/DC3/FLEXPART_HOM_CONTINUOS">TRACER</option>
+       <option value="/home/flexpart/public_html/forecasrsystem_data/PRODUCT_ARCHIVE/DC3/FLEXPART_STE_CONTINUOS">O3</option>
+       <option value="all">sum them all</option>
+       </select>       
+     <input type="text" name="nbr" size="18" value="37"/>
+    </div></li>
+<div class=red><li>parameter: <select name="parameter">
+       <option value="0">CO-NA</option>
+       <option value="1">BB-CO</option>
+       <option value="2">TRACER</option>
+       <option value="3">O3</option>
+       <option value="all">sum them all</option>
+       </select>
+       <li>File type: <select name="typef">
+       <option value="pptv">ppbv</option>
+       <option>conc</option>
+       </select>
+<li>Date:<input type="date" name="time" data-value="2012-06-23" min="2012-03-29" max="2012-06-23" required />
+
+<script>
+ $(":date").dateinput();
+</script>    
+Time (24 Hour):
+      <select name="hour" id="hour"> 
+        <option>00</option> 
+        <option>01</option> 
+        <option>02</option> 
+        <option>03</option> 
+        <option>04</option> 
+        <option>05</option> 
+        <option>06</option> 
+        <option>07</option> 
+        <option>08</option> 
+        <option>09</option> 
+        <option>10</option> 
+        <option>11</option> 
+        <option>12</option> 
+        <option>13</option> 
+        <option>14</option> 
+        <option>15</option> 
+        <option>16</option> 
+        <option>17</option> 
+        <option>18</option> 
+        <option>19</option> 
+        <option>20</option> 
+        <option>21</option> 
+        <option>22</option> 
+        <option>23</option>
+      </select>:00
+
+       <li>age class(seconds) <select name="age">
+       <option value="0">all</option>
+       <option value="1">86400</option>
+       <option value="2">172800</option>
+       <option value="3">864000</option> <-- -->
+       </select>
+       <div style="display:none"><select name="nest"> <-- -->
+       <option value=0>big</option>
+       <option value=1>nested</option>
+    </select>
+    </div>
+       <li>movie?: <select name="movie">
+        <option value="0">no</option>
+        <option value="1">yes</option>
+       </select>
+       <li>how many files for the movie?:<input type="text" name="nbmovie" value="0" size="2"  /> Time step(hours)<input type="text" name="moviestep" value="3" size="2" />
+       </div>
+
+    <div><li>min/max of the parameter?
+    <input type="text" name="minval" value="0" size="4" />
+    <input type="text" name="maxval" value="0" size="4" />
+    <input type="checkbox" name="log">log10 scale (power min and max)
+    </div>
+    <div><li>Which altitude(meters)?<input type="text" name="altit" value="-1" size="4" />(lower than 0=total column)
+       </br>
+       <select name="agl" >
+       <option value="0" selected>Above ground level</option>
+       <option value="1">Above sea level</option>
+       </select>
+       </div>
+       <div><li>If integrated, what is the altitude of the top layer(meters)?<input type="text" name="altit2" value="-1" size="4" />
+       </br>
+       <select name="integrate" >
+       <option value="0" selected>Mean value</option>
+       <option value="1">Maximum value</option>
+       </select>
+       </div>
+      <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" bgcolor="#E0FFFF">
+<td width=520px align="center">
+
+<table border="1" cellpadding="4">
+<tr align="center"><td>
+Interactive map (orography map) <br>
+<font size=2>
+<strong>First click</strong>: select the first corner
+<strong>Second click</strong>: select the second corner
+Click a third time to <strong>erase</strong> the selection
+</font>
+<div id="cylpro">
+
+<h5>
+
+<div id="pointer_div_map" onclick="checkOvermap(event)" onMousemove="updategraph(event)" style="position:relative;background:url(map33.png) center no-repeat ;width:525px;height:340px;">
+</div>
+
+</h5>
+
+</div>
+
+<div id="coupe">
+<input type="radio" name="typecoupe" value="horiz" checked>horizontal
+<input type="radio" name="typecoupe" value="verti">vertical
+<input type="checkbox" name="both">both
+</div>
+<div id="horizcoord" >
+                   <div><font color="red">horizontal </font>min. lat:
+                   <input type="text" name="minlat" value="0" size="4" /> 
+max. lat:
+                   <input type="text" name="maxlat" value="0" size="4" />
+
+min.lon:
+                   <input type="text" name="minlon" value="0" size="4" /> max. lon:
+                   <input type="text" name="maxlon" value="0" size="4" /></div>
+
+<div id="verticoord">
+                   <div><font color="red">vertical </font>min. lat:
+                   <input type="text" name="minlatv" value="0" size="4" /> max. lat:
+                   <input type="text" name="maxlatv" value="0" size="4" />
+
+min.lon:
+                   <input type="text" name="minlonv" value="0" size="4" /> max. lon:
+                   <input type="text" name="maxlonv" value="0" size="4" /></div>
+
+</div>
+</td></tr>
+</table>
+</td>
+
+</table>
+</td>
+           <td align="center" valign="top" width=50%>
+
+<font size=4>Output plot</font><br>
+<div id="loader"  >
+</div>
+<iframe id="frame1" hidden="hidden" ></iframe>
+<br>
+<input type="submit" value="Create Plots" name="Submit">
+
+<input type="reset" value="Clear values" name="Clear" />
+</td>
+</table>
+       </form>
+       </body>
+	
+	   <script type="text/javascript">
+
+	     var _gaq = _gaq || [];
+	     _gaq.push(['_setAccount', 'UA-36018341-1']);
+	     _gaq.push(['_trackPageview']);
+
+	     (function() {
+	       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	     })();
+
+	   </script>
+	   </html>
