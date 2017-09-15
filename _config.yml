@@ -21,6 +21,11 @@ social:
     email: naren@narendasan.com
     bitcoin: # Add your Bitcoin link or address
 
+plugins:
+    - jekyll-assets
+    - jekyll-sitemap
+    - jemoji
+
 assets:
     prefix: "/assets"
     assets:
@@ -61,10 +66,5 @@ exclude:
     - README.md
     - vendor/
     - yarn.lock
-
-plugins:
-    - jekyll-assets
-    - jekyll-sitemap
-    - jemoji
 
 permalink: posts/:slug
