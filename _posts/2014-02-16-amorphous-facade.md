@@ -2,7 +2,7 @@
 layout: post
 title: "Gesture based distributed user interaction system for a reconfigurable self-organizing smart wall"
 description: "We describe user interactions with the self-organized amorphous wall, a modular, fully distributed system of computational building blocks that communicate locally for creatingsmart surfaces and functional room dividers.  We describe a menu  and  a  widget-based  approach  in  which  functions  are color-coded and can be selected by dragging them from module to module on the surface of the wall. We also propose an on-off switch gesture and a dial gesture each spanning multiple units as canonical input mechanisms that are realized in a fully distributed way."
-thumb_image: "documentation/sample-image.jpg"
+thumb_image: "about.jpg"
 tags: [distributedsystems, swarmrobotics, embeddedsystems, hci, design]
 ---
 
