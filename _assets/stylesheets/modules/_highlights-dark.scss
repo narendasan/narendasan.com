@@ -1,0 +1,416 @@
+@import '_gruvbox';
+
+// =============================================================================
+// Highlights dark
+// =============================================================================
+
+.highlight {
+  padding: 50px;
+  margin: 0;
+  margin: 30px 0;
+  overflow: auto;
+  font-weight: 400;
+  background-color: $gd_bg0;
+  border-radius: $base-border-radius;
+  pre {
+    margin: 0;
+  }
+}
+
+// Inline highlighting
+
+.highlighter-rouge {
+  padding: 2px 4px;
+  font-size: 14px;
+  color: $gd_red_light;
+  background: $gd_higlight;
+  border: 1px solid lighten($gd_fg, 20);
+  border-radius: 1px;
+}
+
+// Responsive
+// =============================================================================
+
+@include breakpoint(small) {
+  .highlight {
+    padding: 50px 25px;
+    font-size: 14px;
+  }
+}
+
+// Highlighting types
+// =============================================================================
+
+
+// Comment
+
+.highlight .c {
+  color: $gd_gray_light;
+  font-style: italic;
+}
+
+// Error
+
+.highlight .err {
+  color: #960050;
+  background-color: #1e0010;
+}
+
+// Keyword
+
+.highlight .k {
+  color: $gd_red_light;
+}
+
+// Literal
+
+.highlight .l {
+  color: $gd_purple_light;
+}
+
+// Name
+
+.highlight .n {
+  color: $gd_text;
+}
+
+// Operator
+
+.highlight .o {
+  color: $gd_orange_light;
+}
+
+// Punctuation
+
+.highlight .p {
+  color: $gd_text;
+}
+
+// Comment.Multiline
+
+.highlight .cm {
+  color: $gd_gray_light;
+}
+
+// Comment.Preproc
+
+.highlight .cp {
+  color: $gd_red_light;
+}
+
+// Comment.Single
+
+.highlight .c1 {
+  color: $gd_gray_light;
+}
+
+// Comment.Special
+
+.highlight .cs {
+  color: $gd_gray_light;
+  font-style: underline;
+}
+
+// Generic.Emph
+
+.highlight .ge {
+  font-style: italic;
+}
+
+// Generic.Strong
+
+.highlight .gs {
+  font-weight: bold;
+}
+
+// Keyword.Constant
+
+.highlight .kc {
+  color: $gd_purple_light;
+}
+
+// Keyword.Declaration
+
+.highlight .kd {
+  color: $gd_blue_light;
+}
+
+// Keyword.Namespace
+
+.highlight .kn {
+  color: $gd_red_light;
+}
+
+// Keyword.Pseudo
+
+.highlight .kp {
+  color: $gd_blue_light;
+}
+
+// Keyword.Reserved
+
+.highlight .kr {
+  color: $gd_blue_light;
+}
+
+// Keyword.Type
+
+.highlight .kt {
+  color: $gd_yellow_light;
+}
+
+// Literal.Date
+
+.highlight .ld {
+  color: $gd_green_light;
+}
+
+// Literal.Number
+
+.highlight .m {
+  color: $gd_purple_light;
+}
+
+// Literal.String
+
+.highlight .s {
+  color: $gd_green_light;
+}
+
+// Name.Attribute
+
+.highlight .na {
+  color: $gd_aqua_light;
+}
+
+// Name.Builtin
+
+.highlight .nb {
+  color: $gd_yellow_light;
+}
+
+// Name.Class
+
+.highlight .nc {
+  color: $gd_aqua_light;
+}
+
+// Name.Constant
+
+.highlight .no {
+  color: $gd_orange_light;
+}
+
+// Name.Decorator
+
+.highlight .nd {
+  color: $gd_aqua_light;
+}
+
+// Name.Entity
+
+.highlight .ni {
+  color: $gd_fg0;
+}
+
+// Name.Exception
+
+.highlight .ne {
+  color: $gd_red_light;
+}
+
+// Name.Function
+
+.highlight .nf {
+  color: $gd_aqua_light;
+}
+
+// Name.Label
+
+.highlight .nl {
+  color: $gd_fg0;
+}
+
+// Name.Namespace
+
+.highlight .nn {
+  color: $gd_fg2;
+}
+
+// Name.Other
+
+.highlight .nx {
+  color: $gd_green_light;
+}
+
+// Name.Property
+
+.highlight .py {
+  color: $gd_red_light;
+}
+
+// Name.Tag
+
+.highlight .nt {
+  color: $gd_aqua_light;
+}
+
+// Name.Variable
+
+.highlight .nv {
+  color: $gd_fg;
+}
+
+// Operator.Word
+
+.highlight .ow {
+  color: $gd_red_light;
+}
+
+// Text.Whitespace
+
+.highlight .w {
+  color: $gd_fg1;
+}
+
+// Literal.Number.Float
+
+.highlight .mf {
+  color: $gd_purple_light;
+}
+
+// Literal.Number.Hex
+
+.highlight .mh {
+  color: $gd_purple_light;
+}
+
+// Literal.Number.Integer
+
+.highlight .mi {
+  color: $gd_purple_light;
+}
+
+// Literal.Number.Oct
+
+.highlight .mo {
+  color: $gd_purple_light;
+}
+
+// Literal.String.Backtick
+
+.highlight .sb {
+  color: $gd_red_light;
+}
+
+// Literal.String.Char
+
+.highlight .sc {
+  color: $gd_red_light;
+}
+
+// Literal.String.Doc
+
+.highlight .sd {
+  color: $gd_green_light;
+}
+
+// Literal.String.Double
+
+.highlight .s2 {
+  color: $gd_purple_light;
+}
+
+// Literal.String.Escape
+
+.highlight .se {
+  color: $gd_red_light;
+}
+
+// Literal.String.Heredoc
+
+.highlight .sh {
+  color: $gd_blue_light;
+}
+
+// Literal.String.Interpol
+
+.highlight .si {
+  color: $gd_green_light;
+}
+
+// Literal.String.Other
+
+.highlight .sx {
+  color: $gd_green_light;
+}
+
+// Literal.String.Regex
+
+.highlight .sr {
+  color: $gd_orange_light;
+}
+
+// Literal.String.Single
+
+.highlight .s1 {
+  color: $gd_gray_light;
+}
+
+// Literal.String.Symbol
+
+.highlight .ss {
+  color: $gd_gray_light;
+}
+
+// Name.Builtin.Pseudo
+
+.highlight .bp {
+  color: $gd_aqua_light;
+}
+
+// Name.Variable.Class
+
+.highlight .vc {
+  color: $gd_fg1;
+}
+
+// Name.Variable.Global
+
+.highlight .vg {
+  color: $gd_fg1;
+}
+
+// Name.Variable.Instance
+
+.highlight .vi {
+  color: $gd_fg1;
+}
+
+// Literal.Number.Integer.Long
+
+.highlight .il {
+  color: $gd_purple_light;
+}
+
+// Generic.Subheading & Diff Unified/Comment?
+
+.highlight .gu {
+  color: $gd_fg3;
+}
+
+// Generic.Deleted & Diff Deleted
+
+.highlight .gd {
+  color: $gd_aqua_light;
+}
+
+// Generic.Inserted & Diff Inserted
+
+.highlight .gi {
+  color: $gd_green_light;
+}
+
+code {
+  color: $gd_text;
+}

@@ -1,0 +1,70 @@
+# Mandatory settings
+
+name: Naren Dasan
+url: narendasan.com
+blog_theme: light
+
+homepage_articles: 3
+
+about_enabled: true
+post_enabled: true 
+ga_analytics: 
+local_fonts: false 
+rss_enabled: true 
+scrollappear_enabled: true 
+social:
+    resume: true
+    facebook: narendasan
+    github: narendasan
+    linkedin: narendasan
+    twitter: narendasan
+    email: naren@narendasan.com
+    bitcoin: # Add your Bitcoin link or address
+
+assets:
+    prefix: "/assets"
+    assets:
+        - "*.pdf"
+        - "*.woff"
+        - "*.tff"
+    features:
+        automatic_img_size: false
+    sources:
+        - _assets/fonts
+        - _assets/files
+        - _assets/images
+        - _assets/javascripts
+        - _assets/stylesheets
+        - _assets/yarn
+    
+collections:
+    tags:
+        output: true
+        permalink: /tag/:slug/
+
+    posts:
+        output: true 
+
+defaults:
+    -
+        scope:
+            path: ""
+            type: tags
+        values:
+            layout: articles_by_tag
+
+exclude:
+    - .travis.yml
+    - Gemfile
+    - Gemfile.lock
+    - package.json
+    - README.md
+    - vendor/
+    - yarn.lock
+
+plugins:
+    - jekyll-assets
+    - jekyll-sitemap
+    - jemoji
+
+permalink: posts/:slug
