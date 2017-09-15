@@ -2,7 +2,7 @@
 layout: post
 title: "The Fairview High School Mobile App"
 description: "Making an Mobile Client for the student run LMS at Fairview High School"
-thumb_image: "documentation/sample-image.jpg"
+thumb_image: "about.jpg"
 tags: [mobile, ruby, rubyonrails, js, jquery, web]
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Finding the First 10 Digits Prime Number in the Digits of e"
 description: "The classic Google Billboard problem, find the first 10 digit prime number in the digits of e"
-thumb_image: "documentation/sample-image.jpg"
+thumb_image: "about.jpg"
 tags: [math, numbertheory, java]
 ---
 
