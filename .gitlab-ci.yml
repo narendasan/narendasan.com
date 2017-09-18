@@ -25,10 +25,10 @@ test:
 pages:
   stage: deploy
   script:
-  - rake serve
+  - rake compile
   artifacts:
     paths:
-    - _site
+    - public
   only:
   - master
 
