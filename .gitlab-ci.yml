@@ -1,19 +1,13 @@
 # This file is a template, and might need editing before it works on your project.
 # Template project: https://gitlab.com/pages/jekyll
 # Docs: https://docs.gitlab.com/ce/pages/
-image: node:6.0
+image: starefossen/ruby-node
 
 variables:
   JEKYLL_ENV: production
 
 before_script:
-- apt-get update
-- apt-get install -y aspell build-essential libssl-dev
-- gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 && curl -sSL https://get.rvm.io | bash -s stable
-- rvm install 2.4.0
-- gem install bundler
 - bundle install
-- npm install -g yarn
 - rake yarn
 
 test:
