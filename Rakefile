@@ -19,7 +19,7 @@ task :serve do
 end
 
 task :build do 
-    system "bundle exec jekyll build"
+    system "bundle exec jekyll build -d public"
 end
 
 task :deploy do
