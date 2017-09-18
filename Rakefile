@@ -23,6 +23,10 @@ task :serve do
     system "jekyll serve --baseurl ''"
 end
 
+task :compile do 
+    system "bundle exec jekyll build -d public"
+end
+
 task :deploy do
     system "set -e"
     system "echo \"Started deploying\""
