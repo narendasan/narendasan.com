@@ -15,7 +15,7 @@ before_script:
 test:
   stage: test
   script:
-  - bundle exec jekyll build -d test
+  - rake test
   artifacts:
     paths:
     - test
