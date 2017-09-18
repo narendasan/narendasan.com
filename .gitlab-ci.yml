@@ -25,10 +25,10 @@ test:
 pages:
   stage: deploy
   script:
-  - bundle exec jekyll build -d public
+  - rake serve
   artifacts:
     paths:
-    - public
+    - _site
   only:
   - master
 
