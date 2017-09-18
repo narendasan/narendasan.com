@@ -4,15 +4,18 @@
 image: ruby:2.3
 
 variables:
-  JEKYLL_ENV: production
+    JEKYLL_ENV: production
 
 before_script:
-- bundle install
+    - bundle install
+    - apt-get install -y nodejs
+    - npm install -g yarn
+    - rake yarn
 
 test:
-  stage: test
-  script:
-  - bundle exec jekyll build -d test
+    stage: test
+    script:
+      - bundle exec jekyll build -d test
   artifacts:
     paths:
     - test
