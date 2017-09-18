@@ -7,6 +7,8 @@ variables:
   JEKYLL_ENV: production
 
 before_script:
+- apt-get update
+- apt-get install -y aspell
 - bundle install
 - rake yarn
 
