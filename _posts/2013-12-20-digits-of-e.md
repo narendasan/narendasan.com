@@ -26,10 +26,10 @@ public static int factorial(int num) {
 }
 {% endhighlight %}
 
-At first glance, a brute force method of checking if each ten digit number $$$$ is divisible by any of the numbers from $$2$$ to $$x - 1$$ should not take that long. However, It is unclear though how far into the digits of $$e$$ the program would have to go. Even though, it may take one iteration 10 seconds, 100 iterations could take 10000 and so on. Therefore a more mathematical approach to this problem may be in order.
+At first glance, a brute force method of checking if each ten digit number $$i$$ is divisible by any of the numbers from $$2$$ to $$x - 1$$ should not take that long. However, It is unclear though how far into the digits of $$e$$ the program would have to go. Eventhough it may take one iteration 10 seconds, 100 iterations could take 10000 and so on. Therefore a more feasible approach to this problem may be in order.
  
 ## Discussion of the Problem In-depth
-rom a high level this problem has two parts. Part one is to develop a sufficiently precise definition of $$e$$ to test for the prime in question. The odds are extremely low that the answer would occur in the standard definition of $$e$$ of most programming languages. Part two is to develop a algorithm that will test numbers for primality since a brute force method is not scalable.
+From a high level this problem has two parts. Part one is to develop a sufficiently precise definition of $$e$$ to test for the prime in question. The odds are extremely low that the answer would occur in the standard definition of $$e$$ of most programming languages. Part two is to develop a algorithm that will test numbers for primality since a brute force method is not scalable.
 
 $$e$$ as it is defined in Java’s java.lang.Math class is $$2.718281828459045$$. Java is a object oriented programming language that is meant to be compatible across different computers.The decision to use Java will be explained later In the majority of computer science problems, this definition is sufficient, however as this problem is to find the first ten digit prime, in this definitions there are six ten digit possible numbers to test. The likelihood that the prime exists in these digits are fairly low and therefore it would be useful to generate a more precise definition. $$e$$ can be calculated in a variety of ways, the first of which would be the method used by Bernoulli:
 
@@ -41,7 +41,7 @@ This is a method that is really easy to understand and is therefore the first de
 
 {% include image.html path="digits/fraction.png" path-detail="digits/fraction.png" alt="Sample image" %}
 
-Finally, the third method and the one chosen was the Taylor series definition of $$e$$$:
+Finally, the third method and the one chosen was the Taylor series definition of $$e$$:
 
 $$e = \sum_{n=1}^{\infty} \frac{1}{n!}$$
 

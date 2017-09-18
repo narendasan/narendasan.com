@@ -28,7 +28,7 @@ Now that each block knows where it is in relation to others, it is now possible 
 
 > See paper for full details: ""
 
-At the time of the paper, there were a lot of potential functions that the wall could implement based on the sensors embedded in the control board. The wall can change trnasparency, it can act as a lighting system, a sound system, an HVAC system and a display.
+At the time of the paper, there were a lot of potential functions that the wall could implement based on the sensors embedded in the control board. The wall can change transparency, it can act as a lighting system, a sound system, an HVAC system and a display.
 
 All of these systems require user controls that are intuitive but also possible to be implemented within the network. The simplest technical solution is to have each block expose itself as the interface for the wall, using the six touch buttons as the input mechinism. The issue with this is that its is hard to convey usuful information on a single block that can has no display. 
 
@@ -42,7 +42,7 @@ Since the system is distributed and there is no hierarchy in the system, the blo
 
 A user can then select a function by sliding a block color into the center. 
 
-We then discribe a set of interaction models to address various tasks. 
+We then describe a set of interaction models to address various tasks. 
 
 ### Interaction Models 
 
