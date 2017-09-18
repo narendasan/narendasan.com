@@ -28,7 +28,7 @@ pages:
   - rake build
   artifacts:
     paths:
-    - _site
+    - public
   only:
   - master
 
