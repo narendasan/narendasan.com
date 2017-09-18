@@ -14,17 +14,12 @@ task :generate do
     system "jekyll"
 end
 
-task :build do
-    system "jekyll build"
-end
-
-
 task :serve do
     system "jekyll serve --baseurl ''"
 end
 
-task :compile do 
-    system "bundle exec jekyll build -d public"
+task :build do 
+    system "bundle exec jekyll build"
 end
 
 task :deploy do
