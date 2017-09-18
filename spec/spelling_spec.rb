@@ -31,9 +31,9 @@ module CheckSpelling
     end
 end
 
-describe 'TILs' do 
+describe 'Posts' do 
     it 'are all spelled correctly' do
-        check = CheckSpelling.new("dictionary.yml" , "_til/")
+        check = CheckSpelling.new("dictionary.yml" , "_posts")
         expect(check.areCorrectlySpelled()).to be true
     end
 end
