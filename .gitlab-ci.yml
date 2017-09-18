@@ -8,6 +8,7 @@ variables:
 
 before_script:
     - bundle install
+    - apt-get update
     - apt-get install -y nodejs
     - npm install -g yarn
     - rake yarn
