@@ -10,7 +10,8 @@ before_script:
 - bundle install
 - apt-get update
 - apt-get install -y nodejs npm aspell
-- yarn install --modules-folder ./_assets/yarn
+- npm install -g yarn
+- rake yarn
 
 test:
   stage: test
