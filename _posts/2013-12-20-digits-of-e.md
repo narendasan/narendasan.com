@@ -206,7 +206,7 @@ $$\binom{4}{2} = 6$$
 which is not divisible by 4.
 
 
-_Fermat’s Little Theorem_ also has a simple programatic implementation. By using 2 for a the resources necessary for the program are minimized. note. an extra library is required: `java.lang.math`.
+_Fermat’s Little Theorem_ also has a simple implementation. By using 2 for a the resources necessary for the program are minimized. note. an extra library is required: `java.lang.math`.
 
 {% highlight java %}
 public static boolean prime(int n) {

@@ -519,5 +519,24 @@ ignored [
     "DIVISABLE",
     "SQRT",
     "FACEPLATE",
-    "FAIRVIEW"
+    "FAIRVIEW",
+    "TYK",
+    "ESTRING",
+    "PHP",
+    "RESTFUL",
+    "CODEBASE",
+    "MUX",
+    "AWS",
+    "DJANGO",
+    "DNS",
+    "FUNC",
+    "CFL",
+    "WEBSOCKET",
+    "SANITIZER",
+    "DUPLICATIVE",
+    "MODULARITY",
+    "FULFIL",
+    "BAREBONES",
+    "POGO"
+
 ]  
