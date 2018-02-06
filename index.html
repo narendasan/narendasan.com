@@ -40,7 +40,7 @@ description: "My website of things I work on"
                     <span class="article-list-divider">-</span>
                     <div class="article-list-tags">
                         {% for tag in post.tags %}
-                            <a href="{{ 'tag/' | relative_url }}{{ tag }}.html">{{ tag }}</a>
+                            <a href="{{ 'tag/' | relative_url }}{{ tag }}">{{ tag }}</a>
                         {% endfor %}
                     </div>
                 </div>

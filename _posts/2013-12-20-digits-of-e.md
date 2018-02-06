@@ -10,7 +10,7 @@ tags: [math, numbertheory, java]
 
 Google being a leading company in the technology industry in order to remain competitive needs to find the best talent in computer science, mathematics and the hard sciences. However pure recruitment does not always find the best and the brightest. In an effort to attract driven and curious people to work for Google, the company released this billboard ad.
 
-//TODO Insert Ad here
+{% include image.html path="digits/problem.jpg" path-detail="digits/problem.jpg" alt="Sample image" %}
 
 Personally, this problem is of interests as it is an seemingly simple computer science problem, yet it is used by a company with high standards to screen talent. Therefore it is a good problem to measure ones skills. Though it seems simple, with closer inspection, this problem begins to examine not only a mathematical curiosity but with a little pursuit of elegance also examines number theory, the frequency of primes within a set of digits and efficiency of algorithms. Computer science itself is an interesting extension of a variety of fields including mathematics and engineering. Computer science has enabled mathematics, scientists, engineers and even high school students to explore the curiosities and patterns of mathematics and science and to create new things. Algorithms in computer science start to become very similar to fields in mathematics like combinatorics, probability and number theory. While looking at algorithms, it is interesting to see where the two fields overlap. For instance, for loops and recursive methods in many programming languages are comparable to summations and factorials.
 
