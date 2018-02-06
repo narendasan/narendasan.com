@@ -10,7 +10,7 @@ source "https://rubygems.org"
 # Happy Jekylling!
 
 gem "autoprefixer-rails"
-gem "jekyll-assets"
+gem "jekyll-assets", "~> 2.4"
 gem "jekyll-sitemap"
 gem "jemoji"
 gem "mini_magick"

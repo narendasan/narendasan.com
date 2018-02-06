@@ -4,4 +4,5 @@ _site
 .DS_Store
 .vscode/
 .asset-cache
+.jekyll-cache/
 public

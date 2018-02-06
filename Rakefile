@@ -15,7 +15,7 @@ task :generate do
 end
 
 task :serve do
-    system "jekyll serve --baseurl ''"
+    system "bundle exec jekyll serve"
 end
 
 task :build do 
