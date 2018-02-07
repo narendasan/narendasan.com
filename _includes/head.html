@@ -2,7 +2,7 @@
     {% if page.thumb_image contains '://' %}
         {% assign thumb_image = page.thumb_image %}
     {% else %}
-        {% assign thumb_image = page.thumb_image | asset_path | absolute_url %}
+        {% assign thumb_image = page.thumb_image | asset | absolute_url %}
     {% endif %}
 {% else %}
 {% endif %}
