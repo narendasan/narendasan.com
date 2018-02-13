@@ -53,6 +53,56 @@ description: "My website of things I work on"
         {% endfor %}          
     </ul>
 
+    <h3>Talks</h3>
+    <ul class="article-list">
+        {% assign talks = site.data.talks %}
+        {% for talk in talks %}
+            <li class="article-list-item">
+                <a href="{{ talk.link }}" title="{{ talk.title }}">
+                    <h4>
+                      {{ talk.title }}
+                      <span class="icon icon-arrow-right"></span>
+                    </h4>
+                </a>
+                <p>&quot;{{ talk.description }}&quot;</p>
+                <div class="article-list-footer">
+                    <span class="article-list-date">
+                          {{ talk.date | date: "%B %-d, %Y" }}
+                    </span>
+                    <span class="article-list-divider">-</span>
+                    <div class="article-list-tags">
+                        {{ talk.venue }}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}          
+    </ul>
+
+    <h3>Teaching</h3>
+    <ul class="article-list">
+        {% assign classes = site.data.teaching %}
+        {% for class in classes %}
+            <li class="article-list-item">
+                <a href="{{ class.link }}" title="{{ class.title }}">
+                    <h4>
+                      {{ class.title }}
+                      <span class="icon icon-arrow-right"></span>
+                    </h4>
+                </a>
+                <p>{{ class.description }};</p>
+                <div class="article-list-footer">
+                    <span class="article-list-date">
+                          {{ class.date | date: "%B %-d, %Y" }}
+                    </span>
+                    <span class="article-list-divider">-</span>
+                    <div class="article-list-tags">
+                        {{ class.school }}
+                    </div>
+                </div>
+            </li>
+        {% endfor %}          
+    </ul>
+
     <ul class="article-list">
         {% assign posts = site.posts | slice: 0, site.homepage_articles %}
         {% for post in posts %}
@@ -87,4 +137,6 @@ description: "My website of things I work on"
             </li>
         {% endfor %}          
     </ul>
+
+
 </div>
