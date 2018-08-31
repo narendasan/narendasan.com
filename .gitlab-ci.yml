@@ -4,6 +4,7 @@
 image: starefossen/ruby-node
 
 variables:
+  GIT_SUBMODULE_STRATEGY: recursive      
   JEKYLL_ENV: production
 
 before_script:
