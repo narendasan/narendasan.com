@@ -1,5 +1,5 @@
 _site
-node-modules/
+node_modules/
 _assets/yarn/
 .sass-cache
 .jekyll-metadata
