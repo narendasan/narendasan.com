@@ -17,6 +17,7 @@ test:
   stage: test
   script:
   - rake test
+  allow_failure: true
 
 
 
