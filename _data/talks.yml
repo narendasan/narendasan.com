@@ -1,3 +1,9 @@
+- title: "Lecture: Intro to Convolutional Neural Nets"
+  description: "A quick crash course in using neural nets for Computer Vision. Builds up from logistic regression to CNNs with implementations in PyTorch"
+  venue: University of Illinois Urbana-Champaign - CS@Illinois SAIL 
+  date: April 7, 2018
+  link: https://github.com/narendasan/intro_to_cnns
+
 - title: "Intro to Convolutional Neural Nets and Implications of Deep Learning and AI"
   description: "Artificial Intelligence has entered a great age of productivity, with massive strides in Computer Vision, Natural Language Processing and Task Learning being enabled by the exponential growth in data availability and the computing power enabled by General Purpose GPU (GPGPU) computing. Developers can now create near state of the art AI applications on their laptops. This talk will cover one of the main tools in deep learning and AI: Convolutional Neural Networks (CNN), how to build one, and how to apply it to a problem like handwriting recognition. It will then explore some of the current problems and approaches in the field of AI such as self driving cars, machine translation, and robotics."
   venue: University of Colorado - OIT Tech Talk
