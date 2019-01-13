@@ -1,9 +1,10 @@
 # This file is a template, and might need editing before it works on your project.
 # Template project: https://gitlab.com/pages/jekyll
 # Docs: https://docs.gitlab.com/ce/pages/
-image: starefossen/ruby-node
+image: starefossen/ruby-node:latest
 
 variables:
+  GIT_SUBMODULE_STRATEGY: recursive      
   JEKYLL_ENV: production
 
 before_script:
@@ -16,6 +17,7 @@ test:
   stage: test
   script:
   - rake test
+  allow_failure: true
 
 
 
