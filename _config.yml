@@ -27,7 +27,7 @@ plugins:
     - jemoji
 
 assets:
-    prefix: "assets"
+    prefix: "/assets"
     assets:
         - "*.pdf"
         - "*.woff"
