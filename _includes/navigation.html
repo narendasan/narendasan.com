@@ -1,6 +1,6 @@
 <nav class="header-nav {% if site.scrollappear_enabled %}appear{% endif %}">
   <a href="{{ '/' | relative_url }}" class="header-logo" title="{{ site.name }}">
-    <svg class="wordmark" width="1902px" height="532px" viewBox="0 0 1902 532" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!--<svg class="wordmark" width="1902px" height="532px" viewBox="0 0 1902 532" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
           <title>Naren Dasan</title>
           <defs></defs>
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
@@ -21,8 +21,11 @@
                   </g>
               </g>
           </g>
-      </svg>
-  </a>
+      </svg>-->
+      <div class="wordmark">
+        <img class="logo_img" src="{% asset_path 'naren_logo_transparent.png' %}" alt="About Nielsen Ramon header image" />
+      </div>
+    </a>
   <ul class="header-links">
     {% if site.about_enabled == true %}
       <li>
