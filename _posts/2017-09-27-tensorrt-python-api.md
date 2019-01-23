@@ -235,7 +235,7 @@ We can also use NumPy and other tools like SciPy to do some of the data preproce
 
 This blog post describes using the Python API to do the majority of the work for INT8 Quantization and deploying on a embedded platform:
 
-https://devblogs.nvidia.com/int8-inference-autonomous-vehicles-tensorrt/?utm_content=buffer46af6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer 
+[https://devblogs.nvidia.com/int8-inference-autonomous-vehicles-tensorrt/?utm_content=buffer46af6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer](https://devblogs.nvidia.com/int8-inference-autonomous-vehicles-tensorrt/?utm_content=buffer46af6&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer])
 
 ### Higher level APIs
 
