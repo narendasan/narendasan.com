@@ -8,6 +8,10 @@
     border-bottom: 1px solid $base-border-color;
 }
 
+.header-title {
+    margin: -50%;
+}
+
 .header-logo {
     display: inline-block;
     font-family: $monospace;
