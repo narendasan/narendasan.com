@@ -1,0 +1,8 @@
+#+TODO: TODO IN-PROGRESS BACKLOG DONE
+
+* TODOs 
+Things to do, notes, topics to write about etc.
+
+** Development
+   1. Add a link to the main blog feed from the home page below the recent posts
+   2. Fix the RSS feed
