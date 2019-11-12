@@ -10,7 +10,8 @@ about_enabled: true
 post_enabled: true 
 ga_analytics: 
 local_fonts: false 
-rss_enabled: true 
+rss_enabled: true
+directory_enabled: true
 scrollappear_enabled: true 
 social:
     resume: true

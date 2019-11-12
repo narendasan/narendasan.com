@@ -41,6 +41,13 @@
       </a>
     </li>
     {% endif %}
+    {% if site.directory_enabled == true %}
+    <li>
+      <a href="{{ '/directory' }}.html" title="Naren's Web Directory">
+        <span class="icon icon-directory"></span>
+      </a>
+    </li>
+    {% endif %}
     {% if site.rss_enabled == true %}
       <li>
         <a href="{{ 'feed.xml' | relative_url }}" rel="noreferrer noopener" target="_blank" title="RSS">

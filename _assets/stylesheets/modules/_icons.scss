@@ -46,6 +46,7 @@ $ionicon-social-rss: "\f23d";
 $ionicon-social-twitter: "\f243";
 $ionicon-ios-paper: "\f472";
 $ion-ios-briefcase: "\f3ee";
+$ion-ios-bookmarks: "\f3ea";
 
 
 .#{$ionicons-prefix}flickr:before {
@@ -90,4 +91,8 @@ $ion-ios-briefcase: "\f3ee";
 
 .#{$ionicons-prefix}resume:before {
   content: $ion-ios-briefcase;
+}
+
+.#{$ionicons-prefix}directory:before {
+  content: $ion-ios-bookmarks;
 }
