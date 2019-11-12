@@ -15,7 +15,6 @@ directory_enabled: true
 scrollappear_enabled: true 
 social:
     resume: true
-    facebook: narendasan
     github: narendasan
     linkedin: narendasan
     twitter: narendasan
