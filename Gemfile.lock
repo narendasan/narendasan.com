@@ -99,7 +99,7 @@ GEM
     pathutil (0.16.1)
       forwardable-extended (~> 2.6)
     public_suffix (3.0.1)
-    rack (1.6.8)
+    rack (1.6.11)
     rainbow (2.2.2)
       rake
     rake (12.3.0)
