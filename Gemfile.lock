@@ -20,7 +20,7 @@ GEM
     extras (0.3.0)
       forwardable-extended (~> 2.5)
     fastimage (2.1.1)
-    ffi (1.9.18)
+    ffi (1.11.2)
     ffi-aspell (1.1.0)
       ffi
     forwardable-extended (2.6.0)
