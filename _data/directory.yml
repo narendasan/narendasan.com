@@ -309,11 +309,15 @@ sections:
 
       - name: Ben Congdon
         url: https://benjamincongdon.me/
-        rss_feed:
+        rss_feed: https://benjamincongdon.me/blog/feed.xml
 
       - name: Josh Dunigan
         url: https://www.joshdunigan.com/about-me
-        rss_feed:
+        rss_feed: https://www.joshdunigan.com/feed.rss
+        
+      - name: Tyler Kim
+        url: https://tyler.kim/
+        rss_feed: https://tyler.kim/feed.rss
 
   - name: Hockey
     sites:
