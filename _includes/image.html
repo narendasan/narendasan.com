@@ -1,5 +1,14 @@
-<a href="{% asset_path '{{ include.path-detail }}' %}"
-   data-rjs="{% asset_path '{{ include.path-detail }}' %}"
-   class="fluidbox-trigger">
-  <img src="{% asset_path '{{ include.path }}' %}" alt="{{ include.alt }}" />
-</a>
+<div style="display: flex;
+{% if include.align == 'right' %} 
+justify-content: right; 
+{% elsif include.align == 'left' %} 
+justify-content: left; 
+{% else %} 
+justify-content: center; 
+{% endif %}">
+  <a href="{% asset_path '{{ include.path-detail }}' %}"
+     data-rjs="{% asset_path '{{ include.path-detail }}' %}"
+     class="fluidbox-trigger">
+    <img src="{% asset_path '{{ include.path }}' %}" alt="{{ include.alt }}" />
+  </a>
+</div>
