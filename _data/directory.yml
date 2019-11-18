@@ -1,0 +1,528 @@
+sections:
+  - name: Academia
+    sites:
+      - name: ArXiv Vanity
+        url: https://www.arxiv-vanity.com/
+        rss_feed:
+
+      - name: Semantic Scholar
+        url: https://www.semanticscholar.org/
+        rss_feed:
+  
+  - name: Architecture
+    sites:
+      - name: Architects' Journal
+        url: https://www.architectsjournal.co.uk/
+        rss_feed:
+
+      - name: ArchDaily
+        url: https://www.archdaily.com/
+        rss_feed:
+
+      - name: BLDGBLOG
+        url: http://www.bldgblog.com/
+        rss_feed:
+          
+      - name: Deezen
+        url: https://www.dezeen.com/
+        rss_feed:
+
+  - name: Art
+    sites:
+      - name: It's Nice That
+        url: https://www.itsnicethat.com/
+        rss_feed:
+          
+      - name: MCA Denver
+        url: https://mcadenver.org/blog
+        rss_feed:
+
+      - name: MoMA
+        url: https://www.moma.org/magazine/
+        rss_feed:
+
+      - name: Tate
+        url: https://www.tate.org.uk/
+        rss_feed:
+
+      - name: Triple Canopy
+        url: https://www.canopycanopycanopy.com/
+        rss_feed:
+          
+  - name: Artifical Intellegence
+    sites:
+      - name: Approximately Correct
+        url: http://approximatelycorrect.com/
+        rss_feed:
+
+      - name: ArXiv (cs.ML / cs.LR / cs.RL etc.)
+        url: https://arxiv.org
+        rss_feed:
+
+      - name: BAIR
+        url: https://bair.berkeley.edu/
+        rss_feed:
+      
+      - name: DeepMind
+        url: https://deepmind.com/research
+        rss_feed:
+
+      - name: Distill
+        url: https://distill.pub/
+        rss_feed:
+
+      - name: FAIR
+        url: https://ai.facebook.com/
+        rss_feed:
+
+      - name: Google AI Research
+        url: https://ai.googleblog.com/
+        rss_feed:
+
+      - name: The Gradient
+        url: https://thegradient.pub/
+        rss_feed:
+
+      - name: Gradient Science
+        url: http://gradientscience.org/
+        rss_feed:
+
+      - name: LcZero Blog
+        url: https://blog.lczero.org/
+        rss_feed:
+
+      - name: Leverhulme Centre for the Future of Intellegence
+        url: http://lcfi.ac.uk/
+        rss_feed:
+
+      - name: Off the Convex Path
+        url: http://www.offconvex.org/
+        rss_feed:
+
+      - name: OpenAI
+        url: https://openai.com/blog/
+        rss_feed:
+          
+      - name: Skynet Today
+        url: https://www.skynettoday.com/
+        rss_feed:
+
+      - name: Synced
+        url: https://syncedreview.com/
+        rss_feed:
+
+  - name: Biking
+    sites:
+      - name: BKXC
+        url: https://www.youtube.com/channel/UC3DFdy_qc-cqgKCyQTHLGzA
+        rss_feed:
+
+      - name: Bike Magazine
+        url:
+        rss_feed:
+
+      - name: Cycling Tips
+        url:
+        rss_feed:
+
+      - name: Freehub Magazine
+        url:
+        rss_feed:
+
+      - name: GCN
+        url: https://www.youtube.com/user/globalcyclingnetwork
+        rss_feed:
+
+      - name: GMBN
+        url: https://www.youtube.com/user/globalmtb
+        rss_feed:
+
+      - name: EF Education First Pro Cycling
+        url: https://www.youtube.com/user/slipstreamsportsllc
+        rss_feed:
+
+      - name: Jordan Boostmaster
+        url: https://www.youtube.com/user/JordanBoostmaster
+        rss_feed:
+
+      - name: Mahalo My Dude
+        url: https://www.youtube.com/results?search_query=mahalo+my+dude
+        rss_feed:
+
+      - name: Nate Hills
+        url: https://www.youtube.com/channel/UCywMHpWJsb9GXD0lakYf6WA
+        rss_feed:
+
+      - name: Pinkbike
+        url:
+        rss_feed:
+
+      - name: Porter MTB
+        url:
+        rss_feed:
+
+      - name: Rapha Films
+        url: https://www.youtube.com/user/raphafilms
+        rss_feed:
+
+      - name: Rocky Mountain Bicycles
+        url: https://www.youtube.com/user/watchrockymountain
+        rss_feed:
+
+      - name: Seth's Bike Hacks
+        url: https://www.youtube.com/channel/UCu8YylsPiu9XfaQC74Hr_Gw
+        rss_feed:
+
+      - name: The Singletrack Sampler 
+        url: https://www.youtube.com/channel/UCfUGBBnxQYezwJM9wi3F-Lg
+        rss_feed:
+
+      - name: The Syndicate
+        url: https://www.youtube.com/channel/UCCb8I3PHEUFPV0Jds0-_eig
+        rss_feed:
+
+      - name: Yeti Cycles
+        url: https://www.youtube.com/user/yeticycles
+        rss_feed:
+      
+          
+  - name: Business
+    sites:
+      - name: Stratechery
+        url: https://stratechery.com/
+        rss_feed:
+      
+  - name: Colorado
+    sites:
+      - name: Colorado Sun
+        url: https://coloradosun.com/
+        rss_feed:
+          
+      - name: CPR News
+        url: https://www.cpr.org/news/
+        rss_feed:
+          
+      - name: The Daily Camera
+        url: https://www.dailycamera.com/
+        rss_feed: https://www.dailycamera.com/feed/
+          
+  - name: Computer Science
+    sites:
+      - name: The Morning Paper
+        url: https://blog.acolyer.org/
+        rss_feed:
+
+      - name: Computerphile
+        url:
+        rss_feed:
+      
+  - name: Design
+    sites:
+      - name: ArsElectronica
+        url: https://ars.electronica.art/news/en/
+        rss_feed:
+          
+      - name: Co.Design
+        url: https://www.fastcompany.com/co-design
+        rss_feed:
+          
+      - name: Dezeen
+        url: https://www.dezeen.com/
+        rss_feed:
+
+      - name: Cooper Hewitt
+        url: https://www.cooperhewitt.org/
+        rss_feed:
+
+      - name: Design Week
+        url: https://www.designweek.co.uk/
+        rss_feed:
+
+      - name: Frog Design
+        url: https://www.frogdesign.com/
+        rss_feed:
+
+      - name: Experiments with Google
+        url: https://experiments.withgoogle.com/
+
+      - name: IDEO
+        url: https://www.ideo.com/
+        rss_feed:
+          
+      - name: Journal of Design Science
+        url: https://jods.mitpress.mit.edu/
+        rss_feed:
+
+  - name: Film & TV
+    sites:
+      - name: FilmJoy
+        url: https://www.youtube.com/user/chainsawsuitoriginal/playlists
+        rss_feed:
+      
+      - name: Every Frame a Painting
+        url: https://www.youtube.com/user/everyframeapainting
+        rss_feed:
+        
+      - name: KaptianKristian
+        url: https://www.youtube.com/channel/UCuPgdqQKpq4T4zeqmTelnFg
+        rss_feed:
+          
+      - name: Nerdwriter
+        url: https://www.youtube.com/user/Nerdwriter1
+        rss_feed:
+
+      - name: Now You See It
+        url: https://www.youtube.com/channel/UCWTFGPpNQ0Ms6afXhaWDiRw
+        rss_feed:
+          
+      - name: Royal Ocean Film Society
+        url: https://www.youtube.com/channel/UCWq-qJSudqKrzquTVep9Jwg
+        rss_feed:
+          
+      - name: Patrick (H) Willems
+        url: https://www.youtube.com/user/patrickhwillems
+        rss_feed:
+
+      - name: The Take
+        url: https://www.youtube.com/results?search_query=The+Take
+        rss_feed:
+
+  - name: Food
+    sites:
+      - name: Alex
+        url: https://www.youtube.com/user/FrenchGuyCooking
+        rss_feed:
+      
+      - name: Bon Appetit
+        url: https://www.youtube.com/user/BonAppetitDotCom
+        rss_feed:
+          
+      - name: Vino Farm
+        url: https://www.youtube.com/channel/UC-xczyljpDKuM00-45OUrvg
+        rss_feed:
+      
+  - name: Friends' Sites
+    sites:
+      - name: Andrew Kuznetsov
+        url: http://www.andrewkuz.net/
+        rss_feed:
+
+      - name: Ben Congdon
+        url: https://benjamincongdon.me/
+        rss_feed:
+
+      - name: Josh Dunigan
+        url: https://www.joshdunigan.com/about-me
+        rss_feed:
+
+  - name: Hockey
+    sites:
+      - name: Bar Down
+        url: https://www.youtube.com/playlist?list=PL6ndzuHRRemBEnM3E6tozi8NoB9iRs7vS
+        rss_feed:
+        
+  - name: Illinois
+    sites:
+      - name: Illinois News Bureau
+        url: https://news.illinois.edu/view/6367#
+        rss_feed:
+
+  - name: Literature
+    sites:
+      - name: Neil Gaiman\'s Journal
+        url: http://journal.neilgaiman.com/
+        rss_feed:  
+      
+  - name: Mathematics
+    sites:
+      - name: The Institute for Advanced Study
+        url: https://www.ias.edu/
+        rss_feed:
+
+      - name: Numberphile
+        url: https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A
+        rss_feed:
+          
+      - name: Terrence Tao's Blog
+        url: https://terrytao.wordpress.com/
+        rss_feed:
+
+      - name: Tibees
+        url: https://www.youtube.com/user/tibees
+        rss_feed:
+
+      - name: Quanta Magazine
+        url: https://www.quantamagazine.org/
+        rss_feed:
+
+      - name: 3Blue1Brown
+        url: https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw
+        rss_feed:
+        
+  - name: Making
+    sites:
+      - name: Simone Giertz
+        url: https://www.youtube.com/channel/UC3KEoMzNz8eYnwBC34RaKCQ
+        rss_feed:
+        
+  - name: Music
+    sites:
+      - name: Broken Record
+        url: https://brokenrecordpodcast.com/
+        rss_feed:
+
+      - name: Meet the Composer
+        url: https://www.newsounds.org/shows/meet-composer
+        rss_feed:
+          
+      - name: Middle 8
+        url: https://www.youtube.com/channel/UCfeppgcy70ERp4gQrsYijsg
+        rss_feed:
+
+      - name: Polyphonic
+        url: https://www.youtube.com/channel/UCXkNod_JcH7PleOjwK_8rYQ
+        rss_feed:
+          
+      - name: Resident Advisior
+        url: https://www.residentadvisor.net/
+        rss_feed:
+
+      - name: Sideways
+        url: https://www.youtube.com/channel/UCi7l9chXMljpUft67vw78qw
+        rss_feed:
+
+      - name: Song Exploder
+        url: http://songexploder.net/
+        rss_feed:
+
+  - name: Outdoors
+    sites:
+      - name: The North Face
+        url: https://www.youtube.com/user/TheNorthFaceVideo
+        rss_feed:
+      
+      - name: Outdoor
+        url: https://www.outsideonline.com/
+        rss_feed:
+
+      - name: Patagonia
+        url: https://www.youtube.com/user/patagoniavideo
+        rss_feed:
+
+  - name: Philosophy
+    sites:
+      - name: Aeon
+        url: https://aeon.co/
+        rss_feed:
+
+      - name: The Point
+        url: https://thepointmag.com/
+        rss_feed:
+
+      - name: Wisecrack
+        url: https://www.youtube.com/channel/UC6-ymYjG0SU0jUWnWh9ZzEQ
+        rss_feed:
+
+  - name: Rugby
+    sites:
+      - name: Off The Ball
+        url: https://www.youtube.com/channel/UCfGDs3EEl0RHUwgdEGeCL_A
+        rss_feed:
+
+      - name: Squidge Rugby
+        url: https://www.youtube.com/channel/UCu2oaGQ6Dds6g9lqfexUFbQ
+        rss_feed:
+
+      - name: The 1014 Rugby
+        url: https://www.youtube.com/channel/UCvv-9nUY-6zssj0uw4PrFKg
+        rss_feed:
+
+  #- name: San Fransisco
+  #  sites:
+      
+  - name: Science
+    sites:
+      - name: Inference - International Review of Science
+        url: https://inference-review.com/
+        rss_feed:
+          
+      - name: Nautilus
+        url: http://nautil.us/
+        rss_feed:
+
+      - name: Symmetry Magazine
+        url: https://www.symmetrymagazine.org/
+        rss_feed:
+
+  - name: Society & Culture
+    sites:
+      - name: CCCB Lab
+        url: http://lab.cccb.org/en/
+        rss_feed:
+
+      - name: The Conversation
+        url: https://theconversation.com/
+        rss_feed:
+
+      - name: Edge
+        url: https://www.edge.org/
+        rss_feed:
+
+      - name: Intellegence Squared
+        url: https://www.youtube.com/user/iqsquared
+        rss_feed:
+
+      - name: Logic
+        url: https://logicmag.io/
+        rss_feed:
+
+      - name: Palladium
+        url: https://palladiummag.com/
+        rss_feed:
+
+      - name: 1843 Magazine
+        url: https://www.1843magazine.com/
+        rss_feed:
+
+  - name: Technology
+    sites:
+      - name: ArsTechnica
+        url: https://arstechnica.com/
+        rss_feed: https://arstechnica.com/feed/
+
+      - name: LinusTechTips
+        url: https://www.youtube.com/user/LinusTechTips
+        rss_feed:
+
+      - name: MIT Media Lab
+        url: https://www.media.mit.edu/
+        rss_feed:
+
+      - name: MIT Technology Review
+        url: https://www.technologyreview.com/
+        rss_feed:
+
+      - name: The Observation Deck
+        url: http://dtrace.org/blogs/bmc/
+        rss_feed:
+
+      - name: The Verge
+        url: https://www.theverge.com/
+        rss_feed:
+
+      - name: Uber Engineering
+        url: https://eng.uber.com/
+        rss_feed:
+
+  - name: Urbanism
+    sites:
+      - name: CityLab
+        url: https://www.citylab.com/
+        rss_feed:
+
+    
+  - name: Other
+    sites:
+      - name: CGPGrey
+        url: https://www.youtube.com/user/CGPGrey
+        rss_feed:
