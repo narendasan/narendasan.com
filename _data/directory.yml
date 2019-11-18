@@ -468,6 +468,10 @@ sections:
         url: https://www.edge.org/
         rss_feed:
 
+      - name: The Ezra Klein Show
+        url: https://www.vox.com/ezra-klein-show-podcast
+        rss_feed: https://feeds.megaphone.fm/theezrakleinshow
+
       - name: Intellegence Squared
         url: https://www.youtube.com/user/iqsquared
         rss_feed:
@@ -483,6 +487,7 @@ sections:
       - name: 1843 Magazine
         url: https://www.1843magazine.com/
         rss_feed:
+
 
   - name: Technology
     sites:
