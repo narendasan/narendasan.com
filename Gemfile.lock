@@ -85,7 +85,7 @@ GEM
       mixlib-config (~> 2.2)
       rainbow (~> 2.0)
     mercenary (0.3.6)
-    mini_magick (4.8.0)
+    mini_magick (4.9.4)
     mini_portile2 (2.3.0)
     minima (2.2.0)
       jekyll (~> 3.5)
