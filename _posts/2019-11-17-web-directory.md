@@ -41,7 +41,7 @@ I think this is a practice that should comeback (with RSS) as a way to live a cu
 
 There is a similar old idea I've seen pop up again called Web Rings, which is a group of self referential websites. Members of the ring will link to other members, either to drive traffic towards them or to optimize for SEO. A pretty cool one is this one from XXIIVV [webring.xxiivv.com](https://webring.xxiivv.com/#).
 
-So as a step in this direction, I'm putting up my own [Web Directory](https://narendasan.com/directory.html). Its pretty plain right now (I may attach a formated OPML file with the entries so its easy to import into a RSS reader later), but it includes a list of the websites, youtube channels and podcasts I enjoy. I may add other formats to this, but the rule I'm keeping to is the source must either be a website or consumable by RSS (or both). I hope that you do the same and if you do you should tweet me or whatever other form of communication you prefer [@narendasan](https://www.twitter.com/narendasan). I'd love to see it, I'm always looking for more content.  
+So as a step in this direction, I'm putting up my own [Web Directory](https://narendasan.com/directory.html). Its pretty plain right now (~~I may attach a formated OPML file with the entries so its easy to import into a RSS reader later~~ **UPDATE:** You can now find an OPML file with all the sources [here](../naren-web-directory.opml)), but it includes a list of the websites, youtube channels and podcasts I enjoy. I may add other formats to this, but the rule I'm keeping to is the source must either be a website or consumable by RSS (or both). I hope that you do the same and if you do you should tweet me or whatever other form of communication you prefer [@narendasan](https://www.twitter.com/narendasan). I'd love to see it, I'm always looking for more content.  
 
 {% include image.html path="directory/directory.png" path-detail="directory/directory.png" alt="directory"  algin="center"%}
 
@@ -49,13 +49,33 @@ So as a step in this direction, I'm putting up my own [Web Directory](https://na
 
 So even though I basically got rid of Facebook as a news feed and I frequent a few specific subreddits, I still have a couple recommendation engines in my life, YouTube and Twitter. 
 
-YouTube is an interesting case. Video is not cheap to host, especially compared to a website. And there is no GitHub pages for Video (yet). So there is structural pressure to upload to a service (this centralizes video on a few sites). The additional pressures to actually make a living of content creation, further centralizes video on the one or two services that have that yield the most revenue, for short form video this is YouTube. I don't know how to change this. There are some alternatives (PeerTube, FloatPlane etc.) but for now YouTube is the home of video on the internet, and as much as I want to make decisions for myself, I'd much rather watch the guys at [Mahalo My Dude]() or [Squidge Rugby](). So I resort to trying to use the subscriptions tab when I remember to still maintain as much control over what I'm seeing as possible. But by default you are given an algorithmic feed and so there is cognitive load associated with switching over. But people may not know or may have forgotten that there is actually RSS support for youtube channels, so you may be able to bypass the YouTube recommendation engine that way. 
+YouTube is an interesting case. Video is not cheap to host, especially compared to a website. And there is no GitHub pages for Video (yet). So there is structural pressure to upload to a service (this centralizes video on a few sites). The additional pressures to actually make a living of content creation, further centralizes video on the one or two services that have that yield the most revenue, for short form video this is YouTube. I don't know how to change this. There are some alternatives (PeerTube, FloatPlane etc.) but for now YouTube is the home of video on the internet, and as much as I want to make decisions for myself, I'd much rather watch the guys at [Mahalo My Dude](https://www.youtube.com/channel/UCeWaURbVb0kEFTpN2pB38cw) or [Squidge Rugby](https://www.youtube.com/channel/UCu2oaGQ6Dds6g9lqfexUFbQ). So I resort to trying to use the subscriptions tab when I remember to still maintain as much control over what I'm seeing as possible. But by default you are given an algorithmic feed and so there is cognitive load associated with switching over. But people may not know or may have forgotten that there is actually RSS support for youtube channels, so you may be able to bypass the YouTube recommendation engine that way. 
 
 ### How to subscribe to YouTube Channels over RSS
 
 #### Get RSS updates for a single channel
 
 To get an RSS feed of a single channel’s uploads, paste the channel URL into your RSS reader.
+
+> This seems to only work for channels associated with Users on YouTube (look for `/user/` in the url to tell the difference)
+
+You can subscribe to "channel channels" by finding the external channel id in the URL and using this URL template
+
+```
+https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID
+```
+
+So for [Royal Ocean Film Society](https://www.youtube.com/channel/UCWq-qJSudqKrzquTVep9Jwg) who's url is [https://www.youtube.com/channel/UCWq-qJSudqKrzquTVep9Jwg](https://www.youtube.com/channel/UCWq-qJSudqKrzquTVep9Jwg), the RSS feed would be [https://www.youtube.com/feeds/videos.xml?channel_id=UCWq-qJSudqKrzquTVep9Jwg](https://www.youtube.com/feeds/videos.xml?channel_id=UCWq-qJSudqKrzquTVep9Jwg)
+
+
+You can also subscribe to specific playlist similarly using the following template
+
+```
+https://www.youtube.com/feeds/videos.xml?playlist_id=PLAYLIST_ID
+```
+
+So to subscribe to all the [*It's Alive*](https://www.youtube.com/playlist?list=PLKtIunYVkv_SUyXj_6Fe53okfzM9yVq1F) ([https://www.youtube.com/playlist?list=PLKtIunYVkv_SUyXj_6Fe53okfzM9yVq1F](https://www.youtube.com/playlist?list=PLKtIunYVkv_SUyXj_6Fe53okfzM9yVq1F)) videos from Bon Appetit, you would use [https://www.youtube.com/feeds/videos.xml?playlist_id=PLKtIunYVkv_SUyXj_6Fe53okfzM9yVq1F](https://www.youtube.com/feeds/videos.xml?playlist_id=PLKtIunYVkv_SUyXj_6Fe53okfzM9yVq1F)
+
 
 #### Get RSS updates for all subscriptions
 

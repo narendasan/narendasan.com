@@ -11,9 +11,14 @@ Naren's Directory of Cool Places on the Internet
   A collection of cool sites, blogs, channels and podcasts that I frequent
 </h3>
 
-<span> Last updated 11/17/2019 </span>
-
 {% assign directory = site.data.directory %}
+
+<span> Download as an OPML file <a href="naren-web-directory.opml"> Naren's Web Directory </a> </span>
+<br/>
+<br/>
+<span> Last updated {{ directory.last_updated }} </span>
+<br/>
+
 {% for section in directory.sections %}
 <div class="dir-section">
 <h5>
