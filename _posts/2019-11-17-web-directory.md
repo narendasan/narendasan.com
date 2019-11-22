@@ -34,6 +34,8 @@ Aggregators as well whether they are Facebook, Reddit or the New York Times aim 
 
 ### Nesting Dolls of Curators
 
+{% include image.html path="directory/nesting-doll.jpg" path-detail="directory/nesting-doll.jpg" alt="Nesting Doll" %}
+
 The best example of a healthy ecosystem of curation is podcasts. For podcasts, you don't have a generic feed of content ordered by a third party, you have a collection of feeds, each curated by one or a few people that end up coalescing into a customized feed for each person. When looking for podcasts we don't look for specific episodes we care about from a generic feed, we look for good voices who over time produce interesting and varied content. We are essentially trying to collect a set of curators who in aggregate give you a broad and diverse view of the world, each of them bringing a different experience and expertise to the table. The onus is now on you the consumer when it comes to podcasts to construct a feed that represents the breath of topics and perspectives you want to see, not anyone else. If you want to create a close minded eco-chamber, that's your prerogative but you should have the opportunity to do otherwise.
 
 Unbeknownst to many, the way podcasts work is based on the open standard RSS. Content producers attach a generic feed to their website which RSS Readers can use to get a list of content published that day. RSS. RSS fell out of favor with the death of Google Reader and gradually people adopting Facebook, Twitter and Reddit. But what it did have was a similar curation model to podcasts. People chose what to subscribe to and were delivered all content from those subscriptions. From there they can choose how to filter through that feed. 
