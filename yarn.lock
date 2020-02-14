@@ -24,7 +24,7 @@ webfontloader@^1.6.28:
   resolved "https://registry.yarnpkg.com/webfontloader/-/webfontloader-1.6.28.tgz#db786129253cb6e8eae54c2fb05f870af6675bae"
   integrity sha1-23hhKSU8tujq5UwvsF+HCvZnW64=
 
-yarn@^1.17.3:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.19.1.tgz#14b92410dd1ba5bab87a12b4a3d807f4569bea97"
-  integrity sha512-gBnfbL9rYY05Gt0cjJhs/siqQXHYlZalTjK3nXn2QO20xbkIFPob+LlH44ML47GcR4VU9/2dYck1BWFM0Javxw==
+yarn@^1.22.0:
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.0.tgz#acf82906e36bcccd1ccab1cfb73b87509667c881"
+  integrity sha512-KMHP/Jq53jZKTY9iTUt3dIVl/be6UPs2INo96+BnZHLKxYNTfwMmlgHTaMWyGZoO74RI4AIFvnWhYrXq2USJkg==
