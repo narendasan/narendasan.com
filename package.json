@@ -2,7 +2,7 @@
   "name": "narendasan.com",
   "dependencies": {
     "fluidbox": "^2.0.5",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "retinajs": "^2.1.1",
     "webfontloader": "^1.6.28",
     "yarn": "^1.17.3"
