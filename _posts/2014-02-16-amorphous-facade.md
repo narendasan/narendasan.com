@@ -13,7 +13,7 @@ For 2013 and 2014, I spent a good deal of my free time and all of my summer work
 > Concept art for the Amorphous Facade
 
 
-My work centered on a platform developed at Correll Lab called the Amorphous Facade; a concept for a modular smart wall where the "operating system" of the wall was completely decentralized and leveraged ad-hoc self-organization to do useful work. Each block in the wall is embedded with a ATmega microcontroller, a sensor array, power systems, communication and LEDs. Each block was made out of acrylic, with an aluminum border which is sensitive to touch and a variable transparency faceplate which goes from opaque to clear when a voltage is applied.
+My work centered on a platform developed at Correll Lab called the Amorphous Facade; a concept for a modular smart wall where the "operating system" of the wall was completely decentralized and leveraged ad-hoc self-organization to do useful work. The idea is that you could build spaces out of the blocks were the intellegent features of the wall allowed you to manage enviormental conditions like lighting, HVAC, privacy and sound and also serve as display and control surface. Each block in the wall is embedded with a ATmega microcontroller, a sensor array, power systems, communication and LEDs. Each block was made out of acrylic, with an aluminum border which is sensitive to touch and a variable transparency faceplate which goes from opaque to clear when a voltage is applied.
 
 {% include image.html path="wall/block.jpg" path-detail="wall/block.jpg" alt="Sample image" %}
 
