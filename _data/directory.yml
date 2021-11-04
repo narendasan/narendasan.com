@@ -1,4 +1,4 @@
-last_updated: 11/19/19
+last_updated: 11/1/21
 sections:
   - name: Academia
     sites:
@@ -11,41 +11,52 @@ sections:
         url: https://www.semanticscholar.org/
         rss_feed:
         kind: web
-  
+
   - name: Architecture
     sites:
-      - name: Architects' Journal
-        url: https://www.architectsjournal.co.uk/
-        rss_feed: https://www.architectsjournal.co.uk/XmlServers/navsectionRSS.aspx?navsectioncode=13628
-        kind: web
-        
+
       - name: ArchDaily
         url: https://www.archdaily.com/
         rss_feed: http://feeds.feedburner.com/Archdaily
+        kind: web
+
+      - name: Archis
+        url: https://archis.org
+        rss_feed: https://archis.org/feed
+        kind: web
+
+      - name: Architects' Journal
+        url: https://www.architectsjournal.co.uk/
+        rss_feed: https://www.architectsjournal.co.uk/XmlServers/navsectionRSS.aspx?navsectioncode=13628
         kind: web
 
       - name: BLDGBLOG
         url: http://www.bldgblog.com/
         rss_feed: http://www.bldgblog.com/feed/
         kind: web
-        
+
       - name: Deezen
         url: https://www.dezeen.com/
         rss_feed: https://www.dezeen.com/feed/
         kind: web
-        
+
+      - name: Metropolis Magazine
+        url: https://www.metropolismag.com/
+        rss_feed: https://www.metropolismag.com/rss
+        kind: web
+
   - name: Art
     sites:
       - name: The Art Assignment
         url: https://www.youtube.com/user/theartassignment
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCmQThz1OLYt8mb2PU540LOA
         kind: video
-        
+
       - name: It's Nice That
         url: https://www.itsnicethat.com/
         rss_feed: https://feeds2.feedburner.com/itsnicethat/SlXC
         kind: web
-        
+
       - name: MCA Denver
         url: https://mcadenver.org/blog
         rss_feed: https://mcadenver.org/rss.xml
@@ -65,7 +76,7 @@ sections:
         url: https://www.canopycanopycanopy.com/
         rss_feed: https://www.canopycanopycanopy.com/feed
         kind: web
-          
+
   - name: Artifical Intellegence
     sites:
       - name: Approximately Correct
@@ -82,7 +93,7 @@ sections:
         url: https://bair.berkeley.edu/
         rss_feed: https://bair.berkeley.edu/blog/feed.xml
         kind: web
-      
+
       - name: DeepMind
         url: https://deepmind.com/research
         rss_feed: https://deepmind.com/blog/feed/basic/
@@ -132,7 +143,7 @@ sections:
         url: https://openai.com/blog/
         rss_feed: https://blog.openai.com/rss/
         kind: web
-          
+
       - name: Skynet Today
         url: https://www.skynettoday.com/
         rss_feed:
@@ -215,7 +226,7 @@ sections:
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCu8YylsPiu9XfaQC74Hr_Gw
         kind: video
 
-      - name: The Singletrack Sampler 
+      - name: The Singletrack Sampler
         url: https://www.youtube.com/channel/UCfUGBBnxQYezwJM9wi3F-Lg
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCfUGBBnxQYezwJM9wi3F-Lg
         kind: video
@@ -229,32 +240,98 @@ sections:
         url: https://www.youtube.com/user/yeticycles
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC0Rix1DQ766jsYpj5Kfd_Yg
         kind: video
-      
-          
+
   - name: Business
     sites:
       - name: Stratechery
         url: https://stratechery.com/
         rss_feed: http://stratechery.com/feed/
         kind: web
-      
+
   - name: Colorado
     sites:
       - name: Colorado Sun
         url: https://coloradosun.com/
         rss_feed: https://coloradosun.com/feed
         kind: web
-          
+
       - name: CPR News
         url: https://www.cpr.org/news/
         rss_feed:
         kind: web
-          
+
       - name: The Daily Camera
         url: https://www.dailycamera.com/
         rss_feed: https://www.dailycamera.com/feed/
         kind: web
-          
+
+      - name: "5280"
+        url: https://www.5280.com
+        rss_feed: https://www.5280.com/rss
+        kind: web
+
+  - name: Comics
+    sites:
+      - name: The Boondocks
+        url: https://www.comicsrss.com/preview/boondocks
+        rss_feed: https://www.comicsrss.com/rss/boondocks.rss
+        kind: web
+
+      - name: Calvin and Hobbes
+        url: http://www.ucomics.com/calvinandhobbes
+        rss_feed: http://wdr1.com/block/calvin_and_hobbes.rdf
+        kind: web
+
+      - name: Diesel Sweeties
+        url: http://dieselsweeties.com
+        rss_feed: http://dieselsweeties.com/ds-unifeed.xml
+        kind: web
+
+      - name: Dinosaur Comics!
+        url: https://qwantz.com
+        rss_feed: https://qwantz.com/rssfeed.php
+        kind: web
+
+      - name: The Farside
+        url: https://www.thefarside.com
+        rss_feed: "https://dyn.tedder.me/rss/farside/daily.json"
+        kind: web
+
+      - name: The Nib
+        url: https://thenib.tumblr.com/
+        rss_feed: https://thenib.tumblr.com/rss
+        kind: web
+
+      - name: Non Sequiter
+        url: https://www.comicsrss.com/preview/nonsequiter
+        rss_feed: https://www.comicsrss.com/rss/nonsequiter.rss
+        kind: web
+
+      - name: octopus pie
+        url: http://www.octopuspie.com
+        rss_feed: http://www.octopuspie.com/feed
+        kind: web
+
+      - name: The Perry Bible Fellowship
+        url: https://pbfcomics.com
+        rss_feed: https://pbfcomics.com/feed
+        kind: web
+
+      - name: Scenes From A Multiverse
+        url: http://amultiverse.com
+        rss_feed: http://amultiverse.com/feed
+        kind: web
+
+      - name: Saturday Morning Breakfast Cereal
+        url: https://www.smbc-comics.com
+        rss_feed: https://www.smbc-comics.com/comic/rss
+        kind: web
+
+      - name: XKCD
+        url: https://xkcd.com
+        rss_feed: https://xkcd.com/rss.xml
+        kind: web
+
   - name: Computer Science
     sites:
       - name: The Morning Paper
@@ -266,19 +343,19 @@ sections:
         url: https://www.youtube.com/user/Computerphile
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA
         kind: video
-      
+
   - name: Design
     sites:
       - name: ArsElectronica
         url: https://ars.electronica.art/news/en/
         rss_feed: https://ars.electronica.art/aeblog/en/feed
         kind: web
-          
+
       - name: Co.Design
         url: https://www.fastcompany.com/co-design
         rss_feed: http://feeds.feedburner.com/fastcodesign/feed?format=xml
         kind: web
-          
+
       - name: Dezeen
         url: https://www.dezeen.com/
         rss_feed: https://www.dezeen.com/feed/
@@ -313,7 +390,7 @@ sections:
         url: https://www.ideo.com/
         rss_feed:
         kind: web
-          
+
       - name: Journal of Design Science
         url: https://jods.mitpress.mit.edu/
         rss_feed: https://jods.mitpress.mit.edu/rss.xml
@@ -330,17 +407,17 @@ sections:
         url: https://www.youtube.com/user/chainsawsuitoriginal
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCEtB-nx5ngoNJWEzYa-yXBg
         kind: video
-      
+
       - name: Every Frame a Painting
         url: https://www.youtube.com/user/everyframeapainting
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCjFqcJQXGZ6T6sxyFB-5i6A
         kind: video
-        
+
       - name: KaptianKristian
         url: https://www.youtube.com/channel/UCuPgdqQKpq4T4zeqmTelnFg
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCuPgdqQKpq4T4zeqmTelnFg
         kind: video
-          
+
       - name: Nerdwriter
         url: https://www.youtube.com/user/Nerdwriter1
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCJkMlOu7faDgqh4PfzbpLdg
@@ -350,12 +427,12 @@ sections:
         url: https://www.youtube.com/channel/UCWTFGPpNQ0Ms6afXhaWDiRw
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCWTFGPpNQ0Ms6afXhaWDiRw
         kind: video
-          
+
       - name: Royal Ocean Film Society
         url: https://www.youtube.com/channel/UCWq-qJSudqKrzquTVep9Jwg
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCWq-qJSudqKrzquTVep9Jwg
         kind: video
-          
+
       - name: Patrick (H) Willems
         url: https://www.youtube.com/user/patrickhwillems
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCF1fG3gT44nGTPU2sVLoFWg
@@ -372,17 +449,17 @@ sections:
         url: https://www.youtube.com/user/FrenchGuyCooking
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCPzFLpOblZEaIx2lpym1l1A
         kind: video
-      
+
       - name: Bon Appetit
         url: https://www.youtube.com/user/BonAppetitDotCom
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCbpMy0Fg74eXXkvxJrtEn3w
         kind: video
-          
+
       - name: Vino Farm
         url: https://www.youtube.com/channel/UC-xczyljpDKuM00-45OUrvg
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC-xczyljpDKuM00-45OUrvg
         kind: video
-      
+
   - name: Friends' Sites
     sites:
       - name: Andrew Kuznetsov
@@ -399,7 +476,7 @@ sections:
         url: https://www.joshdunigan.com/about-me
         rss_feed: https://www.joshdunigan.com/feed.rss
         kind: web
-        
+
       - name: Tyler Kim
         url: https://tyler.kim/
         rss_feed: https://tyler.kim/feed.rss
@@ -411,7 +488,7 @@ sections:
         url: https://www.youtube.com/playlist?list=PL6ndzuHRRemBEnM3E6tozi8NoB9iRs7vS
         rss_feed: https://www.youtube.com/feeds/videos.xml?playlist_id=PL6ndzuHRRemBEnM3E6tozi8NoB9iRs7vS
         kind: video
-        
+
   - name: Illinois
     sites:
       - name: Illinois News Bureau
@@ -430,7 +507,7 @@ sections:
         url: https://www.imaginaryworldspodcast.org/
         rss_feed: https://rss.art19.com/imaginary-worlds
         kind: podcast
-      
+
   - name: Mathematics
     sites:
       - name: The Institute for Advanced Study
@@ -442,7 +519,7 @@ sections:
         url: https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A
         kind: video
-          
+
       - name: Terrence Tao's Blog
         url: https://terrytao.wordpress.com/
         rss_feed: https://terrytao.wordpress.com/feed/
@@ -462,14 +539,14 @@ sections:
         url: https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw
         kind: video
-        
+
   - name: Making
     sites:
       - name: Simone Giertz
         url: https://www.youtube.com/channel/UC3KEoMzNz8eYnwBC34RaKCQ
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC3KEoMzNz8eYnwBC34RaKCQ
         kind: video
-        
+
   - name: Music
     sites:
       - name: Broken Record
@@ -477,11 +554,16 @@ sections:
         rss_feed: https://feeds.megaphone.fm/broken-record
         kind: podcast
 
+      - name: JAZZIZ Magazine
+        url: https://www.jazziz.com/
+        rss_feed: https://www/jazziz.com/feed
+        kind: web
+
       - name: Meet the Composer
         url: https://www.newsounds.org/shows/meet-composer
         rss_feed: http://feeds.wnyc.org/wqxr-meetthecomposer
         kind: podcast
-          
+
       - name: Middle 8
         url: https://www.youtube.com/channel/UCfeppgcy70ERp4gQrsYijsg
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCfeppgcy70ERp4gQrsYijsg
@@ -491,7 +573,7 @@ sections:
         url: https://www.youtube.com/channel/UCXkNod_JcH7PleOjwK_8rYQ
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCXkNod_JcH7PleOjwK_8rYQ
         kind: video
-          
+
       - name: Resident Advisior
         url: https://www.residentadvisor.net/
         rss_feed:
@@ -531,6 +613,11 @@ sections:
         rss_feed: http://philosophizethis.libsyn.com/rss
         kind: podcast
 
+      - name: Aesthetics for Birds
+        url: https://aestheticsforbirds.com
+        rss_feed: https://aestheticsforbirds.com/feed
+        kind: web
+
       - name: Wisecrack
         url: https://www.youtube.com/channel/UC6-ymYjG0SU0jUWnWh9ZzEQ
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC6-ymYjG0SU0jUWnWh9ZzEQ
@@ -562,14 +649,14 @@ sections:
 
   #- name: San Fransisco
   #  sites:
-      
+
   - name: Science
     sites:
       - name: Inference - International Review of Science
         url: https://inference-review.com/
         rss_feed:
         kind: web
-          
+
       - name: Nautilus
         url: http://nautil.us/
         rss_feed: http://nautil.us/rss/all
@@ -580,13 +667,23 @@ sections:
         rss_feed: https://www.symmetrymagazine.org/feed
         kind: web
 
+      - name: Supercluster
+        url: https://www.supercluster.com
+        rss_feed: https://www.supercluster.com/rss.xml
+        kind: web
+
   - name: Society & Culture
     sites:
+      - name: This American Life
+        url: https://www.thisamericanlife.org/
+        rss_feed: http://feed.thisamericanlife.org/talpodcast
+        kind: podcast
+
       - name: CCCB Lab
         url: http://lab.cccb.org/en/
         rss_feed: http://lab.cccb.org/en/feed/
         kind: web
-        
+
       - name: The Conversation
         url: https://theconversation.com/
         rss_feed: https://theconversation.com/articles.atom?language=en
@@ -622,9 +719,19 @@ sections:
         rss_feed: https://logicmag.io/rss.xml
         kind: web
 
+      - name: The Marginalian
+        url: https://www.themarginalian.org
+        rss_feed: http://feeds.feedburner.com/brainpickings/rss
+        kind: web
+
       - name: Palladium
         url: https://palladiummag.com/
         rss_feed: https://palladiummag.com/feed
+        kind: web
+
+      - name: The Pudding
+        url: https://pudding.cool
+        rss_feed: https://pudding.cool/feed/index.xml
         kind: web
 
       - name: Reply All
@@ -636,11 +743,11 @@ sections:
         url: https://www.wnycstudios.org/podcasts/radiolab
         rss_feed: http://feeds.wnyc.org/radiolab
         kind: podcast
-        
-      - name: This American Life
-        url: https://www.thisamericanlife.org/
-        rss_feed: http://feed.thisamericanlife.org/talpodcast
-        kind: podcast        
+
+      - name: The Walrus
+        url: https://thewalrus.ca/
+        rss_feed: https://thewalrus.ca/feed
+        kind: web
 
       - name: 1843 Magazine
         url: https://www.1843magazine.com/
@@ -692,7 +799,7 @@ sections:
         rss_feed: https://www.citylab.com/feeds/posts/
         kind: web
 
-    
+
   - name: Other
     sites:
       - name: CGPGrey
