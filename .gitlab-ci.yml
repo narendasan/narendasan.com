@@ -1,10 +1,10 @@
 # This file is a template, and might need editing before it works on your project.
 # Template project: https://gitlab.com/pages/jekyll
 # Docs: https://docs.gitlab.com/ce/pages/
-image: starefossen/ruby-node:latest
+image: timbru31/ruby-node:2.7
 
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive      
+  GIT_SUBMODULE_STRATEGY: recursive
   JEKYLL_ENV: production
 
 before_script:
