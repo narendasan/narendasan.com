@@ -92,7 +92,6 @@ GEM
       rainbow (~> 2.0)
     mercenary (0.3.6)
     mini_magick (4.11.0)
-    mini_portile2 (2.4.0)
     minima (2.5.1)
       jekyll (>= 3.5, < 5.0)
       jekyll-feed (~> 0.9)
@@ -101,12 +100,13 @@ GEM
     mixlib-cli (1.7.0)
     mixlib-config (2.2.18)
       tomlrb
-    nokogiri (1.10.4)
-      mini_portile2 (~> 2.4.0)
+    nokogiri (1.13.4-x86_64-linux)
+      racc (~> 1.4)
     parallel (1.21.0)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (4.0.6)
+    racc (1.6.0)
     rack (1.6.13)
     rainbow (2.2.2)
       rake
@@ -162,7 +162,7 @@ DEPENDENCIES
   mdspell
   mini_magick
   minima (~> 2.0)
-  nokogiri (= 1.10.4)
+  nokogiri (= 1.13.4)
   rake
   rspec
   sass
