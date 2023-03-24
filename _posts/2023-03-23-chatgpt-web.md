@@ -6,11 +6,8 @@ thumb_image: "about.jpg"
 tags: [AI, IR, speculation]
 ---
 
-# ChatGPT's Plugin System Poses an Existential Risk to the Open Web
-
-> Last edited 3/23/23
-
 ##### Sections 1 and 2 are motivation and background if you care, Section 3 is the real meat of the essay.
+</br>
 
 ## ChatGPT is more Information Retrieval UI than Artificial Intelligence
 
@@ -22,12 +19,17 @@ However, I believe (and many others have pointed this out in one way or another)
 
 Abstractly, lots of knowledge work: programming, research, writing, art, can be thought of as a loop of searching a knowledge base, evaluating results, identifying the key ideas, synthesizing new ones and repeating <sup>4</sup>. The primary difficulty is the searching step. 70 years ago, this required going to physical repositories of information like libraries, museums, reading a lot of books and papers, listening to talks, performances etc. 40 years ago, people started making queryable and traversable repositories (e.g. hypertext<sup>5</sup> and the "World Wide Web"<sup>6</sup>) and until yesterday tools like Google would be used to search through them, finding relevant information / inspiration. Today and tomorrow it seems more and more likely that this role (and part of the synthesis role as well – a topic for another essay) will be replaced by systems like ChatGPT.
 
-> <sup>1</sup> https://en.wikipedia.org/wiki/Information_retrieval
-> <sup>2</sup> https://www.youtube.com/watch?v=1ZXugicgn6U
-> <sup>3</sup> https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1068946/
-> <sup>4</sup> https://library.suu.edu/LibraryResearch/information-synthesis
-> <sup>5</sup> https://en.wikipedia.org/wiki/Hypertext
-> <sup>6</sup> https://en.wikipedia.org/wiki/World_Wide_Web
+> <sup>1</sup> [https://en.wikipedia.org/wiki/Information_retrieval](https://en.wikipedia.org/wiki/Information_retrieval)
+
+> <sup>2</sup> [https://www.youtube.com/watch?v=1ZXugicgn6U](https://www.youtube.com/watch?v=1ZXugicgn6U)
+
+> <sup>3</sup> [https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1068946/](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1068946/)
+
+> <sup>4</sup> [https://library.suu.edu/LibraryResearch/information-synthesis](https://library.suu.edu/LibraryResearch/information-synthesis)
+
+> <sup>5</sup> [https://en.wikipedia.org/wiki/Hypertext](https://en.wikipedia.org/wiki/Hypertext)
+
+> <sup>6</sup> [https://en.wikipedia.org/wiki/World_Wide_Web](https://en.wikipedia.org/wiki/World_Wide_Web)
 
 ##  Chatbots are a Better UI For Information Retrieval
 
@@ -37,21 +39,27 @@ User Interfaces, I'd argue, are one if of not **the** most important factor for 
 
 Previous versions of the web in a box have failed precisely because the UIs were not capable enough. Voice assistants like Alexa, Ok Google, Siri and Duplex struggle firstly because voice is likely not the ideal modality for these sort of UIs, speech varies in so many ways e.g. timbre, accents, background noise. Language models solve this by using text. Text is uniform, decrete, there are fewer sources of confusion. Second voice assistants "don't work"; it is a frustrating experience trying to get one of these things to do anything of slight complexity correctly. Even if the assistant heard you correctly, it does not understand what to do or how to do it. Without explicit developer integrations, voice assistants are next to useless. Critically, language models have proven their ability to provide meaningful and interesting results on their own without external resources and more importantly, also have been shown to have the ability to traverse the web to find new information. LM-based chatbots provide a smooth onramp from the open HTML web to the chatbot world. Much like how Facebook created a MySpace bridge to make it easier to switch <sup>13</sup>, LM-based chatbots do not need to wait for developers to integrate with them to be useful.
 
-> <sup>7</sup> https://support.google.com/websearch/answer/2466433?hl=en
-> <sup>8</sup> https://aclanthology.org/D19-1250/
-> <sup>9</sup> https://openai.com/research/webgpt
-> <sup>10</sup> https://en.wikipedia.org/wiki/Graphical_user_interface
-> <sup>11</sup> https://en.wikipedia.org/wiki/Mosaic_(web_browser)
-> <sup>12</sup>https://en.wikipedia.org/wiki/Search_engine
-> <sup>13</sup> https://locusmag.com/2023/01/commentary-cory-doctorow-social-quitting/
+> <sup>7</sup> [https://support.google.com/websearch/answer/2466433?hl=en](https://support.google.com/websearch/answer/2466433?hl=en)
+
+> <sup>8</sup> [https://aclanthology.org/D19-1250/](https://aclanthology.org/D19-1250/)
+
+> <sup>9</sup> [https://openai.com/research/webgpt](https://openai.com/research/webgpt)
+
+> <sup>10</sup> [https://en.wikipedia.org/wiki/Graphical_user_interface](https://en.wikipedia.org/wiki/Graphical_user_interface)
+
+> <sup>11</sup> [https://en.wikipedia.org/wiki/Mosaic_(web_browser](https://en.wikipedia.org/wiki/Mosaic_(web_browser))
+
+> <sup>12</sup> [https://en.wikipedia.org/wiki/Search_engine](https://en.wikipedia.org/wiki/Search_engine)
+
+> <sup>13</sup> [https://locusmag.com/2023/01/commentary-cory-doctorow-social-quitting/](https://locusmag.com/2023/01/commentary-cory-doctorow-social-quitting/)
 
 ## "OpenAI" vs. the Open Web
 
 The recent announcement of "plugins" for ChatGPT<sup>14</sup> has me concerned. Not about any sort of existential risk due to runaway AGI in the near to mid-term, but about the prospects for the open web as we know it. In the past 30 years the "World Wide Web"<sup>15</sup> has become the near complete repository of human knowledge and it is the reason why systems like ChatGPT even have a chance to exist. But some of its most valuable qualities are not foundational to its job as a knowledge base, namely the fact it is human readable/browsable, open and (provided you are connected) equally accessible to all. Some corners of the knowledge base may be more curated, organized and searchable than others (e.g. Wikipedia, StackOverflow, Reddit) and some parsing and retrieval tools may be better than others (e.g. Google - until 3-5 years ago) but whenever anyone anywhere in the world opens a web browser, they have the same access as anyone else to any part of the knowledge base.
-
 <details>
 Services like Facebook, Instagram, where content is hidden behind a login screen I'd argue are not part of the open web in the same way that content in paywalled research repositories aren't. They serve as hints of what a ChatGPT based web looks like
 </details>
+</br>
 
 The fact that it feels like LM-based chatbots are the next step in interacting with the internet creates a forcing function to be a first class member in that world and plugins seem like it will be the mechanism to become one. Will people find you or your service if you're not integrated into ChatGPT? Google already has been criticized for centralizing and arbitrating traffic on the web<sup>16</sup> and many actors have taken to optimizing their content to best fit Google. The implications of this new UI takes that world a step further. Ultimately, what backstopped Google's information was human readable, openly accessible content. There is always the ability to push through or go around Google and get to some sort of readable webpage. Language models (especially hosted ones) themselves have absolutely no human reliability themselves, and with plugins the need for a human readable raw corpus goes out the door once people have transitioned to using LM-based systems other than for potentially new training data. Content can more easily be centralized in privately maintained and heavily accessed controlled repositories and mediated through primarily web APIs with no requirement for an open readable option.
 
@@ -68,13 +76,20 @@ a human web. Many discussions of this idea focus on the ability to tell real fro
 
 The worst case scenario is extreme but I think the likelihood of significant negative externalities from a transition to LM-Based IR systems is non-zero (and much larger than the likelihood of malicious AGI in the coming years). For the first time in a long time, the human readable web has real competition and I do not think it is clear who is going to win.
 
-> <sup>14</sup>https://openai.com/blog/chatgpt-plugins
-> <sup>15</sup>https://en.wikipedia.org/wiki/World_Wide_Web
-> <sup>16</sup>https://www.documentcloud.org/documents/7273448-DOC.html
-> <sup>17</sup>https://jingdaily.com/wechat-ecosystem/
-> <sup>18</sup>https://www.youtube.com/watch?v=ogzsDTBh1T0
-> <sup>19</sup>https://www.npr.org/sections/therecord/2011/03/18/134598010/for-better-or-worse-mp3s-are-the-format-of-choice
-> <sup>20</sup>https://healthcare.utah.edu/healthfeed/2022/09/impact-of-social-media-teens-mental-health
-> <sup>21</sup>https://thediplomat.com/2020/05/facebooks-apology-for-its-role-in-sri-lankas-anti-muslim-riots-should-spark-change/
+> <sup>14</sup> [https://openai.com/blog/chatgpt-plugins](https://openai.com/blog/chatgpt-plugins)
+
+> <sup>15</sup> [https://en.wikipedia.org/wiki/World_Wide_Web](https://en.wikipedia.org/wiki/World_Wide_Web)
+
+> <sup>16</sup> [https://www.documentcloud.org/documents/7273448-DOC.html](https://www.documentcloud.org/documents/7273448-DOC.html)
+
+> <sup>17</sup> [https://jingdaily.com/wechat-ecosystem/](https://jingdaily.com/wechat-ecosystem/)
+
+> <sup>18</sup> [https://www.youtube.com/watch?v=ogzsDTBh1T0](https://www.youtube.com/watch?v=ogzsDTBh1T0)
+
+> <sup>19</sup> [https://www.npr.org/sections/therecord/2011/03/18/134598010/for-better-or-worse-mp3s-are-the-format-of-choice](https://www.npr.org/sections/therecord/2011/03/18/134598010/for-better-or-worse-mp3s-are-the-format-of-choice)
+
+> <sup>20</sup> [https://healthcare.utah.edu/healthfeed/2022/09/impact-of-social-media-teens-mental-healt](https://healthcare.utah.edu/healthfeed/2022/09/impact-of-social-media-teens-mental-health)
+
+> <sup>21</sup> [https://thediplomat.com/2020/05/facebooks-apology-for-its-role-in-sri-lankas-anti-muslim-riots-should-spark-change/](https://thediplomat.com/2020/05/facebooks-apology-for-its-role-in-sri-lankas-anti-muslim-riots-should-spark-change/)
 
 > This essay was handwritten without the aid of large language models
