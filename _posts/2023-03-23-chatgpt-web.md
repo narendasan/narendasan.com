@@ -12,7 +12,6 @@ tags: [AI, IR, speculation]
 
 ## ChatGPT is more Information Retrieval UI than Artificial Intelligence
 
-<details>
 > (In the AGI sense)
 
 Generative AI is having its moment right now and OpenAI's ChatGPT is at the center of it. The "humanness" of the conversations one has with these chatbots have many pundits busy wondering if this is the dawn of the end of humanity or a break down in the economy is imminent. Meanwhile, many in the research community have pointed out the fundamentally iterative improvements in underlying ML technology behind the system and are hesitant to ascribe too much to these systems (yet). Personally, I lean towards the iterative improvement camp when viewing these systems in the artificial intelligence context.
@@ -21,17 +20,14 @@ However, I believe (and many others have pointed this out in one way or another)
 
 Abstractly, lots of knowledge work: programming, research, writing, art, can be thought of as a loop of searching a knowledge base, evaluating results, identifying the key ideas, synthesizing new ones and repeating [^4]. The primary difficulty is the searching step. 70 years ago, this required going to physical repositories of information like libraries, museums, reading a lot of books and papers, listening to talks, performances etc. 40 years ago, people started making queryable and traversable repositories (e.g. hypertext[^5] and the "World Wide Web"[^6]) and until yesterday tools like Google would be used to search through them, finding relevant information / inspiration. Today and tomorrow it seems more and more likely that this role (and part of the synthesis role as well – a topic for another essay) will be replaced by systems like ChatGPT.
 
-</details>
 
 ##  Chatbots are a Better UI For Information Retrieval
 
-<details>
 Systems like ChatGPT wrap up the open web in a neat box. You can "speak" directly to them, you don't need to reformat your question into a pseudo-natural query language[^7] that many of us have learned to speak fluently. And, because it understands context, it is easy to refine your questions to tune the results. Language models both encode a compressed knowledge base (provided by training on the open web)[^8] and have the capability to leverage other knowledge bases[^9] to provide results. Of course, due to the nature of language models the issue of "hallucination" is an issue but any competent and principled knowledge worker can easily check the results and refine if necessary. Information retrieval is hard to do but easy to verify. To this end, these systems seem like a wonderful step forward in the accessibility of using the web.
 
 User Interfaces, I'd argue, are one if of not **the** most important factor for technology adoption at any level. I cannot be convinced that computers would be as prevalent a tool as they are without the Graphical User Interface[^10] and more recently Multi-Touch. Anyone who has used a command line can explain the cognitive load required to operate a system at that level. There is for sure more control at a lower level, but it requires users to have a strong mental model of the state of the system. GUIs require very little of that. Adoption of the web itself has been mediated by UI step changes as well, first the Graphical Web Browser[^11], then Search Engines[^12]. Systems like ChatGPT are the next step in that lineage for the web and just like how GUIs abstract much of the operating system from the user, ChatGPT can abstract much of the web.
 
 Previous versions of the web in a box have failed precisely because the UIs were not capable enough. Voice assistants like Alexa, Ok Google, Siri and Duplex struggle firstly because voice is likely not the ideal modality for these sort of UIs, speech varies in so many ways e.g. timbre, accents, background noise. Language models solve this by using text. Text is uniform, discrete, there are fewer sources of confusion. Second voice assistants "don't work"; it is a frustrating experience trying to get one of these things to do anything of slight complexity correctly. Even if the assistant heard you correctly, it does not understand what to do or how to do it. Without explicit developer integrations, voice assistants are next to useless. Critically, language models have proven their ability to provide meaningful and interesting results on their own without external resources and more importantly, also have been shown to have the ability to traverse the web to find new information[^9]. LM-based chatbots provide a smooth onramp from the open HTML web to the chatbot world. Much like how Facebook created a MySpace bridge to make it easier to switch[^13], LM-based chatbots do not need to wait for developers to integrate with them to be useful.
-</details>
 
 ## "OpenAI" vs. the Open Web
 
