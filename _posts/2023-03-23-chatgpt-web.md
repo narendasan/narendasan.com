@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "ChatGPT's Plugin System Poses an Existential Risk to the Open Web"
-description: "ChatGPT poses threats to fundamental assumptions we make about the web and how we use it, the implications of which can be far reaching and hard to comeback from"
+description: "ChatGPT poses threats to fundamental assumptions we make about the web and how we use it that exceed its threats to humanity in the near to medium term. The implications of blindly accepting this transistion can be reaching and hard to return from"
 thumb_image: "about.jpg"
 tags: [AI, IR, speculation]
 ---
