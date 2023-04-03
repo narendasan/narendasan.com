@@ -3,7 +3,7 @@ layout: post
 title: "ChatGPT's Plugin System Poses an Existential Risk to the Open Web"
 description: "ChatGPT poses threats to fundamental assumptions we make about the web and how we use it that exceed its threats to humanity in the near to medium term. The implications of blindly accepting this transistion could be far reaching and hard to return from"
 thumb_image: "about.jpg"
-tags: [ai, ir, speculation]
+tags: [ai, ir, commentary, speculation]
 ---
 
 ##### Sections 1 and 2 are motivation and background if you care, Section 3 is the real meat of the essay.
