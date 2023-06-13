@@ -1,8 +1,6 @@
 # The URL the site will be built for
 base_url = "https://www.narendasan.com"
 
-title = "Naren Dasan"
-
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
@@ -38,10 +36,11 @@ header_nav = [
     { name = "?blog", url = "/blog"},
     { name = "#tags", url = "/tags" },
     { name = "%directory", url = "/dir" },
+    { name = "!publications", url = "/pubs" },
     { name = "@contexts", url = "/contexts" },
 ]
 footer_nav = [
-    { name = "resume", url = "/pdf/naren_dasan_resume_june_2021_with_citations.pdf" },
+    { name = "cv", url = "/pdf/naren_dasan_resume_june_2021_with_citations.pdf" },
     { name = "twitter", url = "https://twitter.com/narendasan" },
     { name = "github", url = "https://github.com/narendasan" },
     { name = "linkedin", url = "https://linkedin.com/in/narendasan" },

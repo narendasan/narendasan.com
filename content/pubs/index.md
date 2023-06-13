@@ -10,6 +10,7 @@ sort_by = "date"
 # Useful when the section is used to organize pages (not used directly).
 render = true
 
+template = "pubs.html"
 # Your own data.
 [extra]
 +++

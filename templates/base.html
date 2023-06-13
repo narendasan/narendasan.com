@@ -46,9 +46,7 @@
     {% set url = config.base_url %}
 {% endif %}
 
-{% if title %}
-        <title>{{ title }}</title>
-{% endif %}
+<title>Naren Dasan</title>
 
 {% block metatags %}
     {% if title %}
@@ -134,6 +132,7 @@
     <body theme="auto">
         <div class="w">
             <header>
+                <img src="/img/naren_logo_transparent.png" class="logo-img" alt="About Nielsen Ramon header image" />
 {% if config.extra.header_nav %}
                 <nav>
     {% for nav_item in config.extra.header_nav %}
@@ -141,6 +140,7 @@
     {% endfor %}
                 </nav>
 {% endif %}
+                <hr class="section-separator">
 {% block header %}
     {% if title %}
                 <h1>{{ config.title }}</h1>

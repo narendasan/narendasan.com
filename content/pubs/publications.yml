@@ -19,7 +19,7 @@
       site: ""
     - name: Nick Comly
       site: "https://github.com/ncomly-nvidia"
-  date: Decemember 2, 2022
+  date: 2022-12-02
   journal: PyTorch Conference 2022
   link: https://pytorch.s3.amazonaws.com/posters/ptc2022/C04.pdf
 
@@ -44,7 +44,7 @@
       site: "https://github.com/borisfom"
     - name: Josh Park
       site: ""
-  date: Decemember 2, 2021
+  date: 2021-12-02
   journal: PyTorch Developer Conference 2021
   link: https://s3.amazonaws.com/assets.pytorch.org/ptdd2021/posters/D2.png
 
@@ -53,7 +53,7 @@
   coauthors:
     - name: Naren Dasan
       site: ""
-  date: April 21, 2021
+  date: 2021-04-21
   journal: PTED
   link: https://assets.pytorch.org/pted2021/posters/I6.png
 
@@ -68,7 +68,7 @@
       site: ""
     - name: Derek Hoiem
       site: http://dhoiem.cs.illinois.edu
-  date: June 15, 2016
+  date: 2016-06-15
   journal: arXiv:1606.05002
   link: https://arxiv.org/abs/1606.05002
 
@@ -82,5 +82,5 @@
     -  name: Nikolaus Correll
        site: http://correll.cs.colorado.edu/?page_id=19
   journal: "TEI '14"
-  date: Feb 16, 2014
+  date: 2014-02-14
   link: https://dl.acm.org/citation.cfm?id=2540967
