@@ -25,35 +25,6 @@
     <li>2013 - 2014 / University of Colorado Boulder - Correll Lab / High School Research Assistant under <a href="http://correll.cs.colorado.edu/?page_id=19">Professor Nikolaus Correll</a></li>
 </ul>
 
-<hr class="section-separator">
-
-<h2>Most Recent Talks</h2>
-
-<ul class="article-list">
-    {% set talks = load_data(path="content/pubs/talks.yml") %}
-    {% for talk in talks %}
-        {% if loop.index <= 3  %}
-    <li class="article-list-item">
-        <a href="{{ talk.link }}" title="{{ talk.title }}">
-            <h4>
-              [{{ talk.venue }}] {{ talk.title }}
-              <span class="icon icon-arrow-right"></span>
-            </h4>
-        </a>
-        <p>{{ talk.description }}</p>
-        <div class="article-list-footer">
-            <span class="article-list-date">
-                  {{ talk.date | date(format="%B %-d, %Y") }}
-            </span>
-        </div>
-    </li>
-        {% endif %}
-    {% endfor %}
-</ul>
-<a href="/pubs", title="More Talks">More Talks</a>
-
-<hr class="section-separator">
-
 <h2>Most Recent Papers, Posters and Preprints</h2>
 
 <ul class="article-list">
@@ -85,21 +56,59 @@
 </ul>
 <a href="/pubs", title="More publications">More Publications</a>
 
-<hr class="section-separator">
+<h2>Most Recent Talks</h2>
+
+<ul class="article-list">
+    {% set talks = load_data(path="content/pubs/talks.yml") %}
+    {% for talk in talks %}
+        {% if loop.index <= 3  %}
+    <li class="article-list-item">
+        <a href="{{ talk.link }}" title="{{ talk.title }}">
+            <h4>
+              [{{ talk.venue }}] {{ talk.title }}
+              <span class="icon icon-arrow-right"></span>
+            </h4>
+        </a>
+        <p>{{ talk.description }}</p>
+        <div class="article-list-footer">
+            <span class="article-list-date">
+                  {{ talk.date | date(format="%B %-d, %Y") }}
+            </span>
+        </div>
+    </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+<a href="/pubs", title="More Talks">More Talks</a>
 
 <h2>Most Recent Posts</h2>
 
 {% set blog = get_section(path="blog/_index.md") %}
 {% set pages = blog.pages %}
-<ul>
+<ul class="article-list">
 {% for page in pages %}
-{% if loop.index <= 3  %}
-<li>
-    <a href="{{ page.permalink | safe }}">{{ page.date }} - {{ page.title }}</a>
-    <br />
-    {{ page.description }}
-</li>
-{% endif %}
+    {% if loop.index <= 3  %}
+    <li class="article-list-item">
+        <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
+            <h4>
+            {{ page.title }}
+            <span class="icon icon-arrow-right"></span>
+            </h4>
+        </a>
+        <p>{{ page.description }}</p>
+        <div class="article-list-footer">
+            <span class="article-list-date">
+                {{ page.date | date(format="%B %-d, %Y") }}
+            </span>
+            <span class="article-list-divider">-</span>
+            <div class="article-list-tags">
+                {% for tag in page.taxonomies.tags %}
+                    <a href="/tags/{{ tag | slugify }}">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </li>
+    {% endif %}
 {% endfor %}
 </ul>
 <a href="/blog", title="More posts">More Posts</a>

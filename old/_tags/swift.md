@@ -1,4 +1,0 @@
----
-slug: Swift
-name: Swift
----

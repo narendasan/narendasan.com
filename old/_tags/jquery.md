@@ -1,4 +1,0 @@
----
-slug: jquery
-name: Jquery
----

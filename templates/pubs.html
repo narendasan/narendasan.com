@@ -5,28 +5,6 @@
 {% endblock header %}
 
 {% block content %}
-<h2>Talks</h2>
-
-<ul class="article-list">
-    {% set talks = load_data(path="content/pubs/talks.yml") %}
-    {% for talk in talks %}
-    <li class="article-list-item">
-        <a href="{{ talk.link }}" title="{{ talk.title }}">
-            <h4>
-              [{{ talk.venue }}] {{ talk.title }}
-              <span class="icon icon-arrow-right"></span>
-            </h4>
-        </a>
-        <p>{{ talk.description }}</p>
-        <div class="article-list-footer">
-            <span class="article-list-date">
-                  {{ talk.date | date(format="%B %-d, %Y") }}
-            </span>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-
 <h2>Papers, Posters and Preprints</h2>
 
 <ul class="article-list">
@@ -50,6 +28,28 @@
                     <a href="{{coauthor.site}}">{{ coauthor.name }}</a>
                 {% endfor %}
             </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>Talks</h2>
+
+<ul class="article-list">
+    {% set talks = load_data(path="content/pubs/talks.yml") %}
+    {% for talk in talks %}
+    <li class="article-list-item">
+        <a href="{{ talk.link }}" title="{{ talk.title }}">
+            <h4>
+              [{{ talk.venue }}] {{ talk.title }}
+              <span class="icon icon-arrow-right"></span>
+            </h4>
+        </a>
+        <p>{{ talk.description }}</p>
+        <div class="article-list-footer">
+            <span class="article-list-date">
+                  {{ talk.date | date(format="%B %-d, %Y") }}
+            </span>
         </div>
     </li>
     {% endfor %}

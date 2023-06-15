@@ -33,11 +33,11 @@ author = "Naren Dasan"
 logo = "img/favicon.ico"
 header_nav = [
     { name = "~home", url = "/" },
+    { name = "!publications", url = "/pubs" },
+    { name = "%directory", url = "/dir" },
     { name = "?blog", url = "/blog"},
     { name = "#tags", url = "/tags" },
-    { name = "%directory", url = "/dir" },
-    { name = "!publications", url = "/pubs" },
-    { name = "@contexts", url = "/contexts" },
+    { name = "@feed", url = "/atom.xml"}
 ]
 footer_nav = [
     { name = "cv", url = "/pdf/naren_dasan_resume_june_2021_with_citations.pdf" },
