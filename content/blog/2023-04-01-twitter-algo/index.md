@@ -37,6 +37,7 @@ We get some information from [company blog posts](https://about.instagram.com/bl
 And most hilariously:
 
 {% include image.html path="twitter_algos/users.jpg" path-detail="twitter_algos/users.jpg" alt="users"  algin="center"%}
+![users](imgs/login_page.png)
 
 What people found is that some types of engagement (likes) are preferable to others. Some types of content (multimedia) are better than others (links). And it really matters if you are Elon Musk. These rules encode biases (in the ML sense) that have far reaching effects. Likes being preferable to replies or retweets incentivize quippy one liners over substantive back and froths or long threads. Promoting multimedia embeds and penalizing links is a way to keep people on twitter.com and not constantly leaving the site. And it's easy to make your boss feel like the most important person in the world if his tweets get sent to everyone.
 
@@ -59,6 +60,7 @@ Likely, the first thing you might hear from an industry lobbyist regarding some 
 
 
 {% include image.html path="twitter_algos/login_page.png" path-detail="twitter_algos/login_page.png" alt="login screen"  algin="center"%}
+![login_page](imgs/login_page.png)
 
 This is all in contrast to services like Google where all the content is public and the value proposition of the service is to find the most relevant results. For Google, their differentiation is in their recommendation engines performance because anyone can set up a web server and start ranking results. Therefore, if you think Google is unfair, use a different option. There is no alternative for Twitter or Facebook.
 
