@@ -1,33 +1,20 @@
-# This file is a template, and might need editing before it works on your project.
-# Template project: https://gitlab.com/pages/jekyll
-# Docs: https://docs.gitlab.com/ce/pages/
-image: timbru31/ruby-node:2.7
-
+image: alpine:latest
 variables:
+  # This variable will ensure that the CI runner pulls in your theme from the submodule
   GIT_SUBMODULE_STRATEGY: recursive
-  JEKYLL_ENV: production
-
-before_script:
-- apt-get update
-- apt-get install -y aspell
-- bundle install
-- rake yarn
-
-test:
-  stage: test
-  script:
-  - rake test
-  allow_failure: true
-
-
 
 pages:
-  stage: deploy
   script:
-  - rake build
+    # Install the zola package from the alpine community repositories
+    - apk add --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ zola
+    # Execute zola build
+    - zola build
+
   artifacts:
     paths:
-    - public
-  only:
-  - master
+      # Path of our artifacts
+      - public
 
+  # This config will only publish changes that are pushed on the master branch
+  only:
+    - master

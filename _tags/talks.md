@@ -1,4 +1,0 @@
----
-slug: talks
-name: Talks
----

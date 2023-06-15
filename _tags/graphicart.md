@@ -1,4 +1,0 @@
----
-slug: graphicart
-name: graphicart
----

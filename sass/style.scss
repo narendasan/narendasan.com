@@ -1,0 +1,171 @@
+// -------------- THEME SWITCHER -------------- //
+@mixin dark-appearance {
+  filter: invert(1);
+  img {
+    filter: invert(1);
+
+    &.invertable { filter: invert(0); }
+  }
+}
+
+body[theme="dark"] { @include dark-appearance; }
+
+
+@media (prefers-color-scheme: dark) {
+  body[theme="auto"] { @include dark-appearance; }
+}
+// -------------------------------------------- //
+
+// bg color is also needed in html in order to
+// block body's background propagation
+// see: https://stackoverflow.com/a/61265706
+html, body { background: rgb(250, 247, 236); }
+
+html { height: 100%; }
+
+body {
+  color: rgb(19, 19, 19);
+  font-family: serif;
+  font-size: 16px;
+  line-height: 1.4;
+  margin: 0;
+  min-height: 100%;
+  overflow-wrap: break-word;
+}
+
+.post-meta { text-align: right; }
+
+h2, h3, h4, h5, h6 {
+  margin-top: 3rem;
+  font-family: sans-serif;
+}
+
+hr {
+  text-align: center;
+  border: 0;
+
+  &:before { content: '/////' }
+  &:after { content: attr(data-content) '/////' }
+}
+
+p { margin: 1rem 0; }
+
+li { margin: 0.4rem 0; }
+
+*:target { background: yellow; }
+
+.w {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+table { width: 100%; }
+
+table, th, td {
+  border: thin solid black;
+  border-collapse: collapse;
+  padding: 0.4rem;
+}
+
+code {
+  color: white;
+  background: rgb(20, 20, 20);
+}
+
+pre code {
+  display: block;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  padding: 1rem;
+}
+
+blockquote {
+  font-style: italic;
+  border: thin solid black;
+  padding: 1rem;
+
+  p { margin: 0; }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.header-nav {
+  border-bottom: 1px solid black;
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+}
+
+.logo-img {
+  max-width: 70%;
+}
+
+.section-separator {
+  max-width: 100%;
+  text-align: center;
+  border: 1px solid rgb(168, 168, 168);
+}
+
+.footnote-definition {
+  padding: 0 1rem;
+  &:target {
+    background: yellow;
+    color: #212121;
+  }
+  p {
+    display: inline;
+  }
+}
+
+.article-list {
+  padding-left: 0;
+
+  li {
+    border-bottom: 1px solid black;
+    &:last-child {
+      border-bottom: 0;
+    }
+    padding-bottom: 15px;
+  }
+}
+
+.article-list-item {
+  list-style-type: None;
+  margin: 0;
+  padding: 0;
+}
+
+.article-list-footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  .article-list-date {
+    text-align: left;
+    padding-right: 5px;
+    max-width: 17%;
+  }
+
+  .article-list-divider {
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    max-width: 3%;
+  }
+
+  .article-list-tags {
+    padding-left: 5px;
+    max-width: 80%;
+
+    a {
+      white-space: nowrap;
+    }
+  }
+}
+
+nav, .taxonomies { text-align: center; }

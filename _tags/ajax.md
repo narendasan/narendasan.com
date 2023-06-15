@@ -1,4 +1,0 @@
----
-slug: ajax
-name: AJAX
----

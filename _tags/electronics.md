@@ -1,4 +1,0 @@
----
-slug: electronics
-name: Electronics 
----

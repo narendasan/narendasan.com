@@ -1,4 +1,0 @@
----
-slug: hackathons
-name: Hackathons
----

@@ -1,0 +1,41 @@
+- title: "Accelerate PyTorch with TensorRT"
+  description: "Learn how to accelerate PyTorch inference without leaving the framework with Torch-TensorRT. Torch-TensorRT makes the performance of NVIDIA’s TensorRT GPU optimizations available in PyTorch for any model. You'll learn about the key capabilities of Torch-TensorRT, how to use them, and the performance benefits you can expect. We'll walk you through how to easily transition from a trained model to an inference deployment fine-tuned for your specific hardware, all with just a few lines of familiar code. If you want more technical details, the second half of the talk will give you a chance to deep dive into how Torch-TensorRT operates, the mechanics of key features, and a few in-depth examples."
+  venue: GPU Technology Conference Fall 2021
+  date: 2021-11-08
+  link: https://events.rainfocus.com/widget/nvidia/nvidiagtc/sessioncatalog/session/1628545242933001TwnU
+
+- title: "New Features in TRTorch, a PyTorch/TorchScript Compiler Targeting NVIDIA GPUs Using TensorRT"
+  description: "We'll cover new features of TRTorch, a compiler for PyTorch and TorchScript that optimizes deep learning models for inference on NVIDIA GPUs. Programs are internally optimized using TensorRT but maintain full compatibility with standard PyTorch or TorchScript code. This allows users to continue to feel like they're writing PyTorch code in their inference applications while fully leveraging TensorRT. We'll discuss new capabilities enabled in recent releases of TRTorch, including direct integration into PyTorch and post-training quantization."
+  venue: GPU Technology Conference Spring 2021
+  date: 2021-04-02
+  link: https://www.nvidia.com/en-us/on-demand/session/gtcspring21-s31864/
+
+- title: "TRTorch: A PyTorch/TorchScript Compiler Targeting NVIDIA GPUs Using TensorRT"
+  description: "We'll dive into TRTorch, a new compiler for PyTorch and TorchScript that optimizes deep learning models for inference on NVIDIA GPUs. Programs are internally optimized using TensorRT but maintain full compatibility with standard PyTorch or TorchScript code. This allows users to continue to feel like they're writing PyTorch code in their inference applications while fully leveraging TensorRT. We'll cover how the compiler works internally and different ways to leverage the compiler."
+  venue: GPU Technology Conference Fall - Oct, 2020
+  date: 2020-10-10
+  link: https://www.nvidia.com/en-us/on-demand/session/gtcfall20-a21864/
+
+- title: "PyTorch-TensorRT: Accelerating Inference in PyTorch with TensorRT"
+  description: "TensorRT is a deep-learning inference optimizer and runtime to optimize networks for GPUs and the NVIDIA Deep Learning Accelerator (DLA). Typically, the procedure to optimize models with TensorRT is to first convert a trained model to an intermediary format, such as ONNX, and then parse the file with a TensorRT parser. This works well for networks using common architectures and common operators; however, with the rapid pace of model development, sometimes a DL framework like Tensorflow has ops that are not supported in TensorRT. One solution is to implement plugins for these ops. Another is to use a tool like TF-TRT, which will convert supportable subgraphs to TensorRT and use Tensorflow implementations for the rest. We'll demonstrate the same ability with PyTorch with our new tool PTH-TRT, as well leveraging the PyTorch API's great composability features to allow users to reuse their TensorRT-compatible networks in larger, more complex ones."
+  venue: GPU Technology Conference - 2020
+  date: 2020-04-04
+  link: https://developer.nvidia.com/gtc/2020/video/s21671-vid
+
+- title: "Lecture: Intro to Convolutional Neural Nets"
+  description: "A quick crash course in using neural nets for Computer Vision. Builds up from logistic regression to CNNs with implementations in PyTorch"
+  venue: University of Illinois Urbana-Champaign - CS@Illinois SAIL
+  date: 2018-04-07
+  link: https://github.com/narendasan/intro_to_cnns
+
+- title: "Intro to Convolutional Neural Nets and Implications of Deep Learning and AI"
+  description: "Artificial Intelligence has entered a great age of productivity, with massive strides in Computer Vision, Natural Language Processing and Task Learning being enabled by the exponential growth in data availability and the computing power enabled by General Purpose GPU (GPGPU) computing. Developers can now create near state of the art AI applications on their laptops. This talk will cover one of the main tools in deep learning and AI: Convolutional Neural Networks (CNN), how to build one, and how to apply it to a problem like handwriting recognition. It will then explore some of the current problems and approaches in the field of AI such as self driving cars, machine translation, and robotics."
+  venue: University of Colorado - OIT Tech Talk
+  date: 2017-08-23
+  link: https://www.colorado.edu/techtalks/2017/08/23/28-intro-convolutional-neural-nets-and-implications-deep-learning-and-ai
+
+- title: "Navigating Learning in the Multidisciplinary World"
+  description: "What skills are necessary to succeed in a world that's becoming more and more complex? Is it better to specialize, focusing on one subject area? Or is it better to have an inter-disciplinary approach? Why the future of work lies not within specialization, but in the ability to draw on design thinking and immediate problem solving to solve the world's big challenges."
+  venue: TEDxMileHigh - Emergence
+  date: 2014-04-16
+  link: https://www.ted.com/tedx/events/11347

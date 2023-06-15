@@ -1,0 +1,86 @@
+- title: "Torch-TensorRT: A Compiler for Accelerating PyTorch Inference Using TensorRT"
+  description: "Torch-TensorRT is an open-source compiler targeting NVIDIA GPUs for high-performance deep-learning inference in PyTorch. It combines the usability of PyTorch with the performance of TensorRT allowing for easy optimization of inference workloads on NVIDIA GPUs. Torch-TensorRT supports all classes of optimizations in TensorRT including reduced mixed precision down to INT8, through simple Python & C++ APIs designed to work directly from PyTorch. Torch-TensorRT outputs standard PyTorch modules as well as the TorchScript format to allow for a completely self-contained, portable, & static module with TensorRT engines embedded as attributes"
+  coauthors:
+    - name: Naren Dasan
+      site: ""
+    - name: Wei Wei
+      site: ""
+    - name: Dheeraj Peri
+      site: "https://www.linkedin.com/in/dheerajperi/"
+    - name: Shirong Wu
+      site: ""
+    - name: Bo Wang
+      site: "https://ieeexplore.ieee.org/author/37085578871"
+    - name: Yinghai Lu
+      site: ""
+    - name: Apurba Bose
+      site: ""
+    - name: George Stefanakis
+      site: ""
+    - name: Nick Comly
+      site: "https://github.com/ncomly-nvidia"
+  date: 2022-12-02
+  journal: PyTorch Conference 2022
+  link: https://pytorch.s3.amazonaws.com/posters/ptc2022/C04.pdf
+
+- title: "Torch-TensorRT: Accelerating Inference Performance Directly from PyTorch using TensorRT"
+  description: "Torch-TensorRT is an open-source SDK designed to target NVIDIA GPUs for high-performance deep-learning inference. It combines the usability of PyTorch with the performance optimizations of TensorRT allowing for easy optimization of any inference workload on NVIDIA GPUs. Torch-TensorRT supports all optimizations of TensorRT including reduced mixed precision down to INT8, all within simple Python & C++ APIs designed to work directly from PyTorch. Torch-TensorRT outputs the standard TorchScript format to allow for a completely self-contained, portable, & static module with TensorRT engines embedded as attributes. Torch-TensorRT partitions the model into subgraphs based on TensorRT compatibility of each node. Compatible subgraphs are replaced with a single optimized TensorRT engine; the incompatible subgraphs “fallback” and run in native PyTorch. This fallback means there is no requirement for full model support by TensorRT, expanding Torch-TensorRT compatible models to all of TorchScript."
+  coauthors:
+    - name: Naren Dasan
+      site: ""
+    - name: Nick Comly
+      site: "https://github.com/ncomly-nvidia"
+    - name: Dheeraj Peri
+      site: "https://www.linkedin.com/in/dheerajperi/"
+    - name: Anurag Dixit
+      site: "https://www.linkedin.com/in/anuragdixit11"
+    - name: Abhiram Iyer
+      site: "https://scholar.google.com/citations?user=pXIRasMAAAAJ&hl=en"
+    - name: Bo Wang
+      site: "https://ieeexplore.ieee.org/author/37085578871"
+    - name: Arvind Sridhar
+      site: "https://arvindpsridhar.com/"
+    - name: Boris Fomitchev
+      site: "https://github.com/borisfom"
+    - name: Josh Park
+      site: ""
+  date: 2021-12-02
+  journal: PyTorch Developer Conference 2021
+  link: https://s3.amazonaws.com/assets.pytorch.org/ptdd2021/posters/D2.png
+
+- title: "TRTorch: A Compiler for TorchScript Targeting NVIDIA GPUs with TensorRT"
+  description: "We present TRTorch, a compiler for PyTorch and TorchScript targeting NVIDIA GPUs, which combines the usability of PyTorch with the performance of TensorRT allowing users to optimize easily inference workloads on NVIDIA GPUs. For experimentation and the development of machine learning models, few tools are as approachable as PyTorch. However, some of the features that make PyTorch great for development make it hard to deploy. With TorchScript, PyTorch now has solid tooling for addressing some of these problems. TorchScript removes the dependency on Python and produces portable, self contained, static representations of code and weights. In addition to portability, users also look to optimize performance in deployment. On NVIDIA GPUs, TensorRT, NVIDIA’s deep learning optimizer, provides the capability to maximize performance of workloads by tuning the execution of models for specific target hardware. TRTorch merges the benefits of TorchScript and TensorRT to simplify conducting optimization including post training quantization by leveraging common PyTorch tooling. It can be used directly from PyTorch as a TorchScript Backend, via CLI or embedded (C++/Python) in an application to easily increase inference performance."
+  coauthors:
+    - name: Naren Dasan
+      site: ""
+  date: 2021-04-21
+  journal: PTED
+  link: https://assets.pytorch.org/pted2021/posters/I6.png
+
+- title: "3DFS: deformable dense depth fusion and segmentation for object reconstruction from a handheld camera"
+  description: "We propose an approach for 3D reconstruction and segmentation of a single object placed on a flat surface from an input video. Our approach is to perform dense depth map estimation for multiple views using a proposed objective function that preserves detail. The resulting depth maps are then fused using a proposed implicit surface function that is robust to estimation error, producing a smooth surface reconstruction of the entire scene. Finally, the object is segmented from the remaining scene using a proposed 2D-3D segmentation that incorporates image and depth cues with priors and regularization over the 3D volume and 2D segmentations. We evaluate 3D reconstructions qualitatively on our Object-Videos dataset, comparing to fusion, multiview stereo, and segmentation baselines. We also quantitatively evaluate the dense depth estimation using the RGBD Scenes V2 dataset [Henry et al. 2013] and the segmentation using keyframe annotations of the Object-Videos dataset."
+  coauthors:
+    - name: Tanmay Gupta
+      site: http://tanmaygupta.info
+    - name: Daeyun Shin
+      site: http://research.dshin.org/
+    - name: Naren Sivagnanadasan
+      site: ""
+    - name: Derek Hoiem
+      site: http://dhoiem.cs.illinois.edu
+  date: 2016-06-15
+  journal: arXiv:1606.05002
+  link: https://arxiv.org/abs/1606.05002
+
+- title: "Gesture based distributed user interaction system for a reconfigurable self-organizing smart wall"
+  description: "We describe user interactions with the self-organized amorphous wall, a modular, fully distributed system of computational building blocks that communicate locally for creating smart surfaces and functional room dividers. We describe a menu and a widget-based approach in which functions are color-coded and can be selected by dragging them from module to module on the surface of the wall. We also propose an on-off switch gesture and a dial gesture each spanning multiple units as canonical input mechanisms that are realized in a fully distributed way."
+  coauthors:
+    -  name: Nicholas Farrow
+       site: ""
+    -  name: Naren Sivagnanadasan
+       site: ""
+    -  name: Nikolaus Correll
+       site: http://correll.cs.colorado.edu/?page_id=19
+  journal: "TEI '14"
+  date: 2014-02-14
+  link: https://dl.acm.org/citation.cfm?id=2540967

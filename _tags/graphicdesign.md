@@ -1,4 +1,0 @@
----
-slug: graphicdesign
-name: graphicdesign
----
