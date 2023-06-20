@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
-{% block header %}
-<h1>Talks, Papers, Posters and Preprints</h1>
-{% endblock header %}
-
 {% block content %}
-<h2>Papers, Posters and Preprints</h2>
+<h2 id="papers">Papers, Posters and Preprints</h2>
 
 <ul class="article-list">
     {% set publications = load_data(path="content/pubs/publications.yml") %}
@@ -33,7 +29,7 @@
     {% endfor %}
 </ul>
 
-<h2>Talks</h2>
+<h2 id="talks">Talks</h2>
 
 <ul class="article-list">
     {% set talks = load_data(path="content/pubs/talks.yml") %}

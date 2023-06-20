@@ -9,7 +9,7 @@ build_search_index = true
 
 generate_feed = true
 
-#feed_filename = "feed.xml"
+feed_filename = "rss.xml"
 
 taxonomies = [
     {name = "tags"}
@@ -32,12 +32,12 @@ paths_keep_dates = false
 author = "Naren Dasan"
 logo = "img/favicon.ico"
 header_nav = [
-    { name = "~home", url = "/" },
-    { name = "!publications", url = "/pubs" },
-    { name = "%directory", url = "/dir" },
-    { name = "?blog", url = "/blog"},
-    { name = "#tags", url = "/tags" },
-    { name = "@feed", url = "/atom.xml"}
+    { name = "home", url = "/" },
+    { name = "publications", url = "/pubs" },
+    { name = "directory", url = "/dir" },
+    { name = "blog", url = "/blog"},
+    { name = "tags", url = "/tags" },
+    { name = "feed", url = "/rss.xml"}
 ]
 footer_nav = [
     { name = "cv", url = "/pdf/naren_dasan_resume_june_2021_with_citations.pdf" },

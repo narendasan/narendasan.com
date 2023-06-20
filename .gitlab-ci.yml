@@ -9,6 +9,12 @@ pages:
     - apk add --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ zola
     # Execute zola build
     - zola build
+    - |
+        cd public
+        for dir in $(ls -d dir/*list/); do
+          mv "${dir}index.html" "${dir%/}.opml"
+          rmdir ${dir}
+        done
 
   artifacts:
     paths:

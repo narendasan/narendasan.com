@@ -3,10 +3,10 @@
   <body>
     <outline text="Naren's Podcasts" title="Naren's Podcasts">
 {% set directory = load_data(path="content/dir/directory.yml")  %}
-{% for section in directory.sections %}
-  {% for site in section.sites %}
+{% for sec in directory.sections %}
+  {% for site in sec.sites %}
     {% if site.rss_feed %}
-      {% if site.kind == 'podcast' %}
+      {% if site.kind == "podcast" %}
       <outline text="{{ site.name }}" title="{{ site.name }}" xmlUrl="{{ site.rss_feed }}" type="rss" />
       {% endif %}
     {% endif %}
