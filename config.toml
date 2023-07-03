@@ -32,17 +32,17 @@ paths_keep_dates = false
 author = "Naren Dasan"
 logo = "img/favicon.ico"
 header_nav = [
-    { name = "home", url = "/" },
+    { name = "about", url = "/about" },
     { name = "publications", url = "/pubs" },
     { name = "directory", url = "/dir" },
     { name = "blog", url = "/blog"},
-    { name = "tags", url = "/tags" },
-    { name = "feed", url = "/rss.xml"}
+    { name = "photos", url = "/photos" },
 ]
-footer_nav = [
+socials = [
     { name = "cv", url = "/pdf/naren_dasan_resume_june_2021_with_citations.pdf" },
     { name = "twitter", url = "https://twitter.com/narendasan" },
     { name = "github", url = "https://github.com/narendasan" },
+    { name = "mastodon", url = "https://sigmoid.social/@narendasan" },
     { name = "linkedin", url = "https://linkedin.com/in/narendasan" },
     { name = "email", url = "mailto:naren@narendasan.com" },
 ]

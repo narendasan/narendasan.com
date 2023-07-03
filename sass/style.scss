@@ -1,3 +1,4 @@
+@import "variables";
 // -------------- THEME SWITCHER -------------- //
 @mixin dark-appearance {
   filter: invert(1);
@@ -19,13 +20,13 @@ body[theme="dark"] { @include dark-appearance; }
 // bg color is also needed in html in order to
 // block body's background propagation
 // see: https://stackoverflow.com/a/61265706
-html, body { background: rgb(250, 247, 236); }
+html, body { background: $bg-color; }
 
 html { height: 100%; }
 
 body {
-  color: rgb(19, 19, 19);
-  font-family: serif;
+  color: $text-color;
+  font-family: $body-font;
   font-size: 16px;
   line-height: 1.4;
   margin: 0;
@@ -35,9 +36,9 @@ body {
 
 .post-meta { text-align: right; }
 
-h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
   margin-top: 3rem;
-  font-family: sans-serif;
+  font-family: $header-font;
 }
 
 hr {
@@ -50,7 +51,27 @@ hr {
 
 p { margin: 1rem 0; }
 
-li { margin: 0.4rem 0; }
+li {
+  margin: 0.4rem 0;
+}
+
+a {
+  margin: 0.4rem 0;
+  color: inherit;
+  font-style: none;
+  font-weight: lighter;
+  text-decoration: underline;
+
+
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover, &:focus {
+    text-decoration: none;
+    color: #949393;
+  }
+}
 
 *:target { background: yellow; }
 
@@ -63,14 +84,14 @@ li { margin: 0.4rem 0; }
 table { width: 100%; }
 
 table, th, td {
-  border: thin solid black;
+  border: thin solid $separator-color;
   border-collapse: collapse;
   padding: 0.4rem;
 }
 
 code {
-  color: white;
-  background: rgb(20, 20, 20);
+  color: $code-text-color;
+  background: $code-bg-color;
 }
 
 pre code {
@@ -82,7 +103,7 @@ pre code {
 
 blockquote {
   font-style: italic;
-  border: thin solid black;
+  border: thin solid $separator-color;
   padding: 1rem;
 
   p { margin: 0; }
@@ -95,7 +116,7 @@ img {
 }
 
 .header-nav {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $separator-color;
   margin-bottom: 15px;
   padding-bottom: 15px;
 }
@@ -107,7 +128,7 @@ img {
 .section-separator {
   max-width: 100%;
   text-align: center;
-  border: 1px solid rgb(168, 168, 168);
+  border: 1px solid $separator-color;
 }
 
 .footnote-definition {
@@ -125,11 +146,11 @@ img {
   padding-left: 0;
 
   li {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid $separator-color;
     &:last-child {
       border-bottom: 0;
     }
-    padding-bottom: 15px;
+    padding-bottom: 50px;
   }
 }
 

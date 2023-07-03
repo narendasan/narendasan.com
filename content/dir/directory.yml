@@ -1,4 +1,4 @@
-last_updated: 11/1/21
+last_updated: 06/28/23
 sections:
   - name: Academia
     sites:
@@ -437,6 +437,11 @@ sections:
         url: https://www.youtube.com/user/patrickhwillems
         rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCF1fG3gT44nGTPU2sVLoFWg
         kind: video
+
+      - name: Soderblog
+        url: https://extension765.com/blogs/soderblog
+        rss_feed:
+        kind: web
 
       - name: The Take
         url: https://www.youtube.com/channel/UCVjsbqKtxkLt7bal4NWRjJQ
