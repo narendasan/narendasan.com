@@ -21,7 +21,7 @@ weight = 0
 # will always use the closest to itself.
 # However, a page's own `template` variable will always have priority.
 # Not set by default.
-#page_template = "post.html"
+page_template = "post.html"
 
 # This sets the number of pages to be displayed per paginated page.
 # No pagination will happen if this isn't set or if the value is 0.

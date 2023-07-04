@@ -152,20 +152,20 @@
 {% block content %}
 {% endblock content %}
             </main>
-            <footer>
-{% block footer %}
-{% endblock footer %}
-                <nav>
-{% if config.extra.socials %}
-    {% for nav_item in config.extra.socials %}
-                    <a href="{{ nav_item.url | safe }}" rel="me">{{ nav_item.name }}</a>
-    {% endfor %}
-{% endif %}
-                    <a href="/rss.xml" rel="me">feed</a>
-                    <a href="/tags" rel="me">tags</a>
-                </nav>
-            </footer>
         </div>
     </body>
+    <footer>
+        {% block footer %}
+        {% endblock footer %}
+        <nav>
+        {% if config.extra.socials %}
+            {% for nav_item in config.extra.socials %}
+                            <a href="{{ nav_item.url | safe }}" rel="me">{{ nav_item.name }}</a>
+            {% endfor %}
+        {% endif %}
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
 </html>
 
