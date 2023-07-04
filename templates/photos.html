@@ -12,7 +12,7 @@
     {% for photo in photos %}
         <figure class="gallery-item">
             <a href="https://narendasan.com/{{ photo.path }}">
-                <img src="https://narendasan.com/{{ photo.path }}" alt="" class="gallery-item__image">
+                <img src="https://narendasan.com/{{ photo.path }}" alt="" loading="lazy" class="gallery-item__image">
             </a>
         </figure>
     {% endfor %}
