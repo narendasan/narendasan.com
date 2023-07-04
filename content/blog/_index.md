@@ -1,5 +1,5 @@
 +++
-title = "blog"
+title = "Blog"
 
 description = "Naren's Blog"
 
@@ -57,4 +57,5 @@ generate_feed = false
 
 # Your own data.
 [extra]
+slug = "blog"
 +++
