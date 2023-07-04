@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h2 id="papers">Papers, Posters and Preprints</h2>
+{% block header %}
+<p><a href=".."><-</a> {{ page.slug }}</p>
+<h1 id="papers">
+    Papers, Posters and Preprints
+</h1>
+{% endblock header %}
 
+{% block content %}
 <ul class="article-list">
     {% set publications = load_data(path="content/pubs/publications.yml") %}
     {% for pub in publications %}
