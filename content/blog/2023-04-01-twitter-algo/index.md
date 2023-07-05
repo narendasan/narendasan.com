@@ -36,7 +36,7 @@ We get some information from [company blog posts](https://about.instagram.com/bl
 
 And most hilariously:
 
-![users](imgs/users.png)
+![users](imgs/users.jpg)
 
 What people found is that some types of engagement (likes) are preferable to others. Some types of content (multimedia) are better than others (links). And it really matters if you are Elon Musk. These rules encode biases (in the ML sense) that have far reaching effects. Likes being preferable to replies or retweets incentivize quippy one liners over substantive back and froths or long threads. Promoting multimedia embeds and penalizing links is a way to keep people on twitter.com and not constantly leaving the site. And it's easy to make your boss feel like the most important person in the world if his tweets get sent to everyone.
 
