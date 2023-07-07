@@ -13,10 +13,10 @@
     {% for page in pages %}
     <li class="article-list-item">
         <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
-            <h4>
+            <h3>
               {{ page.title }}
               <span class="icon icon-arrow-right"></span>
-            </h4>
+            </h3>
         </a>
         <p>{{ page.description }}</p>
         <div class="article-list-footer">

@@ -13,10 +13,10 @@
     {% for pub in publications %}
     <li class="article-list-item">
         <a href="{{ pub.link }}" title="{{ pub.title }}">
-            <h4>
+            <h3>
               [{{ pub.journal }}] {{ pub.title }}
               <span class="icon icon-arrow-right"></span>
-            </h4>
+            </h3>
         </a>
         <p>{{ pub.description }}</p>
         <div class="article-list-footer">
@@ -41,10 +41,10 @@
     {% for talk in talks %}
     <li class="article-list-item">
         <a href="{{ talk.link }}" title="{{ talk.title }}">
-            <h4>
+            <h3>
               [{{ talk.venue }}] {{ talk.title }}
               <span class="icon icon-arrow-right"></span>
-            </h4>
+            </h3>
         </a>
         <p>{{ talk.description }}</p>
         <div class="article-list-footer">

@@ -27,8 +27,8 @@ html { height: 100%; }
 body {
   color: $text-color;
   font-family: $body-font;
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.8;
   margin: 0;
   //min-height: 100%;
   height: auto;
@@ -37,6 +37,7 @@ body {
 
 footer {
   margin-bottom: 25px;
+  background: $bg-color;
 }
 
 .post-meta { text-align: right; }
@@ -55,6 +56,7 @@ hr {
   height: 5px;
   margin-top: 15px;
   margin-bottom: 15px;
+  font-family: serif;
 
   &:after {
     background: #fff;
@@ -75,9 +77,8 @@ a {
   margin: 0.4rem 0;
   color: inherit;
   font-style: none;
-  font-weight: lighter;
+  font-weight: 600;
   text-decoration: underline;
-
 
   &:visited {
     color: inherit;
@@ -181,10 +182,12 @@ img {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  //font-style: italic;
 
   .article-list-date {
     text-align: left;
     padding-right: 5px;
+    font-weight: 200;
   }
 
   .article-list-divider {
@@ -200,11 +203,17 @@ img {
 
     a {
       white-space: nowrap;
+      font-weight: 700;
     }
   }
 }
 
 nav, .taxonomies { text-align: center; }
+nav {
+  a {
+    font-weight: 300;
+  }
+}
 
 .gallery{
   display:flex;

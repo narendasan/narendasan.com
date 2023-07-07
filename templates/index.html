@@ -33,10 +33,10 @@
         {% if loop.index <= 3  %}
     <li class="article-list-item">
         <a href="{{ pub.link }}" title="{{ pub.title }}">
-            <h4>
+            <h3>
               [{{ pub.journal }}] {{ pub.title }}
               <span class="icon icon-arrow-right"></span>
-            </h4>
+            </h3>
         </a>
         <p>{{ pub.description }}</p>
         <div class="article-list-footer">
@@ -64,10 +64,10 @@
         {% if loop.index <= 3  %}
     <li class="article-list-item">
         <a href="{{ talk.link }}" title="{{ talk.title }}">
-            <h4>
+            <h3>
               [{{ talk.venue }}] {{ talk.title }}
               <span class="icon icon-arrow-right"></span>
-            </h4>
+            </h3>
         </a>
         <p>{{ talk.description }}</p>
         <div class="article-list-footer">
@@ -90,10 +90,10 @@
     {% if loop.index <= 3  %}
     <li class="article-list-item">
         <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
-            <h4>
-            {{ page.title }}
-            <span class="icon icon-arrow-right"></span>
-            </h4>
+            <h3>
+                {{ page.title }}
+                <span class="icon icon-arrow-right"></span>
+            </h3>
         </a>
         <p>{{ page.description }}</p>
         <div class="article-list-footer">
@@ -103,7 +103,7 @@
             <span class="article-list-divider">-</span>
             <div class="article-list-tags">
                 {% for tag in page.taxonomies.tags %}
-                    <a href="/tags/{{ tag | slugify }}">{{ tag }}</a>
+                    <a href="/tags/{{ tag | slugify }}">#{{ tag }}</a>
                 {% endfor %}
             </div>
         </div>
