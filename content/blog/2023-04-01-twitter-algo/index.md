@@ -46,12 +46,18 @@ People have figured out some of this without the source code but having the sour
 
 The authors conclude "On the one hand, the algorithm manufacturer’s choice to predict future  costs is reasonable: The program’s goal, at least in part, is to reduce  costs, and it stands to reason that patients with the greatest future  costs could have the greatest benefit from the program." But there is now much greater clarity on UnitedHealth's objectives, some possible design flaws have been exposed and hopefully this work has helped UnitedHealth improve their model to provide better service.
 
-The next thing some black box system advocates might say is that obfuscating the mechanisms used to select content to promote and demote is necessary to prevent spam and gaming the system. I think this argument fails on the same principles that [security through obscurity](https://en.wikipedia.org/wiki/Security_through_obscurity) fails. The fact that a system is not inspectable does not prevent this from being exploited. And folks operating recommendation systems have seen this [first hand](https://mcrc.journalism.wisc.edu/files/2018/05/TwitterExploit.pdf). As has been learned in infosec, more eyes and more pentesters makes systems more solid. And the easiest way to do that is to make the system open and transparent. We could have better, more fair, more exploitative proof systems if we do the work in the open.
+### The Objections
 
+Why might these companies push back against being transparent about how they
+recommend content to users?
 
-### Objection 1: Value Proposition and The Caveat - Data Monopolies
+#### Objection 1: Exploiting the System
 
-Likely, the first thing you might hear from an industry lobbyist regarding some sort of legislation requiring recommendation engine transparency would be "This harms our competitive advantage" i.e. that the reason a user or advertiser may choose Twitter over Mastodon is their recommendation system. This fundamentally mischaracterizes the value proposition of these services. An adequate recommendation system is required to be able to use these systems at scale, as not all posts or content are relevant or interesting to all people.
+The first thing some black box system advocates might say is that obfuscating the mechanisms used to select content to promote and demote is necessary to prevent spam and gaming the system. I think this argument fails on the same principles that [security through obscurity](https://en.wikipedia.org/wiki/Security_through_obscurity) fails. The fact that a system is not inspectable does not prevent this from being exploited. And folks operating recommendation systems have seen this [first hand](https://mcrc.journalism.wisc.edu/files/2018/05/TwitterExploit.pdf). As has been learned in infosec, more eyes and more pentesters makes systems more solid. And the easiest way to do that is to make the system open and transparent. We could have better, more fair, more exploitative proof systems if we do the work in the open.
+
+#### Objection 2: Value Proposition and The Caveat - Data Monopolies
+
+Likely, the next thing you might hear from an industry lobbyist regarding some sort of legislation requiring recommendation engine transparency would be "This harms our competitive advantage" i.e. that the reason a user or advertiser may choose Twitter over Mastodon is their recommendation system. This fundamentally mischaracterizes the value proposition of these services. An adequate recommendation system is required to be able to use these systems at scale, as not all posts or content are relevant or interesting to all people.
 
  However, the reason why these platforms are valuable is the [network effects](https://online.hbs.edu/blog/post/what-are-network-effects) and data exclusivity of these platforms. They tend to be the one or two places on the internet to find particular types of content. On Instagram this might be your friends or influencers photos, on Twitter this may be some public figure's musings. Fundamentally, you use Twitter and not Mastodon because XYZ person is here and not there.
 
@@ -63,12 +69,7 @@ This is all in contrast to services like Google where all the content is public 
 
 So social media companies control the data and control what data is shown. I argue that you should be able to have one or the other. Either your recommendation system can be private because your source data is public thus allowing competition in recommendations and the ability to audit the data or you can hoard data but you must be transparent on what you collect and how it is promoted or suppressed, thus clarifying the encoded values of the platform (like how Obermeyer et. al. clarifies what is valued in UnitedHealth's model). People can then make an informed decision on whether they agree or if the content available is worth the trade off. If someone is going to be the sole mediator of access to a particular type of data, I want to know what incentives are at play for deciding what is show and what is hidden.
 
-
-### Objection 2: Exploiting the System
-
-The next thing some black box system advocates might say is that obfuscating the mechanisms used to select content to promote and demote is necessary to prevent spam and gaming the system. I think this argument fails on the same principles that [security through obscurity](https://en.wikipedia.org/wiki/Security_through_obscurity) fails. The fact that a system is not inspectable does not prevent this from being exploited. And folks operating recommendation systems have seen this [first hand](https://mcrc.journalism.wisc.edu/files/2018/05/TwitterExploit.pdf). As has been learned in infosec, more eyes and more pentesters makes systems more solid. And the easiest way to do that is to make the system open and transparent. We could have better, more fair, more exploitative proof systems if we do the work in the open.
-
-### Objection 3: Embarrassment
+#### Objection 3: Embarrassment
 
 A ridiculous argument, yet honestly the most deeply held one. It's easier to not be transparent and not expose your dirty laundry, all the hacks and tricks used to recommend one piece of content over another (e.g. Elon, Democrat and Republican specific filters). But this seems like an unacceptable reason for people who's ambitions include being the main source of news and media for **billions** of people to not be transparent. Either reduce the scope of the product or be more open.
 
