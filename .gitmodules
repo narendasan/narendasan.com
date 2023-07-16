@@ -1,3 +1,6 @@
 [submodule "_assets/javascripts/throttle-debounce-fn"]
 	path = _assets/javascripts/throttle-debounce-fn
 	url = https://github.com/soundasleep/throttle-debounce-fn.git
+[submodule "themes/narendasan.com-theme"]
+	path = themes/narendasan.com-theme
+	url = git@github.com:narendasan/narendasan.com-theme
