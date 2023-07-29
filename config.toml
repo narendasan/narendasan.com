@@ -38,6 +38,7 @@ header_nav = [
     { name = "directory", url = "/dir" },
     { name = "blog", url = "/blog"},
     { name = "photos", url = "/photos" },
+    { name = "reposts", url = "/rps" },
 ]
 socials = [
     { name = "cv", url = "/pdf/naren_dasan_resume_june_2021_with_citations.pdf" },

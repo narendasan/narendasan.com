@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block header %}
+<p><a href=".."> <- </a> &ensp; {{ page.slug }}</p>
+<h1>
+    Reposts
+</h1>
+<h3>
+    Articles that are worth reading
+</h3>
+{% endblock header %}
+
+{% block content %}
+{% set rps = load_data(path="content/rps/reposts.yml") %}
+<p> A collections of articles that I referenced or enjoied </p>
+
+{% for section in rps.sections %}
+<div class="dir-section">
+    <h4>
+        {{ section.name }}
+    </h4>
+
+    <ul>
+        {% for post in section.posts %}
+        <li>
+            <a href="{{ post.url }}" title="{{ post.title }}">
+                {{ post.title }}
+            </a>
+            <br>
+            By: <a href="{{ post.homepage}}"> {{post.author}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+</div>
+<br />
+
+{% endblock content %}
