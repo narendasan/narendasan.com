@@ -1,0 +1,8 @@
+last_updated: 07/29/23
+sections:
+  - name: UNIX Things
+    posts:
+      - title: Tidying up your $HOME with Nix
+        url: https://juliu.is/tidying-your-home-with-nix/
+        author: Ju Liu
+        homepage: https://juliu.is/
