@@ -15,13 +15,13 @@ template = "page.html"
 [extra]
 +++
 
-<img src="/img/about.jpg" alt="About Nielsen Ramon header image" />
+<img src="/img/about.jpg" />
 
 ## Naren Dasan
 
 ### About me
 
-Hi! My name is Naren. I am from Colorado, did my undergrad in the cornfields of central Illinois and after a stint in San Francisco working on the development of self driving cars, I am now a graduate student at USC.
+Hi! My name is Naren. I am from Colorado, did my undergrad at the University of Illinois and after a stint in San Francisco working on the development of self driving cars, I completed my masters from USC. 
 
 I've worked on topics ranging from climate modeling, high performance computing, user interface design, computer vision and embedded and operating systems but since I was in high school I have most passionate about thinking about and developing the ways one or many people and one or many robots interact with each other (i.e. human robot interaction, swarm robotics, multi-agent systems, and artificial intelligence). Hence a good amount of my academic research is centered around these ideas.
 
@@ -31,4 +31,4 @@ In my free time I'm an avid mountain biker (and road biker too I guess) as well 
 
 I work at NVIDIA developing perception and other deep learning components for autonomous vehicles within the constraints of the resource limited environment of a car. I therefore use TensorRT a lot and ended up creating the [TensorRT Python API](https://docs.nvidia.com/deeplearning/tensorrt/api/python_api/index.html) and worked on the open sourcing effort for TensorRT. I also created and am the lead maintainer of TRTorch now [Torch-Tensorrt](https://www.github.com/pytorch/tensorrt), a compiler for PyTorch that targets NVIDIA GPUs via TensorRT. You can see a hint of the perception work we do by looking at [NVIDIA's DevBlog](https://developer.nvidia.com/blog/author/narens/).
 
-At USC, I work at the [ICAROS Lab](https://icaros.usc.edu) lead by Prof. Stefanos Nikolaidis. My research centers focuses on a couple aspects of developing human compatible robots. One of my main thrusts is in enabling robots to quickly learn the workflow preferences of their human counterparts in collaborative tasks. Another of my thrusts is in leveraging quality and diversity algorithms to train more robust agents.
+At USC, I worked at the [ICAROS Lab](https://icaros.usc.edu) lead by Prof. Stefanos Nikolaidis. My research centers focuses on a couple aspects of developing human compatible robots. One of my main thrusts is in enabling robots to quickly learn the workflow preferences of their human counterparts in collaborative tasks. Another of my thrusts is in leveraging quality and diversity algorithms to train more robust agents.

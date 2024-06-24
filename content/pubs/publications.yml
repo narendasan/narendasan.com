@@ -1,3 +1,21 @@
+- title: "Selecting Source Tasks for Transfer Learning of Human Preferences"
+  description: "We address the challenge of transferring human preferences for action selection from simpler source tasks to complex target tasks. Our goal is to enable robots to support humans proactively by predicting their actions — without requiring demonstrations of their preferred action sequences in the target task. Previous research has relied on human experts to design or select a simple source task that can be used to effectively learn and transfer human preferences to a known target. However, identifying such source tasks for new target tasks can demand substantial human effort. Thus, we focus on automating the selection of source tasks, introducing two new metrics. Our first metric selects source tasks in which human preferences can be accurately learned from demonstrations, while our second metric selects source tasks in which the learned preferences, although not as accurate, can match the preferred human actions in the target task. We evaluate our metrics in simulated tasks and two human-led assembly studies. Our results indicate that selecting high-scoring source tasks on either metric improves the accuracy of predicting human actions in the target task. Notably, tasks chosen by our second metric can be simpler than the first, sacrificing learning accuracy but preserving prediction accuracy."
+  coauthors:
+    -  name: Heramb Nemlekar
+       site: https://herambnemlekar.github.io/
+    -  name: Naren Sivagnanadasan
+       site: ""
+    -  name: Subham Banga
+       site: ""
+    -  name: Neel Dhanaraj
+       site: https://www.neeldhanaraj.com/
+    -  name: Satyandra K. Gupta
+       site: https://viterbi.usc.edu/directory/faculty/Gupta/Satyandra
+    -  name: Stefanos Nikolaidis
+       site: https://stefanosnikolaidis.net/
+  journal: "IEEE RA-L"
+  date: 2024-06-17
+  link: https://ieeexplore.ieee.org/document/10559410
 - title: "Torch-TensorRT: A Compiler for Accelerating PyTorch Inference Using TensorRT"
   description: "Torch-TensorRT is an open-source compiler targeting NVIDIA GPUs for high-performance deep-learning inference in PyTorch. It combines the usability of PyTorch with the performance of TensorRT allowing for easy optimization of inference workloads on NVIDIA GPUs. Torch-TensorRT supports all classes of optimizations in TensorRT including reduced mixed precision down to INT8, through simple Python & C++ APIs designed to work directly from PyTorch. Torch-TensorRT outputs standard PyTorch modules as well as the TorchScript format to allow for a completely self-contained, portable, & static module with TensorRT engines embedded as attributes"
   coauthors:
