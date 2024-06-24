@@ -10,7 +10,7 @@ build_search_index = true
 
 generate_feeds = true
 
-feed_filename = "rss.xml"
+feed_filenames = ["rss.xml"]
 
 taxonomies = [
     {name = "tags"}
