@@ -6,3 +6,8 @@ sections:
         url: https://juliu.is/tidying-your-home-with-nix/
         author: Ju Liu
         homepage: https://juliu.is/
+
+      - title: Steve's Jujutsu Tutorial
+        url: https://steveklabnik.github.io/jujutsu-tutorial/introduction/introduction.html
+        author: Steve Klabnik
+        homepage: https://steveklabnik.com/
