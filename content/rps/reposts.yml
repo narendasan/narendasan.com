@@ -11,3 +11,8 @@ sections:
         url: https://steveklabnik.github.io/jujutsu-tutorial/introduction/introduction.html
         author: Steve Klabnik
         homepage: https://steveklabnik.com/
+
+      - title: Zero to Nix
+        url: https://zero-to-nix.com
+        author: Determinate Systems
+        homepage: https://determinate.systems
