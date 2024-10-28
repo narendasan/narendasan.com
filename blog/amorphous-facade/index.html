@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="The Amorphous Facade and Developing a Gesture Based Decentralized User Interface">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="My first published work on developing user interfaces that span multiple independent nodes in communication in a smart wall">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/amorphous-facade/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="The Amorphous Facade and Developing a Gesture Based Decentralized User Interface">
+    
+    
+        <meta property="og:description" content="My first published work on developing user interfaces that span multiple independent nodes in communication in a smart wall">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/amorphous-facade/">
+        
+        <meta property="twitter:title" content="The Amorphous Facade and Developing a Gesture Based Decentralized User Interface">
+        
+        
+        <meta property="twitter:description" content="My first published work on developing user interfaces that span multiple independent nodes in communication in a smart wall">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/amorphous-facade/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"My first published work on developing user interfaces that span multiple independent nodes in communication in a smart wall",
+                "url":"https://www.narendasan.com/blog/amorphous-facade/",
+                "@type":"WebSite",
+                "headline":"The Amorphous Facade and Developing a Gesture Based Decentralized User Interface",
+                "name":"The Amorphous Facade and Developing a Gesture Based Decentralized User Interface",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;amorphous-facade</p>
+<p class="post-meta"><time datetime="2014-02-16">February 16, 2014</time></p>
+<h1>The Amorphous Facade and Developing a Gesture Based Decentralized User Interface</h1>
+<i>My first published work on developing user interfaces that span multiple independent nodes in communication in a smart wall</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<p>For 2013 and 2014, I spent a good deal of my free time and all of my summer working on research in Swarm Robotics at the University of Colorado Boulder in Professor Nikolaus Correll's Lab. My main research interest was in exploring ways swarm robotics could be deployed to create new interesting interaction models.</p>
+<blockquote>
+<p><img src="https://www.narendasan.com/blog/amorphous-facade/./imgs/sketch.png" alt="concept wall of the amorphous facade" />
+Concept art for the Amorphous Facade</p>
+</blockquote>
+<p>My work centered on a platform developed at Correll Lab called the Amorphous Facade; a concept for a modular smart wall where the &quot;operating system&quot; of the wall was completely decentralized and leveraged ad-hoc self-organization to do useful work. The idea is that you could build spaces out of the blocks were the intellegent features of the wall allowed you to manage enviormental conditions like lighting, HVAC, privacy and sound and also serve as display and control surface. Each block in the wall is embedded with a ATmega microcontroller, a sensor array, power systems, communication and LEDs. Each block was made out of acrylic, with an aluminum border which is sensitive to touch and a variable transparency faceplate which goes from opaque to clear when a voltage is applied.</p>
+<blockquote>
+<p><img src="https://www.narendasan.com/blog/amorphous-facade/./imgs/block.jpg" alt="blocks of the wall" />
+Three blocks stacked, pins on the sides of the blocks facilitate power distribution and communication between blocks</p>
+</blockquote>
+<p>The system becomes interesting because though the core functionality and software of the RTOS is identical from block to block, the blocks can have heterogenous hardware. So one block may be a camera block, another block may be use for HVAC or another could be for sound. Because of the networked nature of the system, capabilities can be shared and combined, for instance a single microphone block and a set of speaker blocks could be combined to create a loud speaker.</p>
+<p>Because the system is required to be reconfigurable, the question of a decentralized user interface becomes important. Touch is a natural interaction medium for a wall. However, since the configuration of blocks could entirely different from one setup to another, in order to establish a usable touch wall, touches must be able to be put in context (i.e. we need to know where on the wall a touch was detected). We therefore need a way when the system starts up for blocks to establish their location relative to other blocks.</p>
+<h2 id="initialization-of-the-wall">Initialization of the Wall</h2>
+<p>Without localization, touch or any sort of multi-node display or action is impossible. The approach we used leverages the fact that each block is the same dimensions and that each block is created with a unique identifier. We designate a block the origin node (though in the implementation in the paper this is hard coded, a simple leader election algorithm would suffice to define the origin node of the network). The origin node first calculates the coordinates of its borders (where the touch sensors are). Then the origin node multicasts to the bordering blocks the calculated center of the border blocks in relation to its center. Each of these border nodes then does the same process, propagating localization through the network. The location setting message also includes a hop count so blocks will localized based on the message with the lowest hop count.</p>
+<blockquote>
+<p><img src="https://www.narendasan.com/blog/amorphous-facade/./imgs/loc.jpg" alt="localization in the wall" />
+Blocks mid localization, different colors represent different states in the localization process.</p>
+</blockquote>
+<p>Now that each block knows where it is in relation to others, it is now possible to start creating more interesting interfaces to leverage the features of the wall.</p>
+<h2 id="gesture-based-distributed-user-interaction-system-for-a-reconfigurable-self-organizing-smart-wall">Gesture Based Distributed User Interaction System for a Reconfigurable Self-Organizing Smart Wall</h2>
+<blockquote>
+<p>See paper for full details: <a href="https://dl.acm.org/doi/pdf/10.1145/2540930.2540967">Gesture Based Distributed User Interaction System for a Reconfigurable Self-Organizing Smart Wall</a></p>
+</blockquote>
+<p>At the time of the paper, there were a lot of potential functions that the wall could implement based on the sensors embedded in the control board. The wall can change transparency, it can act as a lighting system, a sound system, an HVAC system and a display.</p>
+<p>All of these systems require user controls that are intuitive but also possible to be implemented within the network. The simplest technical solution is to have each block expose itself as the interface for the wall, using the six touch buttons as the input mechanism. The issue with this is that its is hard to convey useful information on a single block that can has no display.</p>
+<p>A better solution is a multi-node system where a subset of the wall work together to expose a more useful interface.</p>
+<h3 id="establishing-a-multi-node-interface">Establishing a Multi-node Interface</h3>
+<p>Since the system is distributed and there is no hierarchy in the system, the blocks must self organize to create the interface. The way we do this is when a user touches on of the blocks on the wall in an effort to accomplish a task, the block that was touched recruits the surrounding nodes to create a flower like menu system. At the time of the paper the menu functions are represented as colors, however when displays are integrated into the face of the block, the menu becomes more descriptive.</p>
+<blockquote>
+<p><img src="https://www.narendasan.com/blog/amorphous-facade/imgs/flower.jpg" alt="Flower menu" />
+An example of the flower menu open, each color represents a different function for the wall.</p>
+</blockquote>
+<p>A user can then select a function by sliding a block color into the center.</p>
+<p>We then describe a set of interaction models to address various tasks.</p>
+<h3 id="interaction-models">Interaction Models</h3>
+<h4 id="binary-settings">Binary Settings</h4>
+<p>For binary settings (ON / OFF) we show a switch like interface where swiping from the bottom to the top or the top to the bottom flips the switch.</p>
+<blockquote>
+<p><img src="https://www.narendasan.com/blog/amorphous-facade/imgs/binary.png" alt="binary menu" />
+An interaction where flipping the binary switch makes the wall transparent instead of opaque</p>
+</blockquote>
+<p><em>A more intuitive interaction maybe to make a similar looking interface but in order to reflect device state, the current state is illuminated and the opposite state should be white. Then the user should just have to touch the block representing the state desired</em></p>
+<h4 id="granular-settings">Granular Settings</h4>
+<p>For settings that have more granular controls than on or off, we describe a dial interface. The user swipes around the center block in a clockwise or counter-clockwise motion in order to increase or decrease the setting value.</p>
+<blockquote>
+<p><img src="https://www.narendasan.com/blog/amorphous-facade/imgs/dial.png" alt="dial menu" />
+An interaction where swiping around the dial increases the volume of the speaker</p>
+</blockquote>
+<p><img src="https://www.narendasan.com/blog/amorphous-facade/imgs/tei.jpg" alt="tei" /></p>
+<blockquote>
+<p>Nicholas Farrow, Prof. Correll and I presenting our work at TEI 2014 in Munich</p>
+</blockquote>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/distributed-systems">#distributed systems</a>
+        
+<a href="/tags/swarm-robotics">#swarm robotics</a>
+        
+<a href="/tags/embedded-systems">#embedded systems</a>
+        
+<a href="/tags/hci">#hci</a>
+        
+<a href="/tags/design">#design</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+

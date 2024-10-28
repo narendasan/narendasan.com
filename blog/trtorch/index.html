@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="TRTorch: A compiler for TorchScript Targeting NVIDIA GPUs">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="Writing a compiler for PyTorch that optimizes neural nets for NVIDIA GPUs">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/trtorch/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="TRTorch: A compiler for TorchScript Targeting NVIDIA GPUs">
+    
+    
+        <meta property="og:description" content="Writing a compiler for PyTorch that optimizes neural nets for NVIDIA GPUs">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/trtorch/">
+        
+        <meta property="twitter:title" content="TRTorch: A compiler for TorchScript Targeting NVIDIA GPUs">
+        
+        
+        <meta property="twitter:description" content="Writing a compiler for PyTorch that optimizes neural nets for NVIDIA GPUs">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/trtorch/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"Writing a compiler for PyTorch that optimizes neural nets for NVIDIA GPUs",
+                "url":"https://www.narendasan.com/blog/trtorch/",
+                "@type":"WebSite",
+                "headline":"TRTorch: A compiler for TorchScript Targeting NVIDIA GPUs",
+                "name":"TRTorch: A compiler for TorchScript Targeting NVIDIA GPUs",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;trtorch</p>
+<p class="post-meta"><time datetime="2020-03-20">March 20, 2020</time></p>
+<h1>TRTorch: A compiler for TorchScript Targeting NVIDIA GPUs</h1>
+<i>Writing a compiler for PyTorch that optimizes neural nets for NVIDIA GPUs</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<p>In the practice of developing machine learning models, there are few tools as approachable as PyTorch for developing and experimenting in designing machine learning models. The power of PyTorch comes from its deep integration into Python, its flexibility and its approach to automatic differentiation and execution (eager execution). However, when moving from research into production, the requirements change and we may no longer want that deep Python integration and we want optimization to get the best performance we can on our deployment platform. In PyTorch 1.0, TorchScript was introduced as a method to separate your PyTorch model from Python, make it portable and optimizable. TorchScript uses PyTorch's JIT compiler to transform your normal PyTorch code which gets interpreted by the Python interpreter to an intermediate representation (IR) which can have optimizations run on it and at runtime can get interpreted by the PyTorch JIT interpreter. For PyTorch this has opened up a whole new world of possibilities, including deployment in other languages like C++. It also introduces a structured graph based format that we can use to do down to the kernel level optimization of models for inference.</p>
+<p>When deploying on NVIDIA GPUs TensorRT, NVIDIA's Deep Learning Optimization SDK and Runtime is able to take models from any major framework and specifically tune them to perform better on specific target hardware in the NVIDIA family be it an A100, TITAN V, Jetson Xavier or NVIDIA's Deep Learning Accelerator. TensorRT performs a couple sets of optimizations to achieve this. TensorRT fuses layers and tensors in the model graph, it then uses a large kernel library to select implementations that perform best on the target GPU. TensorRT also has strong support for reduced operating precision execution which allows users to leverage the Tensor Cores on Volta and newer GPUs as well as reducing memory and computation footprints on device.</p>
+<p>TRTorch is a compiler that uses TensorRT to optimize TorchScript code, compiling standard TorchScript modules into ones that internally run with TensorRT optimizations. This enables you to continue to remain in the PyTorch ecosystem, using all the great features PyTorch has such as module composability, its flexible tensor implementation, data loaders and more. TRTorch is available to use with both PyTorch and LibTorch. Here is a quick example on how to use it.
+Creating a TorchScript Module</p>
+<p>When developing models in PyTorch, modules are the unit of composition, you create or use subclasses of <code>torch.nn.module</code> which are composed into a super module representing your model.  Here is a simple LeNet implementation:</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">LeNetFeatExtractor</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">nn.Module</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>):
+</span><span>        </span><span style="color:#96b5b4;">super</span><span>(LeNetFeatExtractor, </span><span style="color:#bf616a;">self</span><span>).</span><span style="color:#96b5b4;">__init__</span><span>()
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.conv1 = nn.</span><span style="color:#bf616a;">Conv2d</span><span>(</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">3</span><span>)
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.conv2 = nn.</span><span style="color:#bf616a;">Conv2d</span><span>(</span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">3</span><span>)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">forward</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">x</span><span>):
+</span><span>        x = F.</span><span style="color:#bf616a;">max_pool2d</span><span>(F.</span><span style="color:#bf616a;">relu</span><span>(</span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">conv1</span><span>(x)), (</span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">2</span><span>))
+</span><span>        x = F.</span><span style="color:#bf616a;">max_pool2d</span><span>(F.</span><span style="color:#bf616a;">relu</span><span>(</span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">conv2</span><span>(x)), </span><span style="color:#d08770;">2</span><span>)
+</span><span>        </span><span style="color:#b48ead;">return </span><span>x
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">LeNetClassifier</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">nn.Module</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>):
+</span><span>        </span><span style="color:#96b5b4;">super</span><span>(LeNetClassifier, </span><span style="color:#bf616a;">self</span><span>).</span><span style="color:#96b5b4;">__init__</span><span>()
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.fc1 = nn.</span><span style="color:#bf616a;">Linear</span><span>(</span><span style="color:#d08770;">16 </span><span>* </span><span style="color:#d08770;">6 </span><span>* </span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">120</span><span>)
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.fc2 = nn.</span><span style="color:#bf616a;">Linear</span><span>(</span><span style="color:#d08770;">120</span><span>, </span><span style="color:#d08770;">84</span><span>)
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.fc3 = nn.</span><span style="color:#bf616a;">Linear</span><span>(</span><span style="color:#d08770;">84</span><span>, </span><span style="color:#d08770;">10</span><span>)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">forward</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">x</span><span>):
+</span><span>        x = torch.</span><span style="color:#bf616a;">flatten</span><span>(x,</span><span style="color:#d08770;">1</span><span>)
+</span><span>        x = F.</span><span style="color:#bf616a;">relu</span><span>(</span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">fc1</span><span>(x))
+</span><span>        x = F.</span><span style="color:#bf616a;">relu</span><span>(</span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">fc2</span><span>(x))
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">fc3</span><span>(x)
+</span><span>        </span><span style="color:#b48ead;">return </span><span>x
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">LeNet</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">nn.Module</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>):
+</span><span>        </span><span style="color:#96b5b4;">super</span><span>(LeNet, </span><span style="color:#bf616a;">self</span><span>).</span><span style="color:#96b5b4;">__init__</span><span>()
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.feat = </span><span style="color:#bf616a;">LeNetFeatExtractor</span><span>()
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.classifer = </span><span style="color:#bf616a;">LeNetClassifier</span><span>()
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">forward</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">x</span><span>):
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">feat</span><span>(x)
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">classifer</span><span>(x)
+</span><span>        </span><span style="color:#b48ead;">return </span><span>x
+</span></code></pre>
+<p>Here we create two submodules for a feature extractor and a classifier and stitch them together in a single LeNet module. In this case this is overkill but modules give us granular control over our program including where we decide to optimize and where we don't. It is also the unit that the TorchScript compiler operates on. So you can decide to only convert/optimize the feature extractor and leave the classifier in standard PyTorch or you can convert the whole thing. When compiling your module to TorchScript, there are two paths: Tracing and Scripting.</p>
+<h4 id="tracing">Tracing</h4>
+<p>Tracing follows the path of execution when the module is called and records what happens. This recording is what the TorchScript IR will describe. To trace an instance of our LeNet module, we can call <code>torch.jit.trace</code>  with an example input.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>model = </span><span style="color:#bf616a;">LeNet</span><span>()
+</span><span>traced_model = torch.jit.</span><span style="color:#bf616a;">trace</span><span>(model, torch.</span><span style="color:#bf616a;">empty</span><span>([</span><span style="color:#d08770;">1</span><span>,</span><span style="color:#d08770;">1</span><span>,</span><span style="color:#d08770;">32</span><span>,</span><span style="color:#d08770;">32</span><span>]))
+</span></code></pre>
+<h4 id="scripting">Scripting</h4>
+<p>Scripting actually inspects your code with a compiler and  generates an equivalent TorchScript program. The difference is that since tracing simply follows the execution of your module, it cannot pick up control flow for instance, it will only follow the code path that a particular input triggers. By working from the Python code, the compiler can include these components. We can run the script compiler on our LeNet  module by calling <code>torch.jit.script</code>.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>model = </span><span style="color:#bf616a;">LeNet</span><span>()
+</span><span>script_model = torch.jit.</span><span style="color:#bf616a;">script</span><span>(model)
+</span></code></pre>
+<p>There are reasons to use one path or another, the PyTorch documentation has information on how to choose and more information on TorchScript <a href="https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html">https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html</a>. From a TRTorch perspective, there is better support (i.e your module is more likely to compile) for traced modules because it doesn’t include all the complexities of a complete programming language, though both paths are supported.</p>
+<p>After scripting or tracing your module, you are given back a TorchScript Module. This contains the code and parameters used to run the module stored in an intermediate representation. Here is what the LeNet traced module IR looks like:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>graph(%self.1 : __torch__.___torch_mangle_10.LeNet,
+</span><span>    %input.1 : Float(1, 1, 32, 32)):
+</span><span>    %129 : __torch__.___torch_mangle_9.LeNetClassifier = prim::GetAttr[name=&quot;classifer&quot;](%self.1)
+</span><span>    %119 : __torch__.___torch_mangle_5.LeNetFeatExtractor = prim::GetAttr[name=&quot;feat&quot;](%self.1)
+</span><span>    %137 : Tensor = prim::CallMethod[name=&quot;forward&quot;](%119, %input.1)
+</span><span>    %138 : Tensor = prim::CallMethod[name=&quot;forward&quot;](%129, %137)
+</span><span>    return (%138)
+</span></code></pre>
+<p>and the LeNet scripted module IR:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>graph(%self : __torch__.LeNet,
+</span><span>    %x.1 : Tensor):
+</span><span>    %2 : __torch__.LeNetFeatExtractor = prim::GetAttr[name=&quot;feat&quot;](%self)
+</span><span>    %x.3 : Tensor = prim::CallMethod[name=&quot;forward&quot;](%2, %x.1) # x.py:38:12
+</span><span>    %5 : __torch__.LeNetClassifier = prim::GetAttr[name=&quot;classifer&quot;](%self)
+</span><span>    %x.5 : Tensor = prim::CallMethod[name=&quot;forward&quot;](%5, %x.3) # x.py:39:12
+</span><span>    return (%x.5)
+</span></code></pre>
+<p>You can see that the IR preserves the module structure we have in our python code.</p>
+<p>From the user perspective it behaves like a normal PyTorch module. You can run the forward pass using the forward method or just calling the module <code>torch_script_module(in_tensor).</code> The JIT interpreter will run the module and return the results. From here we are in a position to compile our module further to run more efficiently on GPUs with TRTorch.</p>
+<h2 id="compiling-with-trtorch-in-python">Compiling with TRTorch in Python</h2>
+<p>To compile your TorchScript module with TRTorch, all you need to do is provide the module and some compiler settings to TRTorch and you will be returned an optimized TorchScript module to run or add into another PyTorch module. The only required setting is the input size for applications which will have a static input size which is defined as a list of either list types like lists, tuples or PyTorch size objects. If your application needs to support a range of sizes, entries in the list should be dictionaries of minimum, optimal and maximum sizes which describe the range of dimensions that the auto-tuner should use for optimization. The auto-tuner will select kernels which have the lowest runtime for the optimal size but are valid through the range of dimensions specified. You can also specify settings such as operating precision for the engine or target device.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">import </span><span>trtorch
+</span><span>
+</span><span style="color:#d08770;">...
+</span><span>compile_settings = {
+</span><span>    &quot;</span><span style="color:#a3be8c;">input_shapes</span><span>&quot;: [
+</span><span>        {
+</span><span>            &quot;</span><span style="color:#a3be8c;">min</span><span>&quot;: [</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">224</span><span>, </span><span style="color:#d08770;">224</span><span>],
+</span><span>            &quot;</span><span style="color:#a3be8c;">opt</span><span>&quot;: [</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">512</span><span>, </span><span style="color:#d08770;">512</span><span>],
+</span><span>            &quot;</span><span style="color:#a3be8c;">max</span><span>&quot;: [</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">1024</span><span>, </span><span style="color:#d08770;">1024</span><span>]
+</span><span>        }, </span><span style="color:#65737e;"># For static size [1, 3, 224, 224]
+</span><span>    ],
+</span><span>    &quot;</span><span style="color:#a3be8c;">op_precision</span><span>&quot;: torch.half </span><span style="color:#65737e;"># Run with FP16
+</span><span>}
+</span><span>
+</span><span>trt_ts_module = trtorch.</span><span style="color:#bf616a;">compile</span><span>(torch_script_module, compile_settings)
+</span><span>
+</span><span>input_data = input_data.</span><span style="color:#bf616a;">half</span><span>()
+</span><span>result = </span><span style="color:#bf616a;">trt_ts_module</span><span>(input_data)
+</span></code></pre>
+<h2 id="working-with-torchscript-in-c">Working with TorchScript in C++</h2>
+<p>After converting a PyTorch module to TorchScript our dependency on Python ends. We can just save our TorchScript module using <code>torch.jit.save</code> which will serialize the TorchScript code, weights and other information into a package and load it in a C++ application.</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span style="color:#b48ead;">#include </span><span>&lt;</span><span style="color:#a3be8c;">torch/script.h</span><span>&gt; </span><span style="color:#65737e;">// One-stop header.
+</span><span>
+</span><span style="color:#b48ead;">#include </span><span>&lt;</span><span style="color:#a3be8c;">iostream</span><span>&gt;
+</span><span style="color:#b48ead;">#include </span><span>&lt;</span><span style="color:#a3be8c;">memory</span><span>&gt;
+</span><span>
+</span><span style="color:#b48ead;">int </span><span style="color:#8fa1b3;">main</span><span>(</span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">argc</span><span>, </span><span style="color:#b48ead;">const char</span><span>* </span><span style="color:#bf616a;">argv</span><span>[]) {
+</span><span>    torch::jit::Module module;
+</span><span>    </span><span style="color:#b48ead;">try </span><span>{
+</span><span>        </span><span style="color:#65737e;">// Deserialize the ScriptModule from a file using torch::jit::load().
+</span><span>        module = torch::jit::</span><span style="color:#bf616a;">load</span><span>(&quot;</span><span style="color:#a3be8c;">&lt;PATH TO SAVED TS MOD&gt;</span><span>&quot;);
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">catch </span><span>(</span><span style="color:#b48ead;">const</span><span> c10::Error&amp; e) {
+</span><span>        std::cerr &lt;&lt; &quot;</span><span style="color:#a3be8c;">error loading the model</span><span style="color:#96b5b4;">\n</span><span>&quot;;
+</span><span>        </span><span style="color:#b48ead;">return </span><span>-</span><span style="color:#d08770;">1</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    std::cout &lt;&lt; &quot;</span><span style="color:#a3be8c;">ok</span><span style="color:#96b5b4;">\n</span><span>&quot;;
+</span></code></pre>
+<p>You can do full training and inference in C++ with LibTorch if you would like, you can even define your modules in C++ and have access to the same powerful tensor library that backs PyTorch. (For more information: https://pytorch.org/cppdocs/). For instance we can run inference with our module like this:</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span>mod.</span><span style="color:#bf616a;">eval</span><span>();
+</span><span>torch::Tensor in = torch::</span><span style="color:#bf616a;">randn</span><span>({</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">32</span><span>});
+</span><span style="color:#b48ead;">auto</span><span> out = mod.</span><span style="color:#bf616a;">forward</span><span>(in);
+</span></code></pre>
+<p>and to run on the GPU:</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span>mod.</span><span style="color:#bf616a;">eval</span><span>();
+</span><span>mod.</span><span style="color:#bf616a;">to</span><span>(torch::</span><span style="color:#d08770;">kCUDA</span><span>);
+</span><span>torch::Tensor in = torch::</span><span style="color:#bf616a;">randn</span><span>({</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">32</span><span>}, torch::</span><span style="color:#d08770;">kCUDA</span><span>);
+</span><span style="color:#b48ead;">auto</span><span> out = mod.</span><span style="color:#bf616a;">forward</span><span>(in);
+</span></code></pre>
+<p>As you can see it is pretty similar to the Python API. When you call the forward method, you again invoke the JIT interpreter in the same way running a PyTorch module in Python would to run the TorchScript code and return back the results.</p>
+<h2 id="compiling-with-trtorch-in-c">Compiling with TRTorch in C++</h2>
+<p>We are also at the point where we can compile and optimize our module with TRTorch in C++. With our module loaded, we can feed it into the TRTorch compiler. When we do so, we must provide a similar set of additional information on the expected input size and also configure any settings when we do.</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">torch/script.h</span><span>&quot;
+</span><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">trtorch/trtorch.h</span><span>&quot;
+</span><span>...
+</span><span>
+</span><span>    mod.</span><span style="color:#bf616a;">to</span><span>(at::</span><span style="color:#d08770;">kCUDA</span><span>);
+</span><span>    mod.</span><span style="color:#bf616a;">eval</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> in = torch::</span><span style="color:#bf616a;">randn</span><span>({</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">32</span><span>}, {torch::</span><span style="color:#d08770;">kCUDA</span><span>});
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> trt_mod = trtorch::</span><span style="color:#bf616a;">CompileGraph</span><span>(mod, std::</span><span style="color:#bf616a;">vector</span><span>&lt;trtorch::ExtraInfo::InputRange&gt;{{in.</span><span style="color:#bf616a;">sizes</span><span>()}});
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> out = trt_mod.</span><span style="color:#bf616a;">forward</span><span>({in});
+</span></code></pre>
+<p>That’s it! Now the graph runs a TensorRT optimized version of the module through the JIT interpreter.</p>
+<p>We can also set settings like operating precision to run in FP16.</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">torch/script.h</span><span>&quot;
+</span><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">trtorch/trtorch.h</span><span>&quot;
+</span><span>...
+</span><span>
+</span><span>    mod.</span><span style="color:#bf616a;">to</span><span>(at::</span><span style="color:#d08770;">kCUDA</span><span>);
+</span><span>    mod.</span><span style="color:#bf616a;">eval</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> in = torch::</span><span style="color:#bf616a;">randn</span><span>({</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">32</span><span>}, {torch::</span><span style="color:#d08770;">kCUDA</span><span>}).</span><span style="color:#bf616a;">to</span><span>(torch::</span><span style="color:#d08770;">kHALF</span><span>);
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> input_sizes = std::vector&lt;trtorch::ExtraInfo::InputRange&gt;({in.</span><span style="color:#bf616a;">sizes</span><span>()});
+</span><span>    trtorch::ExtraInfo </span><span style="color:#8fa1b3;">info</span><span>(</span><span style="color:#bf616a;">input_sizes</span><span>);
+</span><span>    info.</span><span style="color:#bf616a;">op_precision </span><span>= torch::</span><span style="color:#d08770;">kHALF</span><span>;
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> trt_mod = trtorch::</span><span style="color:#bf616a;">CompileGraph</span><span>(mod, info);
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> out = trt_mod.</span><span style="color:#bf616a;">forward</span><span>({in});
+</span></code></pre>
+<p>And now we are running the module in FP16 precision.</p>
+<p>If you want to save the engine produced by TRTorch to use in a TensorRT application, you can use the <code>ConvertGraphToTRTEngine</code> API (this API is available in Python as well and is compatible with the TensorRT Python API to deploy).</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">torch/script.h</span><span>&quot;
+</span><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">trtorch/trtorch.h</span><span>&quot;
+</span><span>...
+</span><span>
+</span><span>    mod.</span><span style="color:#bf616a;">to</span><span>(at::</span><span style="color:#d08770;">kCUDA</span><span>);
+</span><span>    mod.</span><span style="color:#bf616a;">eval</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> in = torch::</span><span style="color:#bf616a;">randn</span><span>({</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">32</span><span>}, {torch::</span><span style="color:#d08770;">kCUDA</span><span>}).</span><span style="color:#bf616a;">to</span><span>(torch::</span><span style="color:#d08770;">kHALF</span><span>);
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> input_sizes = std::vector&lt;trtorch::ExtraInfo::InputRange&gt;({in.</span><span style="color:#bf616a;">sizes</span><span>()});
+</span><span>    trtorch::ExtraInfo </span><span style="color:#8fa1b3;">info</span><span>(</span><span style="color:#bf616a;">input_sizes</span><span>);
+</span><span>    info.</span><span style="color:#bf616a;">op_precision </span><span>= torch::</span><span style="color:#d08770;">kHALF</span><span>;
+</span><span>    </span><span style="color:#b48ead;">auto</span><span> trt_mod = trtorch::</span><span style="color:#bf616a;">ConvertGraphToTRTEngine</span><span>(mod, &quot;</span><span style="color:#a3be8c;">forward</span><span>&quot;, info);
+</span><span>    std::ofstream </span><span style="color:#8fa1b3;">out</span><span>(&quot;</span><span style="color:#a3be8c;">/tmp/engine_converted_from_jit.trt</span><span>&quot;);
+</span><span>    out &lt;&lt; engine;
+</span><span>    out.</span><span style="color:#bf616a;">close</span><span>();
+</span></code></pre>
+<h2 id="compiler-internals">Compiler Internals</h2>
+<p>When a module is provided to TRTorch, it goes through three main phases, lowering, compilation, and execution.</p>
+<h3 id="lowering-phase">Lowering Phase</h3>
+<p>The lowering is made up of a set of passes (some from PyTorch and some specific to TRTorch) run over the graph IR to map the large PyTorch opset to a reduced opset that is easier to convert to TensorRT.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>graph(%input.2 : Tensor):
+</span><span>    %2 : Float(84, 10) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %3 : Float(120, 84) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %4 : Float(576, 120) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %5 : int = prim::Constant[value=-1]() # x.py:25:0
+</span><span>    %6 : int[] = prim::Constant[value=annotate(List[int], [])]()
+</span><span>    %7 : int[] = prim::Constant[value=[2, 2]]()
+</span><span>    %8 : int[] = prim::Constant[value=[0, 0]]()
+</span><span>    %9 : int[] = prim::Constant[value=[1, 1]]()
+</span><span>    %10 : bool = prim::Constant[value=1]() # ~/.local/lib/python3.6/site-packages/torch/nn/modules/conv.py:346:0
+</span><span>    %11 : int = prim::Constant[value=1]() # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:539:0
+</span><span>    %12 : bool = prim::Constant[value=0]() # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:539:0
+</span><span>    %self.classifer.fc3.bias : Float(10) = prim::Constant[value= 0.0464  0.0383  0.0678  0.0932  0.1045 -0.0805 -0.0435 -0.0818  0.0208 -0.0358 [ CUDAFloatType{10} ]]()
+</span><span>    %self.classifer.fc2.bias : Float(84) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %self.classifer.fc1.bias : Float(120) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %self.feat.conv2.weight : Float(16, 6, 3, 3) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %self.feat.conv2.bias : Float(16) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %self.feat.conv1.weight : Float(6, 1, 3, 3) = prim::Constant[value=&lt;Tensor&gt;]()
+</span><span>    %self.feat.conv1.bias : Float(6) = prim::Constant[value= 0.0530 -0.1691  0.2802  0.1502  0.1056 -0.1549 [ CUDAFloatType{6} ]]()
+</span><span>    %input0.4 : Tensor = aten::_convolution(%input.2, %self.feat.conv1.weight, %self.feat.conv1.bias, %9, %8, %9, %12, %8, %11, %12, %12, %10) # ~/.local/lib/python3.6/site-packages/torch/nn/modules/conv.py:346:0
+</span><span>    %input0.5 : Tensor = aten::relu(%input0.4) # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:1063:0
+</span><span>    %input1.2 : Tensor = aten::max_pool2d(%input0.5, %7, %6, %8, %9, %12) # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:539:0
+</span><span>    %input0.6 : Tensor = aten::_convolution(%input1.2, %self.feat.conv2.weight, %self.feat.conv2.bias, %9, %8, %9, %12, %8, %11, %12, %12, %10) # ~/.local/lib/python3.6/site-packages/torch/nn/modules/conv.py:346:0
+</span><span>    %input2.1 : Tensor = aten::relu(%input0.6) # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:1063:0
+</span><span>    %x.1 : Tensor = aten::max_pool2d(%input2.1, %7, %6, %8, %9, %12) # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:539:0
+</span><span>    %input.1 : Tensor = aten::flatten(%x.1, %11, %5) # x.py:25:0
+</span><span>    %27 : Tensor = aten::matmul(%input.1, %4)
+</span><span>    %28 : Tensor = trt::const(%self.classifer.fc1.bias)
+</span><span>    %29 : Tensor = aten::add_(%28, %27, %11)
+</span><span>    %input0.2 : Tensor = aten::relu(%29) # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:1063:0
+</span><span>    %31 : Tensor = aten::matmul(%input0.2, %3)
+</span><span>    %32 : Tensor = trt::const(%self.classifer.fc2.bias)
+</span><span>    %33 : Tensor = aten::add_(%32, %31, %11)
+</span><span>    %input1.1 : Tensor = aten::relu(%33) # ~/.local/lib/python3.6/site-packages/torch/nn/functional.py:1063:0
+</span><span>    %35 : Tensor = aten::matmul(%input1.1, %2)
+</span><span>    %36 : Tensor = trt::const(%self.classifer.fc3.bias)
+</span><span>    %37 : Tensor = aten::add_(%36, %35, %11)
+</span><span>    return (%37)
+</span><span>(CompileGraph)
+</span></code></pre>
+<p>The graph has now been transformed from a collection of modules, each managing their own parameters into a single graph with the  parameters inlined into the graph and all of the operations laid out. TRTorch has also executed a number of optimizations and mappings to make the graph easier to translate to TensorRT and produces more efficient TensorRT engines. From here the compiler can assemble the TensorRT engine by following the dataflow through the graph.</p>
+<h3 id="conversion-phase">Conversion Phase</h3>
+<p>In the conversion phase we traverse the lowered graph and construct an equivalent TensorRT graph. The conversion phase is made up of three main components, a context to manage compile time data, a evaluator library which will execute operations that can be resolved at compile time and a converter library which maps an op from JIT to TensorRT. Operations are mapped to TensorRT through the use of modular converters, functions that take a node from a the JIT graph and produce an equivalent layer or subgraph in TensorRT. TRTorch ships with a library of these converters stored in a registry, that will be executed depending on the node being analyzed. For instance an <code>aten::relu(%input0.4)</code> instruction will trigger the ReLU converter to be run on it, producing an activation layer in the TensorRT graph.</p>
+<p>For example, if we try to compile a graph with a build of TRTorch that doesn’t support the flatten operation (<code>aten::flatten</code>) you may see this error:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>terminate called after throwing an instance of &#39;trtorch::Error&#39;
+</span><span>what():  [enforce fail at core/conversion/conversion.cpp:109] Expected converter to be true but got false
+</span><span>Unable to convert node: %input.1 : Tensor = aten::flatten(%x.1, %11, %5) # x.py:25:0 (conversion.AddLayer)
+</span><span>Schema: aten::flatten.using_ints(Tensor self, int start_dim=0, int end_dim=-1) -&gt; (Tensor)
+</span><span>Converter for aten::flatten requested, but no such converter was found.
+</span><span>If you need a converter for this operator, you can try implementing one yourself
+</span><span>or request a converter: https://www.github.com/NVIDIA/TRTorch/issues
+</span></code></pre>
+<p>We register converters in the global converter registry, associating a function schema like <code>aten::flatten.using_ints(Tensor self, int start_dim=0, int end_dim=-1) -&gt; (Tensor)</code> with a lambda that will take the state of the conversion, the node/operation in question to convert and all of the inputs to the node and produces as a side effect a new layer in the TensorRT network. Arguments are passed as a vector of inspectable unions of TensorRT <code>ITensors</code> and Torch <code>IValues</code> (PyTorch data such as Tensors, ints, lists, etc.) in the order arguments are listed in the schema.</p>
+<p>Below is an implementation of an <code>aten::flatten</code> converter.</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">torch/script.h</span><span>&quot;
+</span><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">trtorch/trtorch.h</span><span>&quot;
+</span><span style="color:#b48ead;">#include </span><span>&quot;</span><span style="color:#a3be8c;">trtorch/core/conversion/converters/converters.h</span><span>&quot;
+</span><span>
+</span><span style="color:#b48ead;">static auto</span><span> flatten_converter = trtorch::core::conversion::converters::</span><span style="color:#bf616a;">RegisterNodeConversionPatterns</span><span>()
+</span><span>    .</span><span style="color:#bf616a;">pattern</span><span>({
+</span><span>        &quot;</span><span style="color:#a3be8c;">aten::flatten.using_ints(Tensor self, int start_dim=0, int end_dim=-1) -&gt; (Tensor)</span><span>&quot;,
+</span><span>        [](trtorch::core::conversion::ConversionCtx* ctx,
+</span><span>            </span><span style="color:#b48ead;">const</span><span> torch::jit::Node* n,
+</span><span>            trtorch::core::conversion::converters::args&amp; args) -&gt; </span><span style="color:#bf616a;">bool </span><span>{
+</span><span>            </span><span style="color:#b48ead;">auto</span><span> in = args[</span><span style="color:#d08770;">0</span><span>].</span><span style="color:#bf616a;">ITensor</span><span>();
+</span><span>            </span><span style="color:#b48ead;">auto</span><span> start_dim = args[</span><span style="color:#d08770;">1</span><span>].</span><span style="color:#bf616a;">unwrapToInt</span><span>();
+</span><span>            </span><span style="color:#b48ead;">auto</span><span> end_dim = args[</span><span style="color:#d08770;">2</span><span>].</span><span style="color:#bf616a;">unwrapToInt</span><span>();
+</span><span>            </span><span style="color:#b48ead;">auto</span><span> in_shape = trtorch::core::util::</span><span style="color:#bf616a;">toVec</span><span>(in-&gt;</span><span style="color:#bf616a;">getDimensions</span><span>());
+</span><span>            </span><span style="color:#b48ead;">auto</span><span> out_shape = torch::</span><span style="color:#bf616a;">flatten</span><span>(torch::</span><span style="color:#96b5b4;">rand</span><span>(in_shape), start_dim, end_dim).</span><span style="color:#bf616a;">sizes</span><span>();
+</span><span>
+</span><span>            </span><span style="color:#b48ead;">auto</span><span> shuffle = ctx-&gt;</span><span style="color:#bf616a;">net</span><span>-&gt;</span><span style="color:#bf616a;">addShuffle</span><span>(*in);
+</span><span>            shuffle-&gt;</span><span style="color:#bf616a;">setReshapeDimensions</span><span>(trtorch::core::util::</span><span style="color:#bf616a;">toDims</span><span>(out_shape));
+</span><span>            shuffle-&gt;</span><span style="color:#bf616a;">setName</span><span>(trtorch::core::util::</span><span style="color:#bf616a;">node_info</span><span>(n).</span><span style="color:#bf616a;">c_str</span><span>());
+</span><span>
+</span><span>            </span><span style="color:#b48ead;">auto</span><span> out_tensor = ctx-&gt;</span><span style="color:#bf616a;">AssociateValueAndTensor</span><span>(n-&gt;</span><span style="color:#bf616a;">outputs</span><span>()[</span><span style="color:#d08770;">0</span><span>], shuffle-&gt;</span><span style="color:#bf616a;">getOutput</span><span>(</span><span style="color:#d08770;">0</span><span>));
+</span><span>            </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">true</span><span>;
+</span><span>        }
+</span><span>    });
+</span></code></pre>
+<h4 id="writing-converters">Writing Converters</h4>
+<h5 id="converter-contract">Converter Contract</h5>
+<p>What is guaranteed to converters</p>
+<ul>
+<li>In the args there will be an entry for each node input value, either a ITensor or IValue</li>
+<li>Inputs will be provided in order according to the function schema</li>
+</ul>
+<p>Responsibilities of a converter</p>
+<ul>
+<li>Args must be guaranteed to be a type to unwrap the Arg union without checking, typically input tensor arguments can be expected to be ITensors</li>
+<li>Any weights or static values must guaranteed to be valid until the end of conversion time</li>
+<li>Converters are expected to produce an <code>IValue</code> or <code>ITensor </code>for each output of a node. The compiler will check this and produce warnings if there are Values that don’t have associated ITensors or IValues.</li>
+<li>Outputs must be annotated. There must be an association between a JIT nodes output values and the new TRT layers output tensors in the value_tensor_map in the conversion context</li>
+</ul>
+<h5 id="conversion-context">Conversion Context</h5>
+<p>The conversion context maintains the state of conversion, it manages the Network Definition, two maps one that stores associations between <code>Values</code> and <code>IValues</code> (the evaluated_value_map) and one that stores associations between <code>Values</code> and <code>ITensors</code>, and any sort of memory that needs to live until the end of conversion. The main apis that you will interface with in converters is directly accessing the network definition to add layers ctx-&gt;net and data association functions <code>ctx-&gt;AssociateValueAndTensor()</code> and <code>ctx-&gt;AssociateValueAndIValue()</code>, which you will use to add layers to the TRT layers and log pairs of node outputs and static values or TensorRT layer outputs.</p>
+<h5 id="args">Args</h5>
+<p>Arguments provided to the converter are inspectable unions of nvinfer1::ITensors and torch::jit::IValues (i.e. abstract dataflow in the TensorRT graph and static values). You are guaranteed that you will have some argument for each input value for the node. They are provided in the order of the function schema. It can be expected that inputs (meaning the parameters that would be passed into the forward function of a module in PyTorch) will be ITensors but the Arg class also has mechanisms to inspect arguments safely before unwrapping if you are unsure. Args also have deep unwrap methods that let you get straight to the underlying data in an IValue if you know it’s safe. You can also pass in a fallback value if there is a chance the IValue is None. IValues have been extended to be able to hold a wrapper around ITensors only in the case of TensorLists. You can get an ITensor from an IValue by a pattern similar to this: ivalue.toCustomClass<TensorContainer>()-&gt;tensor() . You can tell if an IValue contains a Tensor or an ITensor by using ivalue.isTensor() or ivalue.isCustomClass() .</p>
+<h5 id="weights">Weights</h5>
+<p>Weights are used during build time, so any weights need to be guaranteed to live until the end of the conversion phase. TensorRT also uses its own weights structure to hold the weights. There is a wrapper around this class available to converts which abstracts a lot of this.</p>
+<p>The weights wrapper class can accept either at::Tensors or singular values (right now). You also need to pass the conversion context when constructing these weights because internally the weights class will allocate memory managed by the conversion context to store a copy of the tensor data. This data gets freed when the conversion context destructor gets destroyed so converters don’t really need to think about it.</p>
+<p>There is metadata generated from the shape of the input data which becomes useful in interfacing with TensorRT, such as number of input maps, number of output maps and kernel shape.</p>
+<p>The complier will topologically traverse the graph from the lowering phase and then iteratively construct the TensorRT graph. Once it is complete, the graph is optimized for the target hardware using TensorRT's library of tuned kernel implementations. Here TRTorch creates a JIT Module to execute the TensorRT engine which will be  instantiated and managed by the TRTorch runtime.</p>
+<p>Here is the graph that you get back after compilation is complete:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>graph(%self.1 : __torch__.___torch_mangle_10.LeNet_trt,
+</span><span>    %2 : Tensor):
+</span><span>    %1 : int = prim::Constant[value=94106001690080]()
+</span><span>    %3 : Tensor = trt::execute_engine(%1, %2)
+</span><span>    return (%3)
+</span><span>(AddEngineToGraph)
+</span></code></pre>
+<p>You can see the call where the engine is executed, based on a constant which is the ID of the engine, telling JIT how to find the engine and the input tensor which will be fed to TensorRT.</p>
+<h3 id="runtime-phase">Runtime Phase</h3>
+<p>After the graph is provided to the user, it is now a fully compliant TorchScript module. You can seralize and deserialize it the same way and all that is required is to have the TRTorch runtime loaded in memory.</p>
+<h3 id="getting-trtorch">Getting TRTorch</h3>
+<p>TRTorch 0.1.0 precompiled binaries are available on GitHub <a href="https://github.com/NVIDIA/TRTorch/releases">https://github.com/NVIDIA/TRTorch/releases</a> You can get a tarball distribution of the C++ API (either pre-CXX11 ABI or CXX11 ABI builds) and wheel files for the Python package, which is installable via pip. To get the latest and greatest, you can compile the library and/or the Python package from source following these instructions: <a href="https://nvidia.github.io/TRTorch/tutorials/installation.html">https://nvidia.github.io/TRTorch/tutorials/installation.html</a>. Compilation on embedded platforms like Jetson is possible via minor modifications to the build system.</p>
+<h3 id="more-information">More Information</h3>
+<p>I gave two talks on TRTorch at the GPU Technology Conference:</p>
+<blockquote>
+<ul>
+<li><a href="https://www.nvidia.com/en-us/gtc/session-catalog/?search.language=1594320459782001LCjF&amp;tab.catalogtabfields=1600209910618002Tlxt&amp;search=TRTorch#/session/15985554695910019Knc">TRTorch: A PyTorch/TorchScript Compiler Targeting NVIDIA GPUs Using TensorRT</a> - GTC 2020 October</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><a href="https://developer.nvidia.com/gtc/2020/video/s21671-vid">PyTorch-TensorRT: Accelerating Inference in PyTorch with TensorRT</a> - GTC 2020</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>Github: <a href="https://github.com/NVIDIA/TRTorch/">https://github.com/NVIDIA/TRTorch/</a>
+Project Page: <a href="https://nvidia.github.io/TRTorch/">https://nvidia.github.io/TRTorch/</a></p>
+</blockquote>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/cv">#cv</a>
+        
+<a href="/tags/ai">#ai</a>
+        
+<a href="/tags/compilers">#compilers</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+

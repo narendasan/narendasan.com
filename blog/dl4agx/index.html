@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="Real Time Autonomous Vehicle Perception on Heterogenous Hardware">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="Showing how you can use DRIVE AGX and its suite of accelerators to achieve real-time perception for self driving cars">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/dl4agx/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="Real Time Autonomous Vehicle Perception on Heterogenous Hardware">
+    
+    
+        <meta property="og:description" content="Showing how you can use DRIVE AGX and its suite of accelerators to achieve real-time perception for self driving cars">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/dl4agx/">
+        
+        <meta property="twitter:title" content="Real Time Autonomous Vehicle Perception on Heterogenous Hardware">
+        
+        
+        <meta property="twitter:description" content="Showing how you can use DRIVE AGX and its suite of accelerators to achieve real-time perception for self driving cars">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/dl4agx/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"Showing how you can use DRIVE AGX and its suite of accelerators to achieve real-time perception for self driving cars",
+                "url":"https://www.narendasan.com/blog/dl4agx/",
+                "@type":"WebSite",
+                "headline":"Real Time Autonomous Vehicle Perception on Heterogenous Hardware",
+                "name":"Real Time Autonomous Vehicle Perception on Heterogenous Hardware",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;dl4agx</p>
+<p class="post-meta"><time datetime="2019-04-12">April 12, 2019</time></p>
+<h1>Real Time Autonomous Vehicle Perception on Heterogenous Hardware</h1>
+<i>Showing how you can use DRIVE AGX and its suite of accelerators to achieve real-time perception for self driving cars</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<p>I wrote a post for the NVIDIA Developer Blog on how we implemented real-time autonomous vehicle perception using the specialized
+hardware available on the NVIDIA DRIVE AGX Self Driving Computer. The AGX is powered by Xavier, NVIDIAs in-house ARM SoC which
+includes a Volta-based GPU, two programmable vision accelerators (used for tasks like edge detection, epipolar geometry) and two deep learning accelerators
+(fixed function neural network accelerator) in a unified memory architecture. We show how you can easily span all of these different types of simultaneously accelerators to make a real time perception pipeline.</p>
+<h3 id="take-a-look-https-developer-nvidia-com-blog-drive-agx-accelerators-object-detection">Take a look: <a href="https://developer.nvidia.com/blog/drive-agx-accelerators-object-detection/">https://developer.nvidia.com/blog/drive-agx-accelerators-object-detection/</a></h3>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/cv">#cv</a>
+        
+<a href="/tags/ai">#ai</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+
