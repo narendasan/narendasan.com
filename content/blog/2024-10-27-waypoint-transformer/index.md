@@ -16,7 +16,7 @@ In reinforcement learning, the agent learns to interact with an environment by t
 
 ### Supervised Reinforcement Learning (RvS)
 
-Traditional offline methods rely on objectives that encourage pessimism in combination with value based methods. Value based methods learn a value function that estimates the expected return of a policy. Alternatively, model-based offline RL methods estimate the dynamics of the environment and use it to plan. Typically, complex hyperparameter tuning is required to achieve stable learning.
+Value-based offline methods tend to attempt to learn a pessimistic value estimate for different states in the state space or state action pairs. This is used to estimate the expected return of a policy. Alternatively, model-based offline RL methods estimate the dynamics of the environment and use it to plan. Typically, complex hyperparameter tuning is required to achieve stable learning.
 
 Reinforcement learning via supervised learning (RvS), builds off behavioral cloning as a simple alternative to traditional offline RL. This removes the need for Temporal Difference (TD) learning and value functions and allows offline RL to reuse methods from supervised learning. Typically, the conditioning variable for the policy is based off the return, goal-conditioning, or inverse reinforcement learning,
 
