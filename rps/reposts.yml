@@ -1,0 +1,18 @@
+last_updated: 07/29/23
+sections:
+  - name: UNIX Things
+    posts:
+      - title: Tidying up your $HOME with Nix
+        url: https://juliu.is/tidying-your-home-with-nix/
+        author: Ju Liu
+        homepage: https://juliu.is/
+
+      - title: Steve's Jujutsu Tutorial
+        url: https://steveklabnik.github.io/jujutsu-tutorial/introduction/introduction.html
+        author: Steve Klabnik
+        homepage: https://steveklabnik.com/
+
+      - title: Zero to Nix
+        url: https://zero-to-nix.com
+        author: Determinate Systems
+        homepage: https://determinate.systems

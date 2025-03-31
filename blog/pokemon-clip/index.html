@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="Building CLIP from Scratch to Classify Pokemon">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="Learning about how Contrastive Language-Image Pre-training (CLIP) works">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/pokemon-clip/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="Building CLIP from Scratch to Classify Pokemon">
+    
+    
+        <meta property="og:description" content="Learning about how Contrastive Language-Image Pre-training (CLIP) works">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/pokemon-clip/">
+        
+        <meta property="twitter:title" content="Building CLIP from Scratch to Classify Pokemon">
+        
+        
+        <meta property="twitter:description" content="Learning about how Contrastive Language-Image Pre-training (CLIP) works">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/pokemon-clip/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"Learning about how Contrastive Language-Image Pre-training (CLIP) works",
+                "url":"https://www.narendasan.com/blog/pokemon-clip/",
+                "@type":"WebSite",
+                "headline":"Building CLIP from Scratch to Classify Pokemon",
+                "name":"Building CLIP from Scratch to Classify Pokemon",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;pokemon-clip</p>
+<p class="post-meta"><time datetime="2024-10-07">October 7, 2024</time></p>
+<h1>Building CLIP from Scratch to Classify Pokemon</h1>
+<i>Learning about how Contrastive Language-Image Pre-training (CLIP) works</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<h1 id="building-clip-from-scratch-to-classify-pokemon">Building CLIP from Scratch to Classify Pokemon</h1>
+<p>Prior deep learning approaches to performing image classification frame the problem as given a
+dataset of image, label pairs, learn a mapping between the image space and the label space using
+a neural network (MLP, CNN, etc.). Here the image space is typically a CxHxW dimensional space
+where C is the number of channels, H and W are the height and width of the input image. Labels
+may have semantic meaning to us as humans, but are presented to the model simply as one-hot
+encoded vectors in a fixed sized N-D space where N is the number of possible different labels
+that can be seen in the dataset. Each dimension of the label space is assigned a distinct
+possible label, and the models output in that any particular dimension represents the models
+confidence that the image is of that class. Extremely good performance on classification tasks
+can be achieved using this problem framing and a good choice of model architecture. However,
+this framing has drawbacks when trying to move out of narrow independent and identically
+distributed settings, such as classification of images that are of a class not seen before
+or dealing with slightly differently formed labels. In such cases, the model is unaware of
+the existence of anything other than the N classes it was designed to decide between. Even
+if it was, it would not be able to represent a novel class due to its fixed sized output and
+the assigned semantic meanings to each dimension.</p>
+<p>More recently, self-supervised methods have emerged which use simple scalable training tasks
+to create models that can easily be repurposed for a number of different tasks. Many of these
+methods avoid the use fixed sized label spaces instead looking to embed representations of
+different modalities of data in a common embedding space. Distance in this embedding space
+represents “sameness”. These models look to therefore project tuples of related data into the
+same area in embedding space. Unseen labels or classes can be projected into this embedding
+space just as easily as seen data, so even if the model has not seen that exact label before,
+it its embedding should be close to similar seen labels and consequently their corresponding images.</p>
+<p>One of these methods is Contrastive Language-Image Pre-training (CLIP). CLIP looks to take image
+and text pairs such as captions for an image or alt-text and estimate how related they are by
+this projection into a common embedding space. As opposed to “traditional” classification approaches,
+CLIP is not attempting to solve the classification problem directly. It instead looks to maximize
+the cosine similarity between correct image text pairs in the joint embedding space and minimize
+the similarity between incorrect pairs. CLIP can then be repurposed for classification by giving
+the model the choice between a number of potential captions (or labels) for an unseen image. The
+caption with the highest cosine similarity can be considered the class, leading to what is known
+“open world” object recognition. In this tutorial, we will learn how to create our own CLIP model
+and use it to classify images of Pokemon.</p>
+<h2 id="the-clip-model">The CLIP Model</h2>
+<p>The CLIP model consists of a text encoder and an image encoder. Since the ultimate goal is to be
+able pair image embeddings with their corresponding text embeddings, these two models are trained
+together to maximize the pairwise cosine similarities between corresponding image and text embeddings
+and conversely minimize the cosine similarity between image and text embeddings from different pairs.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">CLIP</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">nn.Module</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">emb_dim</span><span>, </span><span style="color:#bf616a;">vit_width</span><span>, </span><span style="color:#bf616a;">img_size</span><span>, </span><span style="color:#bf616a;">patch_size</span><span>, </span><span style="color:#bf616a;">n_channels</span><span>, </span><span style="color:#bf616a;">vit_layers</span><span>, </span><span style="color:#bf616a;">vit_heads</span><span>, </span><span style="color:#bf616a;">vocab_size</span><span>, </span><span style="color:#bf616a;">text_width</span><span>, </span><span style="color:#bf616a;">max_seq_length</span><span>, </span><span style="color:#bf616a;">text_heads</span><span>, </span><span style="color:#bf616a;">text_layers</span><span>):
+</span><span>        </span><span style="color:#96b5b4;">super</span><span>().</span><span style="color:#96b5b4;">__init__</span><span>()
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.image_encoder = </span><span style="color:#bf616a;">ImageEncoder</span><span>(vit_width, img_size, patch_size, n_channels, vit_layers, vit_heads, emb_dim)
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.text_encoder = </span><span style="color:#bf616a;">TextEncoder</span><span>(vocab_size, text_width, max_seq_length, text_heads, text_layers, emb_dim)
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.temperature = nn.</span><span style="color:#bf616a;">Parameter</span><span>(torch.</span><span style="color:#bf616a;">ones</span><span>([]) * np.</span><span style="color:#bf616a;">log</span><span>(</span><span style="color:#d08770;">1 </span><span>/ </span><span style="color:#d08770;">0.07</span><span>))
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.device = torch.</span><span style="color:#bf616a;">device</span><span>(&quot;</span><span style="color:#a3be8c;">cuda</span><span>&quot; </span><span style="color:#b48ead;">if </span><span>torch.cuda.</span><span style="color:#bf616a;">is_available</span><span>() </span><span style="color:#b48ead;">else </span><span>&quot;</span><span style="color:#a3be8c;">cpu</span><span>&quot;)
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">forward</span><span>(</span><span style="color:#bf616a;">self</span><span>,</span><span style="color:#bf616a;">image</span><span>,</span><span style="color:#bf616a;">text</span><span>, </span><span style="color:#bf616a;">mask</span><span>=</span><span style="color:#d08770;">None</span><span>):
+</span><span>        I_e = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">image_encoder</span><span>(image)
+</span><span>        T_e = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">text_encoder</span><span>(text, </span><span style="color:#bf616a;">mask</span><span>=mask)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># scaled pairwise cosine similarities [n, n]
+</span><span>        logits = (I_e @ T_e.</span><span style="color:#bf616a;">transpose</span><span>(-</span><span style="color:#d08770;">2</span><span>,-</span><span style="color:#d08770;">1</span><span>)) * torch.</span><span style="color:#bf616a;">exp</span><span>(</span><span style="color:#bf616a;">self</span><span>.temperature)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># symmetric loss function
+</span><span>        labels = torch.</span><span style="color:#bf616a;">arange</span><span>(logits.shape[</span><span style="color:#d08770;">0</span><span>]).</span><span style="color:#bf616a;">to</span><span>(</span><span style="color:#bf616a;">self</span><span>.device)
+</span><span>
+</span><span>        loss_i = nn.functional.</span><span style="color:#bf616a;">cross_entropy</span><span>(logits.</span><span style="color:#bf616a;">transpose</span><span>(-</span><span style="color:#d08770;">2</span><span>,-</span><span style="color:#d08770;">1</span><span>), labels)
+</span><span>        loss_t = nn.functional.</span><span style="color:#bf616a;">cross_entropy</span><span>(logits, labels)
+</span><span>
+</span><span>        loss = (loss_i + loss_t) / </span><span style="color:#d08770;">2
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>loss
+</span></code></pre>
+<p>If you don’t know what text or image encoders are, you might want to follow a more bottom-up CLIP
+tutorial that first develops these concepts: https://medium.com/correll-lab/building-clip-from-scratch-68f6e42d35f4</p>
+<h3 id="text-encoder">Text Encoder</h3>
+<p>For the text encoder in CLIP we use the standard transformer architecture. However we want to embed
+features in the joint vision-text embedding space. Therefore we have an extra set of parameters
+<code>nn.Parameter(torch.randn(width, emb_dim))</code>. In the forward function, the text features are
+embedded in the joint space by getting the dot product of the features and the learned
+projection divided by the normalized dot product.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">TextEncoder</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">nn.Module</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">vocab_size</span><span>, </span><span style="color:#bf616a;">width</span><span>, </span><span style="color:#bf616a;">max_seq_length</span><span>, </span><span style="color:#bf616a;">n_heads</span><span>, </span><span style="color:#bf616a;">n_layers</span><span>, </span><span style="color:#bf616a;">emb_dim</span><span>):
+</span><span>        </span><span style="color:#96b5b4;">super</span><span>().</span><span style="color:#96b5b4;">__init__</span><span>()
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.max_seq_length = max_seq_length  </span><span style="color:#65737e;"># Maximum length of input sequence
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.encoder_embedding = nn.</span><span style="color:#bf616a;">Embedding</span><span>(vocab_size, width) </span><span style="color:#65737e;"># Embedding Table
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.positional_embedding = </span><span style="color:#bf616a;">PositionalEmbedding</span><span>(width, max_seq_length)
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.encoder = nn.</span><span style="color:#bf616a;">ModuleList</span><span>([</span><span style="color:#bf616a;">TransformerEncoder</span><span>(width,n_heads) </span><span style="color:#b48ead;">for </span><span style="color:#bf616a;">_ </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(n_layers)])
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># learned proj of image to embed
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.projection = nn.</span><span style="color:#bf616a;">Parameter</span><span>(torch.</span><span style="color:#bf616a;">randn</span><span>(width, emb_dim))
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">forward</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">text</span><span>, </span><span style="color:#bf616a;">mask</span><span>=</span><span style="color:#d08770;">None</span><span>):
+</span><span>        </span><span style="color:#65737e;"># Text Embedding
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">encoder_embedding</span><span>(text)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Positional Embedding
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">positional_embedding</span><span>(x)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Transformer Encoder
+</span><span>        </span><span style="color:#b48ead;">for </span><span>encoder_layer </span><span style="color:#b48ead;">in </span><span style="color:#bf616a;">self</span><span>.encoder:
+</span><span>            x = </span><span style="color:#bf616a;">encoder_layer</span><span>(x, </span><span style="color:#bf616a;">mask</span><span>=mask)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Takes features from the EOT Embedding
+</span><span>        x = x[torch.</span><span style="color:#bf616a;">arange</span><span>(text.shape[</span><span style="color:#d08770;">0</span><span>]),torch.</span><span style="color:#bf616a;">sub</span><span>(torch.</span><span style="color:#bf616a;">sum</span><span>(mask[:,</span><span style="color:#d08770;">0</span><span>],</span><span style="color:#bf616a;">dim</span><span>=</span><span style="color:#d08770;">1</span><span>),</span><span style="color:#d08770;">1</span><span>)]
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># joint multimodal embedding
+</span><span>        </span><span style="color:#b48ead;">if </span><span style="color:#bf616a;">self</span><span>.projection is not </span><span style="color:#d08770;">None</span><span>:
+</span><span>            x = x @ </span><span style="color:#bf616a;">self</span><span>.projection
+</span><span>
+</span><span>        x = x / torch.</span><span style="color:#bf616a;">norm</span><span>(x, </span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#bf616a;">keepdim</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>x
+</span></code></pre>
+<h3 id="image-encoder">Image Encoder</h3>
+<p>For the image encoder we use the standard vision transformer architecture. Similar to the text encoder,
+we have an extra set of parameters <code>nn.Parameter(torch.randn(width, emb_dim))</code>, the forward function
+will embed the image features in the joint embedding space by taking the dot product of the features
+and the learned projection divided by the normalized dot product.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">ImageEncoder</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">nn.Module</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">width</span><span>, </span><span style="color:#bf616a;">img_size</span><span>, </span><span style="color:#bf616a;">patch_size</span><span>, </span><span style="color:#bf616a;">n_channels</span><span>, </span><span style="color:#bf616a;">n_layers</span><span>, </span><span style="color:#bf616a;">n_heads</span><span>, </span><span style="color:#bf616a;">emb_dim</span><span>):
+</span><span>        </span><span style="color:#96b5b4;">super</span><span>().</span><span style="color:#96b5b4;">__init__</span><span>()
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">assert </span><span>img_size[</span><span style="color:#d08770;">0</span><span>] % patch_size[</span><span style="color:#d08770;">0</span><span>] == </span><span style="color:#d08770;">0 </span><span>and img_size[</span><span style="color:#d08770;">1</span><span>] % patch_size[</span><span style="color:#d08770;">1</span><span>] == </span><span style="color:#d08770;">0</span><span>, &quot;</span><span style="color:#a3be8c;">img_size dimensions must be divisible by patch_size dimensions</span><span>&quot;
+</span><span>        </span><span style="color:#b48ead;">assert </span><span>width % n_heads == </span><span style="color:#d08770;">0</span><span>, &quot;</span><span style="color:#a3be8c;">width must be divisible by n_heads</span><span>&quot;
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.n_patches = (img_size[</span><span style="color:#d08770;">0</span><span>] * img_size[</span><span style="color:#d08770;">1</span><span>]) // (patch_size[</span><span style="color:#d08770;">0</span><span>] * patch_size[</span><span style="color:#d08770;">1</span><span>])
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.max_seq_length = </span><span style="color:#bf616a;">self</span><span>.n_patches + </span><span style="color:#d08770;">1
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Patch Embedding
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.linear_project = nn.</span><span style="color:#bf616a;">Conv2d</span><span>(n_channels, width, </span><span style="color:#bf616a;">kernel_size</span><span>=patch_size, </span><span style="color:#bf616a;">stride</span><span>=patch_size)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Classification Token
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.cls_token = nn.</span><span style="color:#bf616a;">Parameter</span><span>(torch.</span><span style="color:#bf616a;">randn</span><span>(</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, width))
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.positional_embedding = </span><span style="color:#bf616a;">PositionalEmbedding</span><span>(width,</span><span style="color:#bf616a;">self</span><span>.max_seq_length)
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.encoder = nn.</span><span style="color:#bf616a;">ModuleList</span><span>([</span><span style="color:#bf616a;">TransformerEncoder</span><span>(width,n_heads) </span><span style="color:#b48ead;">for </span><span style="color:#bf616a;">_ </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(n_layers)])
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># learned proj of image to embed
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.projection = nn.</span><span style="color:#bf616a;">Parameter</span><span>(torch.</span><span style="color:#bf616a;">randn</span><span>(width, emb_dim))
+</span><span>
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">forward</span><span>(</span><span style="color:#bf616a;">self</span><span>,</span><span style="color:#bf616a;">x</span><span>):
+</span><span>        </span><span style="color:#65737e;"># Patch Embedding
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">linear_project</span><span>(x)
+</span><span>        x = x.</span><span style="color:#bf616a;">flatten</span><span>(</span><span style="color:#d08770;">2</span><span>).</span><span style="color:#bf616a;">transpose</span><span>(</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Positional Embedding
+</span><span>        x = torch.</span><span style="color:#bf616a;">cat</span><span>((</span><span style="color:#bf616a;">self</span><span>.cls_token.</span><span style="color:#bf616a;">expand</span><span>(x.</span><span style="color:#bf616a;">size</span><span>()[</span><span style="color:#d08770;">0</span><span>], -</span><span style="color:#d08770;">1</span><span>, -</span><span style="color:#d08770;">1</span><span>),x), </span><span style="color:#bf616a;">dim</span><span>=</span><span style="color:#d08770;">1</span><span>)
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">positional_embedding</span><span>(x)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Transformer Encoder
+</span><span>        </span><span style="color:#b48ead;">for </span><span>encoder_layer </span><span style="color:#b48ead;">in </span><span style="color:#bf616a;">self</span><span>.encoder:
+</span><span>            x = </span><span style="color:#bf616a;">encoder_layer</span><span>(x)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Takes Class Tokens
+</span><span>        x = x[:, </span><span style="color:#d08770;">0</span><span>, :]
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># joint multimodal embedding
+</span><span>        </span><span style="color:#b48ead;">if </span><span style="color:#bf616a;">self</span><span>.projection is not </span><span style="color:#d08770;">None</span><span>:
+</span><span>            x = x @ </span><span style="color:#bf616a;">self</span><span>.projection
+</span><span>
+</span><span>        x = x / torch.</span><span style="color:#bf616a;">norm</span><span>(x, </span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#bf616a;">keepdim</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>x
+</span></code></pre>
+<h3 id="training">Training</h3>
+<p><img src="https://www.narendasan.com/blog/pokemon-clip/imgs/clip_training.webp" alt="clip_training" /></p>
+<p>The training process consists of providing image, caption pairs from the dataset. CLIP uses contrastive
+loss to train the model. Since we are looking to maximize the scaled pairwise cosine similarities
+between the image and text embeddings along the diagonal where the text and image embeddings are correctly
+paired, we can use cross entropy loss across the rows and columns with psuedo-labels corresponding to the
+index of the embedding. This is the same as evaluating $n$ distinct text -&gt; image estimates
+and $n$ image -&gt; text estimates concurrently. The model loss is the mean loss between the text and
+image cross entropy loss.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>labels = torch.</span><span style="color:#bf616a;">arange</span><span>(logits.shape[</span><span style="color:#d08770;">0</span><span>]).</span><span style="color:#bf616a;">to</span><span>(</span><span style="color:#bf616a;">self</span><span>.device)
+</span><span style="color:#65737e;"># Label for row/column i is i (i.e. the index of the correct other half of the pair)
+</span><span>
+</span><span>loss_i = nn.functional.</span><span style="color:#bf616a;">cross_entropy</span><span>(logits.</span><span style="color:#bf616a;">transpose</span><span>(-</span><span style="color:#d08770;">2</span><span>,-</span><span style="color:#d08770;">1</span><span>), labels)
+</span><span>loss_t = nn.functional.</span><span style="color:#bf616a;">cross_entropy</span><span>(logits, labels)
+</span><span>
+</span><span>loss = (loss_i + loss_t) / </span><span style="color:#d08770;">2
+</span></code></pre>
+<h3 id="dataset">Dataset</h3>
+<p>For this tutorial we will use <a href="https://huggingface.co/fcakyon">Faith Aykon</a>'s
+<a href="https://huggingface.co/datasets/fcakyon/pokemon-classification">Mini-Pokemon dataset</a>, hosted on HuggingFace
+(this requires <code>datasets==2.21.0</code>).</p>
+<p>This dataset consists of 280 examples in a 210/70 train/test split. The full dataset has 7000 images but as
+such takes much longer to train, though the code can be trivially modified to use the full dataset</p>
+<p>We will perform a number of modifications to this dataset to make it more suitable to training for CLIP.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">from </span><span>torchvision.transforms </span><span style="color:#b48ead;">import </span><span>v2
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Pokemon</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">Dataset</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">train</span><span>=</span><span style="color:#d08770;">True</span><span>):
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Download the dataset from HuggingFace, use the mini split (change &quot;mini&quot; to &quot;full&quot; for the full dataset)
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.dataset = </span><span style="color:#bf616a;">load_dataset</span><span>(&quot;</span><span style="color:#a3be8c;">fcakyon/pokemon-classification</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">mini</span><span>&quot;, </span><span style="color:#bf616a;">trust_remote_code</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>
+</span><span>        </span><span style="color:#65737e;"># Image preprocessing
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.transform = v2.</span><span style="color:#bf616a;">Compose</span><span>([
+</span><span>            v2.</span><span style="color:#bf616a;">Resize</span><span>((</span><span style="color:#d08770;">128</span><span>, </span><span style="color:#d08770;">128</span><span>)),
+</span><span>            v2.</span><span style="color:#bf616a;">ToTensor</span><span>()
+</span><span>        ])
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">if </span><span>train:
+</span><span>            </span><span style="color:#bf616a;">self</span><span>.split = &quot;</span><span style="color:#a3be8c;">train</span><span>&quot;
+</span><span>        </span><span style="color:#b48ead;">else</span><span>:
+</span><span>            </span><span style="color:#bf616a;">self</span><span>.split = &quot;</span><span style="color:#a3be8c;">test</span><span>&quot;
+</span><span>
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.label_names = </span><span style="color:#bf616a;">self</span><span>.dataset[</span><span style="color:#bf616a;">self</span><span>.split].features[&quot;</span><span style="color:#a3be8c;">labels</span><span>&quot;].names
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.caption_options = [&quot;</span><span style="color:#a3be8c;">An image of </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                                &quot;</span><span style="color:#a3be8c;">A </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                                &quot;</span><span style="color:#a3be8c;">A photo of </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                                &quot;</span><span style="color:#a3be8c;">A </span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> in a photo</span><span>&quot;,
+</span><span>                                &quot;</span><span style="color:#a3be8c;">A picture of </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                                &quot;</span><span style="color:#a3be8c;">A </span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> image</span><span>&quot;]
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.captions = {
+</span><span>            i: </span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">An image of a </span><span>{l}&quot; </span><span style="color:#b48ead;">for </span><span>i, l </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">enumerate</span><span>(</span><span style="color:#bf616a;">self</span><span>.label_names)
+</span><span>        }
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.labels = {
+</span><span>            i : l </span><span style="color:#b48ead;">for </span><span>i,l </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">enumerate</span><span>(</span><span style="color:#bf616a;">self</span><span>.label_names)
+</span><span>        }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__len__</span><span>(</span><span style="color:#bf616a;">self</span><span>):
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">self</span><span>.dataset.num_rows[</span><span style="color:#bf616a;">self</span><span>.split]
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__getitem__</span><span>(</span><span style="color:#bf616a;">self</span><span>,</span><span style="color:#bf616a;">i</span><span>):
+</span><span>        img = </span><span style="color:#bf616a;">self</span><span>.dataset[</span><span style="color:#bf616a;">self</span><span>.split][i][&quot;</span><span style="color:#a3be8c;">image</span><span>&quot;]
+</span><span>        img = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">transform</span><span>(img)
+</span><span>
+</span><span>        caption_template = np.random.</span><span style="color:#bf616a;">choice</span><span>(</span><span style="color:#bf616a;">self</span><span>.caption_options)
+</span><span>        caption_text = caption_template.</span><span style="color:#bf616a;">format</span><span>(</span><span style="color:#bf616a;">self</span><span>.labels[</span><span style="color:#bf616a;">self</span><span>.dataset[</span><span style="color:#bf616a;">self</span><span>.split][i][&quot;</span><span style="color:#a3be8c;">labels</span><span>&quot;]])
+</span><span>        cap, mask = </span><span style="color:#bf616a;">tokenizer</span><span>(caption_text)
+</span><span>
+</span><span>        mask = mask.</span><span style="color:#bf616a;">repeat</span><span>(</span><span style="color:#96b5b4;">len</span><span>(mask),</span><span style="color:#d08770;">1</span><span>)
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>{&quot;</span><span style="color:#a3be8c;">image</span><span>&quot;: img, &quot;</span><span style="color:#a3be8c;">caption</span><span>&quot;: cap, &quot;</span><span style="color:#a3be8c;">mask</span><span>&quot;: mask, &quot;</span><span style="color:#a3be8c;">text</span><span>&quot;: caption_text, &quot;</span><span style="color:#a3be8c;">label</span><span>&quot;: </span><span style="color:#bf616a;">self</span><span>.dataset[</span><span style="color:#bf616a;">self</span><span>.split][i][&quot;</span><span style="color:#a3be8c;">labels</span><span>&quot;]}
+</span></code></pre>
+<h4 id="image-preprocessing">Image Preprocessing</h4>
+<p>We define a transformation pipeline which gets applied to each image using</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#bf616a;">self</span><span>.transform = v2.</span><span style="color:#bf616a;">Compose</span><span>([
+</span><span>    v2.</span><span style="color:#bf616a;">Resize</span><span>((</span><span style="color:#d08770;">128</span><span>, </span><span style="color:#d08770;">128</span><span>)),
+</span><span>    v2.</span><span style="color:#bf616a;">ToTensor</span><span>()
+</span><span>])
+</span></code></pre>
+<p>There is not too much data augmentation needed for simple cases, therefore we just resize the input image to a reasonable size.</p>
+<h4 id="text-preprocessing">Text Preprocessing</h4>
+<p>The original dataset is set up for more traditional classification approaches, i.e. some class label for each image which is an <code>int</code>
+representing the index of the 1 in a one-hot encoded form of the label. Since CLIP uses text and not one-hot encoded vectors for the
+“labels”, we need to generate them. The critical information is the type of Pokemon in the image. However, there are many ways in
+natural language to convey the same information and we want to be robust to phrasing as it will help our classifier be more
+robust later on.</p>
+<p>Therefore, we include a number of caption templates that phrase the label in many semantically similar ways. When retrieving
+a new image, a label pair is pulled from the dataset, this code will choose one of the caption templates to create a caption
+containing the label text.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Pokemon</span><span style="color:#eff1f5;">():
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">__init</span><span>(</span><span style="color:#bf616a;">self</span><span>, ...):
+</span><span>    </span><span style="color:#d08770;">...
+</span><span>    </span><span style="color:#bf616a;">self</span><span>.caption_options = [&quot;</span><span style="color:#a3be8c;">An image of </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                            &quot;</span><span style="color:#a3be8c;">A </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                            &quot;</span><span style="color:#a3be8c;">A photo of </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                            &quot;</span><span style="color:#a3be8c;">A </span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> in a photo</span><span>&quot;,
+</span><span>                            &quot;</span><span style="color:#a3be8c;">A picture of </span><span style="color:#d08770;">{0}</span><span>&quot;,
+</span><span>                            &quot;</span><span style="color:#a3be8c;">A </span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> image</span><span>&quot;]
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__getitem__</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">i</span><span>):
+</span><span>    </span><span style="color:#d08770;">...
+</span><span>    caption_template = rng.</span><span style="color:#bf616a;">choice</span><span>(</span><span style="color:#bf616a;">self</span><span>.caption_options)
+</span><span>    caption_text = caption_template.</span><span style="color:#bf616a;">format</span><span>(</span><span style="color:#bf616a;">self</span><span>.labels[</span><span style="color:#bf616a;">self</span><span>.dataset[</span><span style="color:#bf616a;">self</span><span>.split][i][&quot;</span><span style="color:#a3be8c;">labels</span><span>&quot;]])
+</span><span>
+</span></code></pre>
+<h4 id="tokenization">Tokenization</h4>
+<p><img src="https://www.narendasan.com/blog/pokemon-clip/imgs/tokenizing.webp" alt="tokenizing" /></p>
+<p>Transformer models do not work directly on text, instead they use a numerical representation of characters (tokens). In this example
+we use a trivial tokenization scheme UTF-8.</p>
+<p>With the UTF-8 encoding the max vocabulary size is 256 since we are direct mapping from characters. For larger desired context sizes,
+other tokenization schemes with greater vocabulary sizes may be desired.</p>
+<p>The tokenizer delimits the input string with start and end tokens, reserved values that denote the limits of the input. Since the
+input to the transformer is fixed size, the input tensor is padded to the full width of the input. Finally a mask is created to denote
+that padded inputs should be ignored.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">tokenizer</span><span>(</span><span style="color:#bf616a;">text</span><span>, </span><span style="color:#bf616a;">encode</span><span>=</span><span style="color:#d08770;">True</span><span>, </span><span style="color:#bf616a;">mask</span><span>=</span><span style="color:#d08770;">None</span><span>, </span><span style="color:#bf616a;">max_seq_length</span><span>=</span><span style="color:#d08770;">32</span><span>):
+</span><span>    </span><span style="color:#b48ead;">if </span><span>encode:
+</span><span>        out = </span><span style="color:#96b5b4;">chr</span><span>(</span><span style="color:#d08770;">2</span><span>) + text + </span><span style="color:#96b5b4;">chr</span><span>(</span><span style="color:#d08770;">3</span><span>) </span><span style="color:#65737e;"># Adding SOT and EOT tokens
+</span><span>        out = out + &quot;&quot;.</span><span style="color:#bf616a;">join</span><span>([</span><span style="color:#96b5b4;">chr</span><span>(</span><span style="color:#d08770;">0</span><span>) </span><span style="color:#b48ead;">for </span><span style="color:#bf616a;">_ </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(max_seq_length-</span><span style="color:#96b5b4;">len</span><span>(out))]) </span><span style="color:#65737e;"># Adding Padding
+</span><span>        out = torch.</span><span style="color:#bf616a;">IntTensor</span><span>(</span><span style="color:#bf616a;">list</span><span>(out.</span><span style="color:#bf616a;">encode</span><span>(&quot;</span><span style="color:#a3be8c;">utf-8</span><span>&quot;))) </span><span style="color:#65737e;"># Encoding Text
+</span><span>        mask = torch.</span><span style="color:#bf616a;">ones</span><span>(</span><span style="color:#96b5b4;">len</span><span>(out.</span><span style="color:#bf616a;">nonzero</span><span>()))
+</span><span>        mask = torch.</span><span style="color:#bf616a;">cat</span><span>((mask,torch.</span><span style="color:#bf616a;">zeros</span><span>(max_seq_length-</span><span style="color:#96b5b4;">len</span><span>(mask)))).</span><span style="color:#bf616a;">type</span><span>(torch.IntTensor)
+</span><span>    </span><span style="color:#b48ead;">else</span><span>:
+</span><span>        out = [</span><span style="color:#96b5b4;">chr</span><span>(x) </span><span style="color:#b48ead;">for </span><span>x </span><span style="color:#b48ead;">in </span><span>text[</span><span style="color:#d08770;">1</span><span>:</span><span style="color:#96b5b4;">len</span><span>(mask.</span><span style="color:#bf616a;">nonzero</span><span>())-</span><span style="color:#d08770;">1</span><span>]]
+</span><span>        out = &quot;&quot;.</span><span style="color:#bf616a;">join</span><span>(out)
+</span><span>        mask = </span><span style="color:#d08770;">None
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">return </span><span>out, mask
+</span></code></pre>
+<p>These tokenzied forms of the captions are pre-calculated as part of the dataset.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>cap, mask = </span><span style="color:#bf616a;">tokenizer</span><span>(caption_text)
+</span></code></pre>
+<p>Since the mask will be applied to the attention scores ($max_seq_len x max_seq_len$), it needs to be repeated to be applied to each row.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>mask = mask.</span><span style="color:#bf616a;">repeat</span><span>(</span><span style="color:#96b5b4;">len</span><span>(mask),</span><span style="color:#d08770;">1</span><span>)
+</span></code></pre>
+<p>Therefore for each entry in the dataset we have the following information</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>{&quot;</span><span style="color:#a3be8c;">image</span><span>&quot;: img, &quot;</span><span style="color:#a3be8c;">caption</span><span>&quot;: cap, &quot;</span><span style="color:#a3be8c;">mask</span><span>&quot;: mask, &quot;</span><span style="color:#a3be8c;">text</span><span>&quot;: caption_text, &quot;</span><span style="color:#a3be8c;">label</span><span>&quot;: </span><span style="color:#bf616a;">self</span><span>.dataset[</span><span style="color:#bf616a;">self</span><span>.split][i][&quot;</span><span style="color:#a3be8c;">labels</span><span>&quot;]}
+</span></code></pre>
+<h5 id="example">Example</h5>
+<p><img src="https://www.narendasan.com/blog/pokemon-clip/imgs/abra.webp" alt="abra" /></p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>image.shape: torch.</span><span style="color:#bf616a;">Size</span><span>([</span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">128</span><span>, </span><span style="color:#d08770;">128</span><span>])
+</span><span>caption.shape: torch.</span><span style="color:#bf616a;">Size</span><span>([</span><span style="color:#d08770;">32</span><span>])
+</span><span>mask.shape: torch.</span><span style="color:#bf616a;">Size</span><span>([</span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">32</span><span>])
+</span><span>text: &quot;</span><span style="color:#a3be8c;">A Alakazam image</span><span>&quot;
+</span><span style="color:#bf616a;">caption</span><span>(tokenized): </span><span style="color:#bf616a;">tensor</span><span>([ </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">65</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">112</span><span>, </span><span style="color:#d08770;">104</span><span>, </span><span style="color:#d08770;">111</span><span>, </span><span style="color:#d08770;">116</span><span>, </span><span style="color:#d08770;">111</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">111</span><span>, </span><span style="color:#d08770;">102</span><span>, </span><span style="color:#d08770;">32</span><span>, </span><span style="color:#d08770;">65</span><span>, </span><span style="color:#d08770;">108</span><span>,
+</span><span style="color:#d08770;">97</span><span>, </span><span style="color:#d08770;">107</span><span>, </span><span style="color:#d08770;">97</span><span>, </span><span style="color:#d08770;">122</span><span>, </span><span style="color:#d08770;">97</span><span>, </span><span style="color:#d08770;">109</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>,
+</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>], </span><span style="color:#bf616a;">dtype</span><span>=torch.int32)
+</span><span>mask: </span><span style="color:#bf616a;">tensor</span><span>([[</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, …, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>],
+</span><span>[</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, …, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>],
+</span><span>[</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, …, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>],
+</span><span>…,
+</span><span>[</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, …, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>],
+</span><span>[</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, …, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>],
+</span><span>[</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, …, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>]], </span><span style="color:#bf616a;">dtype</span><span>=torch.int32)
+</span></code></pre>
+<h4 id="hyperparameters">Hyperparameters</h4>
+<p>These are the parameters I used for training on a 3080Ti. The notebook contains these parameters and the seed I used.
+Some modifications to the batch size might be needed if training on smaller GPUs.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>emb_dim = </span><span style="color:#d08770;">32
+</span><span>vit_width = </span><span style="color:#d08770;">9
+</span><span>img_size = (</span><span style="color:#d08770;">128</span><span>,</span><span style="color:#d08770;">128</span><span>)
+</span><span>patch_size = (</span><span style="color:#d08770;">64</span><span>,</span><span style="color:#d08770;">64</span><span>)
+</span><span>n_channels = </span><span style="color:#d08770;">3
+</span><span>vit_layers = </span><span style="color:#d08770;">3
+</span><span>vit_heads = </span><span style="color:#d08770;">3
+</span><span>vocab_size = </span><span style="color:#d08770;">256
+</span><span>text_width = </span><span style="color:#d08770;">32
+</span><span>max_seq_length = </span><span style="color:#d08770;">32
+</span><span>text_heads = </span><span style="color:#d08770;">8
+</span><span>text_layers = </span><span style="color:#d08770;">4
+</span><span>lr = </span><span style="color:#d08770;">1e-3
+</span><span>epochs = </span><span style="color:#d08770;">1500
+</span><span>batch_size = </span><span style="color:#d08770;">1024
+</span></code></pre>
+<h4 id="training-loop">Training Loop</h4>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>device = torch.</span><span style="color:#bf616a;">device</span><span>(&quot;</span><span style="color:#a3be8c;">cuda</span><span>&quot; </span><span style="color:#b48ead;">if </span><span>torch.cuda.</span><span style="color:#bf616a;">is_available</span><span>() </span><span style="color:#b48ead;">else </span><span>&quot;</span><span style="color:#a3be8c;">cpu</span><span>&quot;)
+</span><span style="color:#96b5b4;">print</span><span>(&quot;</span><span style="color:#a3be8c;">Using device: </span><span>&quot;, device, </span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">(</span><span>{torch.cuda.</span><span style="color:#bf616a;">get_device_name</span><span>(device)}</span><span style="color:#a3be8c;">)</span><span>&quot; </span><span style="color:#b48ead;">if </span><span>torch.cuda.</span><span style="color:#bf616a;">is_available</span><span>() </span><span style="color:#b48ead;">else </span><span>&quot;&quot;)
+</span><span>
+</span><span>model = </span><span style="color:#bf616a;">CLIP</span><span>(emb_dim, vit_width, img_size, patch_size, n_channels, vit_layers, vit_heads, vocab_size, text_width, max_seq_length, text_heads, text_layers).</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>
+</span><span>optimizer = optim.</span><span style="color:#bf616a;">Adam</span><span>(model.</span><span style="color:#bf616a;">parameters</span><span>(), </span><span style="color:#bf616a;">lr</span><span>=lr)
+</span><span>
+</span><span>best_loss = np.inf
+</span><span style="color:#b48ead;">for </span><span>epoch </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">range</span><span>(epochs):
+</span><span>    </span><span style="color:#b48ead;">for </span><span>i, data </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">enumerate</span><span>(train_loader, </span><span style="color:#d08770;">0</span><span>):
+</span><span>        img, cap, mask = data[&quot;</span><span style="color:#a3be8c;">image</span><span>&quot;].</span><span style="color:#bf616a;">to</span><span>(device), data[&quot;</span><span style="color:#a3be8c;">caption</span><span>&quot;].</span><span style="color:#bf616a;">to</span><span>(device), data[&quot;</span><span style="color:#a3be8c;">mask</span><span>&quot;].</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>        loss = </span><span style="color:#bf616a;">model</span><span>(img,cap,mask)
+</span><span>        optimizer.</span><span style="color:#bf616a;">zero_grad</span><span>()
+</span><span>        loss.</span><span style="color:#bf616a;">backward</span><span>()
+</span><span>        optimizer.</span><span style="color:#bf616a;">step</span><span>()
+</span><span>
+</span><span>    </span><span style="color:#65737e;"># Saves model if it performed better than the previous best
+</span><span>    </span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">Epoch [</span><span>{epoch+</span><span style="color:#d08770;">1</span><span>}</span><span style="color:#a3be8c;">/</span><span>{epochs}</span><span style="color:#a3be8c;">], Batch Loss: </span><span>{loss.</span><span style="color:#bf616a;">item</span><span>()</span><span style="color:#d08770;">:.3f</span><span>}&quot;)
+</span><span>    </span><span style="color:#b48ead;">if </span><span>loss.</span><span style="color:#bf616a;">item</span><span>() &lt;= best_loss:
+</span><span>        best_loss = loss.</span><span style="color:#bf616a;">item</span><span>()
+</span><span>        torch.</span><span style="color:#bf616a;">save</span><span>(model.</span><span style="color:#bf616a;">state_dict</span><span>(), &quot;</span><span style="color:#a3be8c;">clip_pokemon4.pt</span><span>&quot;)
+</span><span>        </span><span style="color:#96b5b4;">print</span><span>(&quot;</span><span style="color:#a3be8c;">Model Saved.</span><span>&quot;)
+</span></code></pre>
+<h3 id="testing-performance">Testing Performance</h3>
+<p><img src="https://www.narendasan.com/blog/pokemon-clip/imgs/clip_inference.webp" alt="clip_inference" /></p>
+<p>We can evaluate how well our model is at associating image text pairs. We start by creating a spanning set of captions
+for the different possible labels using one a slightly different caption form from those seen in training (ex. ”An
+image of a Pikachu”). This was actually done as part of the dataset construction:</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#bf616a;">self</span><span>.captions = {
+</span><span>  i: </span><span style="color:#b48ead;">f</span><span>&quot;</span><span style="color:#a3be8c;">An image of a </span><span>{l}&quot; </span><span style="color:#b48ead;">for </span><span>i, l </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">enumerate</span><span>(</span><span style="color:#bf616a;">self</span><span>.label_names)
+</span><span>}
+</span></code></pre>
+<p>Each of these potential captions is tokenzied using the tokenizer and fed to the text encoder and a batch of images from the
+test set are fed into the image encoder.</p>
+<p>We then calculate the cosine similarity between the text and image embeddings and run softmax to get probabilities that any
+particular label is the best pairing for a particular image.</p>
+<p>We can then match these predicted captions with the true label to determine if the model was correct or not.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#65737e;"># Loading Best Model
+</span><span>model = </span><span style="color:#bf616a;">CLIP</span><span>(emb_dim, vit_width, img_size, patch_size, n_channels, vit_layers, vit_heads, vocab_size, text_width, max_seq_length, text_heads, text_layers).</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>model.</span><span style="color:#bf616a;">load_state_dict</span><span>(torch.</span><span style="color:#bf616a;">load</span><span>(&quot;</span><span style="color:#a3be8c;">clip_pokemon4.pt</span><span>&quot;, </span><span style="color:#bf616a;">map_location</span><span>=device))
+</span><span>
+</span><span style="color:#65737e;"># Getting dataset captions to compare images to
+</span><span>text = torch.</span><span style="color:#bf616a;">stack</span><span>([</span><span style="color:#bf616a;">tokenizer</span><span>(x)[</span><span style="color:#d08770;">0</span><span>] </span><span style="color:#b48ead;">for </span><span>x </span><span style="color:#b48ead;">in </span><span>test_set.captions.</span><span style="color:#bf616a;">values</span><span>()]).</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>mask = torch.</span><span style="color:#bf616a;">stack</span><span>([</span><span style="color:#bf616a;">tokenizer</span><span>(x)[</span><span style="color:#d08770;">1</span><span>] </span><span style="color:#b48ead;">for </span><span>x </span><span style="color:#b48ead;">in </span><span>test_set.captions.</span><span style="color:#bf616a;">values</span><span>()])
+</span><span>mask = mask.</span><span style="color:#bf616a;">repeat</span><span>(</span><span style="color:#d08770;">1</span><span>,</span><span style="color:#96b5b4;">len</span><span>(mask[</span><span style="color:#d08770;">0</span><span>])).</span><span style="color:#bf616a;">reshape</span><span>(</span><span style="color:#96b5b4;">len</span><span>(mask),</span><span style="color:#96b5b4;">len</span><span>(mask[</span><span style="color:#d08770;">0</span><span>]),</span><span style="color:#96b5b4;">len</span><span>(mask[</span><span style="color:#d08770;">0</span><span>])).</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>
+</span><span>correct, total = </span><span style="color:#d08770;">0</span><span>,</span><span style="color:#d08770;">0
+</span><span style="color:#b48ead;">with </span><span>torch.</span><span style="color:#bf616a;">no_grad</span><span>():
+</span><span>    </span><span style="color:#b48ead;">for </span><span>data </span><span style="color:#b48ead;">in </span><span>test_loader:
+</span><span>        images, labels  = data[&quot;</span><span style="color:#a3be8c;">image</span><span>&quot;].</span><span style="color:#bf616a;">to</span><span>(device), data[&quot;</span><span style="color:#a3be8c;">label</span><span>&quot;].</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>        image_features = model.</span><span style="color:#bf616a;">image_encoder</span><span>(images)
+</span><span>        text_features = model.</span><span style="color:#bf616a;">text_encoder</span><span>(text, </span><span style="color:#bf616a;">mask</span><span>=mask)
+</span><span>
+</span><span>        image_features /= image_features.</span><span style="color:#bf616a;">norm</span><span>(</span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#bf616a;">keepdim</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>        text_features /= text_features.</span><span style="color:#bf616a;">norm</span><span>(</span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#bf616a;">keepdim</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>        similarity = (</span><span style="color:#d08770;">100.0 </span><span>* (image_features @ text_features.T)).</span><span style="color:#bf616a;">softmax</span><span>(</span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>)
+</span><span>        </span><span style="color:#bf616a;">_</span><span>, indices = torch.</span><span style="color:#bf616a;">max</span><span>(similarity,</span><span style="color:#d08770;">1</span><span>)
+</span><span>
+</span><span>        correct += torch.</span><span style="color:#bf616a;">sum</span><span>(indices==labels)
+</span><span>        total += </span><span style="color:#96b5b4;">len</span><span>(labels)
+</span><span>
+</span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#b48ead;">f</span><span>&#39;</span><span style="color:#96b5b4;">\n</span><span style="color:#a3be8c;">Model Accuracy: </span><span>{</span><span style="color:#d08770;">100 </span><span>* correct // total}</span><span style="color:#a3be8c;"> %</span><span>&#39;)
+</span></code></pre>
+<p>Using my training settings and seed, I was able to achieve 87% accuracy on the Pokemon-mini dataset. This is not really representative for C
+LIP’s power, as the dataset we have used for training here is very small. Using a CNN would actually be the preferred approach
+here. Yet, for very large datasets CLIP has outperformed previous CNN model.</p>
+<h3 id="zero-shot-classification">Zero-shot Classification</h3>
+<p><img src="https://www.narendasan.com/blog/pokemon-clip/imgs/result.webp" alt="result" /></p>
+<p>We can reuse our CLIP model to perform the classification task now. First we generate a list of possible labels. These will just be names of
+different types of Pokemon found in the dataset (ex. ”Pikachu”). We then tokenize each potential label and feed them to the text encoder. We
+also feed an unlabeled image to the image label. The CLIP model will return the similarities between each potential label and the image based
+on the training it had seen before. Note that we never just provide the label alone as a text pairing during training, but we do provide
+various different captions which all share the label word within them. This demonstrates how, because of our pre-training, we are robust to
+unseen label forms and yet can correctly associate the image with the correct label.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#65737e;"># Loading Best Model
+</span><span>model = </span><span style="color:#bf616a;">CLIP</span><span>(emb_dim, vit_width, img_size, patch_size, n_channels, vit_layers, vit_heads, vocab_size, text_width, max_seq_length, text_heads, text_layers).</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>model.</span><span style="color:#bf616a;">load_state_dict</span><span>(torch.</span><span style="color:#bf616a;">load</span><span>(&quot;</span><span style="color:#a3be8c;">clip_pokemon4.pt</span><span>&quot;, </span><span style="color:#bf616a;">map_location</span><span>=device))
+</span><span>
+</span><span>
+</span><span style="color:#65737e;"># Captions to compare images to
+</span><span>class_names = test_set.label_names
+</span><span>class_text = [</span><span style="color:#b48ead;">f</span><span>&quot;{l}&quot; </span><span style="color:#b48ead;">for </span><span>l </span><span style="color:#b48ead;">in </span><span>class_names]
+</span><span>
+</span><span>text = torch.</span><span style="color:#bf616a;">stack</span><span>([</span><span style="color:#bf616a;">tokenizer</span><span>(x)[</span><span style="color:#d08770;">0</span><span>] </span><span style="color:#b48ead;">for </span><span>x </span><span style="color:#b48ead;">in </span><span>class_text]).</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>mask = torch.</span><span style="color:#bf616a;">stack</span><span>([</span><span style="color:#bf616a;">tokenizer</span><span>(x)[</span><span style="color:#d08770;">1</span><span>] </span><span style="color:#b48ead;">for </span><span>x </span><span style="color:#b48ead;">in </span><span>class_text])
+</span><span>mask = mask.</span><span style="color:#bf616a;">repeat</span><span>(</span><span style="color:#d08770;">1</span><span>,</span><span style="color:#96b5b4;">len</span><span>(mask[</span><span style="color:#d08770;">0</span><span>])).</span><span style="color:#bf616a;">reshape</span><span>(</span><span style="color:#96b5b4;">len</span><span>(mask),</span><span style="color:#96b5b4;">len</span><span>(mask[</span><span style="color:#d08770;">0</span><span>]),</span><span style="color:#96b5b4;">len</span><span>(mask[</span><span style="color:#d08770;">0</span><span>])).</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span>
+</span><span>idx = </span><span style="color:#d08770;">12
+</span><span>
+</span><span>img = test_set[idx][&quot;</span><span style="color:#a3be8c;">image</span><span>&quot;][</span><span style="color:#d08770;">None</span><span>,:]
+</span><span>plt.</span><span style="color:#bf616a;">imshow</span><span>(  img[</span><span style="color:#d08770;">0</span><span>].</span><span style="color:#bf616a;">permute</span><span>(</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">0</span><span>),)
+</span><span>plt.</span><span style="color:#bf616a;">title</span><span>(test_set[idx][&quot;</span><span style="color:#a3be8c;">text</span><span>&quot;])
+</span><span>plt.</span><span style="color:#bf616a;">show</span><span>()
+</span><span>img = img.</span><span style="color:#bf616a;">to</span><span>(device)
+</span><span style="color:#b48ead;">with </span><span>torch.</span><span style="color:#bf616a;">no_grad</span><span>():
+</span><span>  image_features = model.</span><span style="color:#bf616a;">image_encoder</span><span>(img)
+</span><span>  text_features = model.</span><span style="color:#bf616a;">text_encoder</span><span>(text, </span><span style="color:#bf616a;">mask</span><span>=mask)
+</span><span>
+</span><span>
+</span><span>image_features /= image_features.</span><span style="color:#bf616a;">norm</span><span>(</span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#bf616a;">keepdim</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>text_features /= text_features.</span><span style="color:#bf616a;">norm</span><span>(</span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#bf616a;">keepdim</span><span>=</span><span style="color:#d08770;">True</span><span>)
+</span><span>similarity = (</span><span style="color:#d08770;">100.0 </span><span>* image_features @ text_features.T).</span><span style="color:#bf616a;">softmax</span><span>(</span><span style="color:#bf616a;">dim</span><span>=-</span><span style="color:#d08770;">1</span><span>)
+</span><span>values, indices = similarity[</span><span style="color:#d08770;">0</span><span>].</span><span style="color:#bf616a;">topk</span><span>(</span><span style="color:#d08770;">5</span><span>)
+</span><span>
+</span><span style="color:#65737e;"># Print the result
+</span><span style="color:#96b5b4;">print</span><span>(&quot;</span><span style="color:#96b5b4;">\n</span><span style="color:#a3be8c;">Top predictions:</span><span style="color:#96b5b4;">\n</span><span>&quot;)
+</span><span style="color:#b48ead;">for </span><span>value, index </span><span style="color:#b48ead;">in </span><span style="color:#96b5b4;">zip</span><span>(values, indices):
+</span><span>    </span><span style="color:#96b5b4;">print</span><span>(</span><span style="color:#b48ead;">f</span><span>&quot;{class_names[</span><span style="color:#bf616a;">int</span><span>(index)]</span><span style="color:#d08770;">:&gt;16s</span><span>}</span><span style="color:#a3be8c;">: </span><span>{</span><span style="color:#d08770;">100 </span><span>* value.</span><span style="color:#bf616a;">item</span><span>()</span><span style="color:#d08770;">:.2f</span><span>}</span><span style="color:#a3be8c;">%</span><span>&quot;)
+</span></code></pre>
+<p>You can find a notebook with the code from this tutorial <a href="https://colab.research.google.com/drive/1tOJDnSeScGTDATwWXxCF9jL8X_V9m9B2">here</a></p>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/cv">#cv</a>
+        
+<a href="/tags/ai">#ai</a>
+        
+<a href="/tags/transformers">#transformers</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+

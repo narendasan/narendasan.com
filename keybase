@@ -1,0 +1,71 @@
+---
+permalink: .well-known/keybase.txt
+---
+==================================================================
+https://keybase.io/narendasan
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://narendasan.com
+  * I am narendasan (https://keybase.io/narendasan) on keybase.
+  * I have a public key with fingerprint 7035 A775 3EF7 8285 B2E5  62D3 8DC1 0DD8 D421 BD11
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01013e450b47e9bc24af935f00dc9a1bba0cb254e1c9019e8229b4f712003180a7b30a",
+      "fingerprint": "7035a7753ef78285b2e562d38dc10dd8d421bd11",
+      "host": "keybase.io",
+      "key_id": "8dc10dd8d421bd11",
+      "kid": "01013e450b47e9bc24af935f00dc9a1bba0cb254e1c9019e8229b4f712003180a7b30a",
+      "uid": "72bb7ad99db717aadeca463899870919",
+      "username": "narendasan"
+    },
+    "service": {
+      "hostname": "narendasan.com",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1547494362,
+  "expire_in": 157680000,
+  "prev": "74c621e9a9d4eb7a5aa9b21fa76cdd5ca15e2c2e903ea252a81de69f20c19c1c",
+  "seqno": 26,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.80
+Comment: https://keybase.io/crypto
+
+yMIgAnicrVJZSFVBGD63TTTMpLKHFmwqs7jIzJx1bkFZCSI+lEkLWZfZrp3Sc273
+HG0xe2rhPlRGBZYGLQpCRbRI0UamD9GCD0GFFFlC+VLRRhRt50g91WPzMsw/3/f9
+3/fz92QPV7IiZ9dOGF64SnZE7na11ilV8wb6GgBzxRYQawAb5NAla4T0/PgGW4AY
+gAgiVWo6ZJopCeNYowmi6gkIBScUMUYhZ1jXJOIEIiItjAnTEibCEKrIgtRkKqQg
+ChK2Uy1TyZTt+IGsCVWdmqauyoRpYUtnWOoGFqolOIJCWELDiAmEAuI61wsZgTlG
+PVlku0EteMSH7P0D/5991w3JmZgxkwpCBDORSamQnGqGahFimZAgEgI9mXJorQzQ
+Dk1JR1CPOqAxCoJ6vc1lONowy1+YIu7WBvxkyvVd7tYEf+t8P+nFQq6/JRmCN0kW
+/y0TZ7YjglkGjHqZ8mzXATEUILlvh7pI10yNaKqBo0BuTtopGbdDhG4aFgxO2EfW
+h4k0bmAkCSVCk0E2nVLCMEpQ0+BC6JwiXWKOJYGqpFjH1EJCGiSBIUeEIw7CYBsd
+F8SwEfik1YGmZ1c71K9LSdB462bVCCWSpYwaOSxcMiUrc+yf1VOiGT9rn7zKTMsX
+Gd9W2qPbSit3P3Kejd9rly8YV/D+Iuxr3p4uuT8vp//UnWcvpx3bOVh74fzpI8p6
+u9ycNaZ903i96WD+2+zLh54WGmVr0lb7zi9z1H3Pm/eAju4p68n1omzs1U+szrHe
+2PdeH1aKnfyv7YOZz5fmn6mcdjzSeW1hZWTmh6ndcDnpnbS3d9GNYZfS0YGvq+fu
+Z009HfsTM5riNRtB1uDpgTO4sfddy8NdW9+XPvjB+ounV9hlJ2ZFW9ryqyoepz+d
+O/kBDFYe/T76wPwCZYX1pn9iV9622bTkWMW16207Jm9d0nol720uvF2+7OrczJ77
+/tg5iz935pYUN3w89f0X5fY7yg==
+=0+QN
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/narendasan
+
+==================================================================

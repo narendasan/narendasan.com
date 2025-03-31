@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="Ekko and Greylock Hackfest 2015">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="Simple utility to enable quick collaboration">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/ekko/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="Ekko and Greylock Hackfest 2015">
+    
+    
+        <meta property="og:description" content="Simple utility to enable quick collaboration">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/ekko/">
+        
+        <meta property="twitter:title" content="Ekko and Greylock Hackfest 2015">
+        
+        
+        <meta property="twitter:description" content="Simple utility to enable quick collaboration">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/ekko/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"Simple utility to enable quick collaboration",
+                "url":"https://www.narendasan.com/blog/ekko/",
+                "@type":"WebSite",
+                "headline":"Ekko and Greylock Hackfest 2015",
+                "name":"Ekko and Greylock Hackfest 2015",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;ekko</p>
+<p class="post-meta"><time datetime="2015-07-09">July 9, 2015</time></p>
+<h1>Ekko and Greylock Hackfest 2015</h1>
+<i>Simple utility to enable quick collaboration</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<blockquote>
+<p>This work was done during the 2015 Greylock Hackfest</p>
+</blockquote>
+<p>Coming to a hackathon with no idea what you want to work on is always leads to the same thing.
+Once you have your team, the HQ for the next 36ish hours and unpacked the two backpacks worth of
+computer hardware, maybe an extra keyboard and mouse and some pillows you then preceed to spend the
+next 2-3 hours throwing around ideas, most of which are either stupid or too hard. This is exactly
+what happened when we got to the old TellApart office that Greylock converted into one of the best
+run hackathon spaces I've been to. There was a chocolate fountain, a carnival outside with churros,
+food trucks, a ping pong table and hammocks. So you can waste a bit of time exploring the space and
+talking to people but ultimately you need to sit down and figure out what to do. Sitting side by
+side next to my team at the cleared out desk of some engineer we started talking about technologies we
+wanted to try out, looking up documentation and finding out that our genius idea was done 6 times before.
+I had a web page open and was telling my teammate next to me to look it up and thats when we had the idea for our project.
+&quot;Why can't I just drag my browser window onto your desktop?&quot;</p>
+<p>It started out as a silly idea but as we thought about it, the ability to just open a page on someone
+else's machine is actually really cool (given you do the work to curb spamming and other security
+concerns). Especially in the one to many case, i.e. I open a window on all of my teammates screens. We also thought that the movemement of dragging the window off the screen was a nice intuitive interaction that is easy to remember since it feels contextual.</p>
+<p>Now you may ask why sending the URL isnt good enough and it is, but if you break down the steps to
+do so you get:</p>
+<ol>
+<li>Click on the URL bar</li>
+<li>Highlight the entire URL (while there are shortcuts to do this, its &quot;not inuitive&quot; you need to create the muscle memory, and using the mouse can incure errors)</li>
+<li>Copy the URL</li>
+<li>Paste it</li>
+<li>Send the message</li>
+<li>Everyone else has to click on it</li>
+</ol>
+<p>This is compared to:</p>
+<ol>
+<li>Drag the window off the screen</li>
+<li>There is no step 2</li>
+</ol>
+<h2 id="ekko">Ekko</h2>
+<p>So cool idea, how do you implement it?</p>
+<p>Everyone on our team had Macs and we wanted to play with Swift so we chose to make a toolbar extention.
+It creates a hotzone on the right hand side, where if a browser is dragged into it, it turns slightly grey and instantly the same website is opened on everyone else's machine. To limit the scope of the sharing we created rooms, so links are only share amongst users in that room.</p>
+<p>We get the URL from the browser using AppleScript, which is an incredible feature of the operating system. AppleScript allows developers to access all sorts of
+underlying APIs for different applications. In our case it let us query what the URL open in the current window of the browser is (on Firefox, Chrome and Safari).</p>
+<p>We then used Firebase to manage the URL transmission to the different users in the room. Their Ekko instances will recive a notification and then open the browser and
+the web page.</p>
+<p>In concept it's really simple but in actual usage it was a pretty perfound experience. The first time I could share a web page with the flick of the mouse was a
+incredible moment. The judges agreed. We were able to allow them to play directly with the app on a couple of laptops and we could tell by the reactions on
+their faces the first time a window popped open with a funny meme that we had something good. Ultimately we won Top 10 at Greylock Hackfest but more importantly
+we actually kept using Ekko when were working on class work or wanted to share a YouTube video long after we left the hackathon, a rare outcome for most hackathon projects.</p>
+<p>You can checkout the source code for Ekko here:</p>
+<blockquote>
+<p><a href="https://github.com/Perilynn/Ekko">https://github.com/Perilynn/Ekko</a></p>
+</blockquote>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/macos">#macos</a>
+        
+<a href="/tags/swift">#swift</a>
+        
+<a href="/tags/hci">#hci</a>
+        
+<a href="/tags/design">#design</a>
+        
+<a href="/tags/hackathons">#hackathons</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+
