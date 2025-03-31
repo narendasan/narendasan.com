@@ -1,42 +1,61 @@
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <img src="/img/about.jpg" alt="About Nielsen Ramon header image" />
 <p>
-    My interests are in Artificial Intelligence, Robotics, and Tangible Interaction Design
-    mostly surrounding systems with multiple agents.
-    I've done other work in the past on distributed and embedded systems, the web and high
-    performance computing. Right now I am working on the development of Autonomous Vehicles at NVIDIA.
-    I am a Colorado native and completed my undergrad at the University of Illinois at
-    Urbana-Champaign in Computer Engineering and my masters in Computer Science and Robotics at USC.
-    In my free time I work on / advocate for open source, play rugby, soccer and tennis,
-    race bikes and from 2016 to 2017 I served as the Chair of the UIUC Chapter of the ACM.
+    My interests are in Robotics, Artificial Intelligence, and Tangible
+    Interaction Design mostly surrounding systems with multiple agents. I've
+    done other work in the past on computer vision, distributed and embedded
+    systems. Right now, I am a PhD Student at the University of Colorado Boulder
+    working on Human Robot Interaction research and working on the development
+    of Autonomous Vehicles at NVIDIA. I completed my undergrad at the University
+    of Illinois at Urbana-Champaign in Computer Engineering and my masters in
+    Computer Science and Robotics at USC.
 </p>
 
 <h3>Academic and Professional Timeline</h3>
 <ul>
-    <li>2022-2023 / University of Southern California - ICAROS / Graduate Research Assistant under <a
-            href="https://icaros.usc.edu/">Professor Stefanos Nikolaidis</a></li>
-    <li>2021 / New York University - Game Innovation Lab / Graduate Research Assistant under <a
-            href="http://julian.togelius.com/">Professor Julian Togelius</a></li>
-    <li>2018-Present / NVIDIA / Automotive Deep Learning Solution Architect </li>
-    <li>2017 / NVIDIA / Automotive Deep Learning Solution Architect Intern </li>
-    <li>2016 / University of Illinois Urbana-Champaign - Bretl Research Group / Undergraduate Research Assistant under
+    <li>
+        2024-Present / University of Colorado Boulder - HIRO Lab / PhD Student
+        advised by
+        <a href="https://hiro-group.ronc.one//">Professor Alessandro Roncone</a>
+    </li>
+    <li>
+        2022-2023 / University of Southern California - ICAROS / Graduate
+        Research Assistant under
+        <a href="https://icaros.usc.edu/">Professor Stefanos Nikolaidis</a>
+    </li>
+    <li>
+        2021 / New York University - Game Innovation Lab / Graduate Research
+        Assistant under
+        <a href="http://julian.togelius.com/">Professor Julian Togelius</a>
+    </li>
+    <li>2018-Present / NVIDIA / Automotive Deep Learning Solution Architect</li>
+    <li>2017 / NVIDIA / Automotive Deep Learning Solution Architect Intern</li>
+    <li>
+        2016 / University of Illinois Urbana-Champaign - Bretl Research Group /
+        Undergraduate Research Assistant under
         <a href="http://bretl.csl.illinois.edu/people/">Professor Tim Bretl</a>
     </li>
     <li>2016 / Nest Labs / Embedded Software Engineering Intern</li>
-    <li>2014 - 2018 / University of Illinois Urbana-Champaign - Vision Group / Undergraduate Research Assistant under <a
-            href="http://dhoiem.cs.illinois.edu/">Professor Derek Hoiem</a></li>
-    <li>2013 - 2014 / University of Colorado Boulder - Correll Lab / High School Research Assistant under <a
-            href="http://correll.cs.colorado.edu/?page_id=19">Professor Nikolaus Correll</a></li>
+    <li>
+        2014 - 2018 / University of Illinois Urbana-Champaign - Vision Group /
+        Undergraduate Research Assistant under
+        <a href="http://dhoiem.cs.illinois.edu/">Professor Derek Hoiem</a>
+    </li>
+    <li>
+        2013 - 2014 / University of Colorado Boulder - Correll Lab / High School
+        Research Assistant under
+        <a href="http://correll.cs.colorado.edu/?page_id=19"
+            >Professor Nikolaus Correll</a
+        >
+    </li>
 </ul>
 
 <h2>Most Recent Papers, Posters and Preprints</h2>
 
 <ul class="article-list">
-    {% set publications = load_data(path="content/pubs/publications.yml") %}
-    {% for pub in publications %}
-    {% if loop.index <= 3 %} <li class="article-list-item">
+    {% set publications = load_data(path="content/pubs/publications.yml") %} {%
+    for pub in publications %} {% if loop.index <= 3 %}
+    <li class="article-list-item">
         <a href="{{ pub.link }}" title="{{ pub.title }}">
             <h3>
                 [{{ pub.journal }}] {{ pub.title }}
@@ -55,18 +74,17 @@
                 {% endfor %}
             </div>
         </div>
-        </li>
-        {% endif %}
-        {% endfor %}
+    </li>
+    {% endif %} {% endfor %}
 </ul>
 <a href="/pubs#papers" , title="More publications">More Publications</a>
 
 <h2>Most Recent Talks</h2>
 
 <ul class="article-list">
-    {% set talks = load_data(path="content/pubs/talks.yml") %}
-    {% for talk in talks %}
-    {% if loop.index <= 3 %} <li class="article-list-item">
+    {% set talks = load_data(path="content/pubs/talks.yml") %} {% for talk in
+    talks %} {% if loop.index <= 3 %}
+    <li class="article-list-item">
         <a href="{{ talk.link }}" title="{{ talk.title }}">
             <h3>
                 [{{ talk.venue }}] {{ talk.title }}
@@ -79,19 +97,17 @@
                 {{ talk.date | date(format="%B %-d, %Y") }}
             </span>
         </div>
-        </li>
-        {% endif %}
-        {% endfor %}
+    </li>
+    {% endif %} {% endfor %}
 </ul>
 <a href="/pubs#talks" , title="More Talks">More Talks</a>
 
 <h2>Most Recent Posts</h2>
 
-{% set blog = get_section(path="blog/_index.md") %}
-{% set pages = blog.pages %}
+{% set blog = get_section(path="blog/_index.md") %} {% set pages = blog.pages %}
 <ul class="article-list">
-    {% for page in pages %}
-    {% if loop.index <= 3 %} <li class="article-list-item">
+    {% for page in pages %} {% if loop.index <= 3 %}
+    <li class="article-list-item">
         <a href="{{ page.permalink | safe }}" title="{{ page.title }}">
             <h3>
                 {{ page.title }}
@@ -110,9 +126,8 @@
                 {% endfor %}
             </div>
         </div>
-        </li>
-        {% endif %}
-        {% endfor %}
+    </li>
+    {% endif %} {% endfor %}
 </ul>
 <a href="/blog" , title="More posts">More Posts</a>
 
