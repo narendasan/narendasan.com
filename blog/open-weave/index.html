@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="Weave DSL - A DSL for IoT Device specification">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="A DSL made by Nest Labs to easily develop end-to-end IoT services">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/open-weave/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="Weave DSL - A DSL for IoT Device specification">
+    
+    
+        <meta property="og:description" content="A DSL made by Nest Labs to easily develop end-to-end IoT services">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/open-weave/">
+        
+        <meta property="twitter:title" content="Weave DSL - A DSL for IoT Device specification">
+        
+        
+        <meta property="twitter:description" content="A DSL made by Nest Labs to easily develop end-to-end IoT services">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/open-weave/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"A DSL made by Nest Labs to easily develop end-to-end IoT services",
+                "url":"https://www.narendasan.com/blog/open-weave/",
+                "@type":"WebSite",
+                "headline":"Weave DSL - A DSL for IoT Device specification",
+                "name":"Weave DSL - A DSL for IoT Device specification",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;open-weave</p>
+<p class="post-meta"><time datetime="2016-08-21">August 21, 2016</time></p>
+<h1>Weave DSL - A DSL for IoT Device specification</h1>
+<i>A DSL made by Nest Labs to easily develop end-to-end IoT services</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<h2 id="weave">Weave</h2>
+<p><img src="https://www.narendasan.com/blog/open-weave/imgs/thermostat.jpg" alt="thermostat" /></p>
+<p>The potential of IoT in the mid 2010s was really embodied by Nest, a company founded by the same
+people who developed the iPod and ultimately was bought by Google. Nest had focus
+on elegant design and intelligent behavior and this was embodied best by the Nest Thermostat,
+a small puck which at the time was completely different than anything on the market.
+It not only looked different, it was truly smart, tracking usage and self programming to
+make your home more comfortable and more efficient. As Nest branched out into other products
+like smoke detectors and cameras, it started to think about how all these devices would work together.</p>
+<p><img src="https://www.narendasan.com/blog/open-weave/./imgs/weave.png" alt="weave" /></p>
+<p>Nest developed the Thread protocol which is like the low power, IoT version of WiFi. The idea is that
+you don't want these devices to clog up the WiFi network and consume a lot of power doing so and instead
+could run on a separate network which specializes in low energy operation. Also unlike WiFi, Thread
+is mesh based, it creates a spanning tree across all devices and uses some devices to route to others.
+This ensures that there is a stable connection for each IoT device. Nest wanted to center as much of the
+information and decision making inside the Thread network as possible, instead of relying on a bunch of
+cloud services needed to interact on your devices behalf. So they developed an application layer protocol
+for Thread called Weave.</p>
+<p><img src="https://www.narendasan.com/blog/open-weave/imgs/han.png" alt="han" /></p>
+<p>The role of Weave is to be the layer that allows structured information like requests for the current temperature
+or the status of the smoke alarm can be transmitted. This is all done within the &quot;Home Area Network&quot; (HAN). The
+issue is it becomes pretty complicated and time consuming to build complex features when you need to worry about
+not just the device and Weave implementation but also the cloud services side to handle updates and remote access
+and the UI on smart phones and the web.</p>
+<h3 id="weave-schema-description-language">Weave Schema Description Language</h3>
+<p>My internship work was to help address this problem. My team built into Weave a formalization of devices, called a device
+schema. This is the data model for the device.</p>
+<blockquote>
+<p>&quot;
+The schema defines three elements:</p>
+<ul>
+<li>Traits: A unit of basic capability, such as the state of a property, a notification of the state, or a request to change the state</li>
+<li>Interfaces:  A group of traits that represent a specific function, such as the properties and events that make up a deadbolt lock</li>
+<li>Resources: A logical or physical thing comprised of traits and interfaces, such as a Nest device, a structure, or a user
+&quot;</li>
+</ul>
+</blockquote>
+<p>So a user can define a light which has the trait whether its on or off, and an interface which is a command to turn it on or off and the light itself is the resource.</p>
+<p>We define this formalism using the Weave Schema Description Language, a DSL which gives us a structured artifact that describes a device.</p>
+<p>Here is an example schema of an interface that implements a door lock:</p>
+<pre data-lang="proto" style="background-color:#2b303b;color:#c0c5ce;" class="language-proto "><code class="language-proto" data-lang="proto"><span style="color:#65737e;">/*
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Copyright (c) 2019 Google LLC.
+</span><span style="color:#65737e;"> *    Copyright (c) 2016-2018 Nest Labs, Inc.
+</span><span style="color:#65737e;"> *    All rights reserved.
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+</span><span style="color:#65737e;"> *    you may not use this file except in compliance with the License.
+</span><span style="color:#65737e;"> *    You may obtain a copy of the License at
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *        http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Unless required by applicable law or agreed to in writing, software
+</span><span style="color:#65737e;"> *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+</span><span style="color:#65737e;"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color:#65737e;"> *    See the License for the specific language governing permissions and
+</span><span style="color:#65737e;"> *    limitations under the License.
+</span><span style="color:#65737e;"> */
+</span><span>
+</span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;"> *    @file
+</span><span style="color:#65737e;"> *      This file specifies a Weave Common interface for a PIN
+</span><span style="color:#65737e;"> *      code-actuated bolt lock.
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> */
+</span><span>
+</span><span style="color:#b48ead;">syntax </span><span>= &quot;</span><span style="color:#a3be8c;">proto3</span><span>&quot;;
+</span><span style="color:#b48ead;">package </span><span style="color:#bf616a;">weave</span><span>.</span><span style="color:#bf616a;">iface</span><span>.lock;
+</span><span>
+</span><span style="color:#b48ead;">option </span><span style="color:#bf616a;">java_package</span><span>=&quot;</span><span style="color:#a3be8c;">weave.lock</span><span>&quot;;
+</span><span style="color:#b48ead;">option </span><span style="color:#bf616a;">java_outer_classname </span><span>= &quot;</span><span style="color:#a3be8c;">WeaveInternalPincodeLockIface</span><span>&quot;;
+</span><span style="color:#b48ead;">option </span><span style="color:#bf616a;">objc_class_prefix </span><span>= &quot;</span><span style="color:#a3be8c;">SCM</span><span>&quot;;
+</span><span>
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">wdl/wdl_options.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/iface/lock/basic_lock_iface.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/security/bolt_lock_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/security/bolt_lock_settings_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/security/bolt_lock_capabilities_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/security/user_pincodes_settings_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/security/user_pincodes_capabilities_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/schedule/basic_user_schedules_settings_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/schedule/basic_user_schedules_capabilities_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/security/pincode_input_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/security/pincode_input_settings_trait.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/trait/auth/application_keys_trait.proto</span><span>&quot;;
+</span><span>
+</span><span style="color:#b48ead;">message </span><span style="color:#ebcb8b;">PincodeLockIface </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">message_type</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#d08770;">IFACE</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">iface</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">stability</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">ALPHA</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">vendor_id</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">0x0000</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">version</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">1
+</span><span style="color:#eff1f5;">  };
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">security</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BoltLockTrait lock </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">security</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BoltLockSettingsTrait lock_settings </span><span>= </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">security</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BoltLockCapabilitiesTrait lock_capabilities </span><span>= </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">security</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">UserPincodesSettingsTrait pincodes_settings </span><span>= </span><span style="color:#d08770;">4</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">security</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">UserPincodesCapabilitiesTrait pincodes_capabilities </span><span>= </span><span style="color:#d08770;">5</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">schedule</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BasicUserSchedulesSettingsTrait schedules_settings </span><span>= </span><span style="color:#d08770;">6</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">schedule</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BasicUserSchedulesCapabilitiesTrait schedules_capabilities </span><span>= </span><span style="color:#d08770;">7</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">security</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">PincodeInputTrait keypad </span><span>= </span><span style="color:#d08770;">8</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">security</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">PincodeInputSettingsTrait keypad_settings </span><span>= </span><span style="color:#d08770;">9</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">auth</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ApplicationKeysTrait application_keys </span><span>= </span><span style="color:#d08770;">10</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">message </span><span style="color:#ebcb8b;">Implements </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">message_type</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#d08770;">IFACE_IMPLEMENTATIONS</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">iface</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">lock</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BasicLockIface basic_lock </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>You can see that for this lock interface there is a bunch of traits that describe states like the lock, its settings, the pincode etc.
+Here is an implementation of the bolt lock trait:</p>
+<pre data-lang="proto" style="background-color:#2b303b;color:#c0c5ce;" class="language-proto "><code class="language-proto" data-lang="proto"><span style="color:#65737e;">/*
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Copyright (c) 2019 Google LLC.
+</span><span style="color:#65737e;"> *    Copyright (c) 2016-2018 Nest Labs, Inc.
+</span><span style="color:#65737e;"> *    All rights reserved.
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+</span><span style="color:#65737e;"> *    you may not use this file except in compliance with the License.
+</span><span style="color:#65737e;"> *    You may obtain a copy of the License at
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *        http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Unless required by applicable law or agreed to in writing, software
+</span><span style="color:#65737e;"> *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+</span><span style="color:#65737e;"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color:#65737e;"> *    See the License for the specific language governing permissions and
+</span><span style="color:#65737e;"> *    limitations under the License.
+</span><span style="color:#65737e;"> */
+</span><span>
+</span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;"> *    @file
+</span><span style="color:#65737e;"> *      This file defines the Bolt Lock trait.
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> */
+</span><span>
+</span><span style="color:#b48ead;">syntax </span><span>= &quot;</span><span style="color:#a3be8c;">proto3</span><span>&quot;;
+</span><span>
+</span><span style="color:#b48ead;">package </span><span style="color:#bf616a;">weave</span><span>.</span><span style="color:#bf616a;">trait</span><span>.security;
+</span><span>
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">wdl/wdl_options.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">weave/common/identifiers.proto</span><span>&quot;;
+</span><span style="color:#b48ead;">import </span><span>&quot;</span><span style="color:#a3be8c;">google/protobuf/timestamp.proto</span><span>&quot;;
+</span><span>
+</span><span style="color:#b48ead;">option </span><span style="color:#bf616a;">java_outer_classname </span><span>= &quot;</span><span style="color:#a3be8c;">WeaveInternalBoltLockTrait</span><span>&quot;;
+</span><span style="color:#b48ead;">option </span><span style="color:#bf616a;">objc_class_prefix </span><span>= &quot;</span><span style="color:#a3be8c;">SCM</span><span>&quot;;
+</span><span>
+</span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;"> * Residential Bolt Lock Trait is meant to cover a physical residential lock that uses a deadbolt as its locking mechanism.
+</span><span style="color:#65737e;"> * Beyond its physical attributes, it is REQUIRED to have the following functionality:
+</span><span style="color:#65737e;"> * - Retract/Extend Bolt remotely
+</span><span style="color:#65737e;"> * - Retract/Extend Bolt locally
+</span><span style="color:#65737e;"> * - Report the bolt state itself (i.e. Extended, Retracted, etc.  See BoltState for more info)
+</span><span style="color:#65737e;"> * - Report the bolt actuator state (i.e. OK, Moving, Locking, Unlocking, etc.  See BoltActuatorState for more info)
+</span><span style="color:#65737e;"> * - Report what caused the bolt state or actuator state to change (i.e. Inside, Outside, Outside Keypad.  See BoltBlame)
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> * Optionally, a lock may
+</span><span style="color:#65737e;"> * - Report the locked state of the lock as a whole (i.e. Unlocked, Locked, etc.  See LockedState)
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> * V2 adds support for voice arming (via cloud)
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> * Scenarios:
+</span><span style="color:#65737e;"> * - Bolt extended and locked, User retracts bolt w/a pin code
+</span><span style="color:#65737e;"> *      1) Bolt begins retracting
+</span><span style="color:#65737e;"> *      2) Notify
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_UNLOCKING
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      3) Event BoltActuatorStateChangeEvent
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_EXTENDED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_UNLOCKING
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      blame = BOLT_BLAME_OUTSIDE_KEYPAD_PIN
+</span><span style="color:#65737e;"> *      userid = someuserid of matching pincode
+</span><span style="color:#65737e;"> *      4) Bolt retraction completes
+</span><span style="color:#65737e;"> *      5) Notify
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_RETRACTED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_OK
+</span><span style="color:#65737e;"> *      6) Event BoltActuatorStateChangeEvent w/
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_RETRACTED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_OK
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      blame = BOLT_BLAME_OUTSIDE_KEYPAD_PIN
+</span><span style="color:#65737e;"> *      userid = someuserid of matching pincode
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> * - Bolt retracted and unlocked, User extends bolt w/one touch
+</span><span style="color:#65737e;"> *      1) Bolt begins extending
+</span><span style="color:#65737e;"> *      2) Notify
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_EXTENDED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_LOCKING
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      3) Event BoltActuatorStateChangeEvent
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_EXTENDED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_LOCKING
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      blame = BOLT_BLAME_OUTSIDE_MANUAL
+</span><span style="color:#65737e;"> *      userid = &lt;omitted&gt;
+</span><span style="color:#65737e;"> *      4) Bolt extension completes
+</span><span style="color:#65737e;"> *      5) Notify
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_OK
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_LOCKED
+</span><span style="color:#65737e;"> *      6) Event BoltActuatorStateChangeEvent
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_EXTENDED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_OK
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_LOCKED
+</span><span style="color:#65737e;"> *      blame = BOLT_BLAME_OUTSIDE_MANUAL
+</span><span style="color:#65737e;"> *      userid = &lt;omitted&gt;
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> * - Bolt retracted and unlocked, User extends bolt w/mobile but does not lock
+</span><span style="color:#65737e;"> *      1) Update w/metadata
+</span><span style="color:#65737e;"> *          blame = BOLT_BLAME_REMOTE_USER
+</span><span style="color:#65737e;"> *          userid = someuserid
+</span><span style="color:#65737e;"> *      2) Bolt begins extending
+</span><span style="color:#65737e;"> *      3) Notify
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_EXTENDED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_LOCKING
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      3) Event BoltActuatorStateChangeEvent
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_EXTENDED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_LOCKING
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      blame = BOLT_BLAME_REMOTE_USER
+</span><span style="color:#65737e;"> *      userid = someuserid
+</span><span style="color:#65737e;"> *      4) Bolt extension completes
+</span><span style="color:#65737e;"> *      5) Notify
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_OK
+</span><span style="color:#65737e;"> *      6) Event BoltActuatorStateChangeEvent
+</span><span style="color:#65737e;"> *      state = BOLT_STATE_EXTENDED
+</span><span style="color:#65737e;"> *      actuator_state = BOLT_ACTUATOR_STATE_OK
+</span><span style="color:#65737e;"> *      locked_state = BOLT_LOCKED_STATE_UNLOCKED
+</span><span style="color:#65737e;"> *      blame = BOLT_BLAME_REMOTE_USER
+</span><span style="color:#65737e;"> *      userid = someuserid
+</span><span style="color:#65737e;"> */
+</span><span style="color:#b48ead;">message </span><span style="color:#ebcb8b;">BoltLockTrait </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">message_type</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#d08770;">TRAIT</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">trait</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">stability</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">ALPHA</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">id</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">0x0E02</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">vendor_id</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">0x0000</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">version</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">2
+</span><span style="color:#eff1f5;">  };
+</span><span style="color:#eff1f5;">
+</span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">   * The current state of the bolt itself
+</span><span style="color:#65737e;">   * Remember, this only tells you the state of the bolt itself and doesn&#39;t tell you
+</span><span style="color:#65737e;">   * anything about whether the door is locked (i.e. bolt is in jamb) or not.  To
+</span><span style="color:#65737e;">   * get the full picture you must look to information represented by the LockedState enum
+</span><span style="color:#65737e;">   *
+</span><span style="color:#65737e;">   * Implementors of this trait must implement all values below
+</span><span style="color:#65737e;">   */
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">enum </span><span style="color:#eff1f5;">BoltState {
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_STATE_UNSPECIFIED </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_STATE_RETRACTED </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;       </span><span style="color:#65737e;">/// Bolt is fully retracted
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_STATE_EXTENDED </span><span>= </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;        </span><span style="color:#65737e;">/// Bolt is AT LEAST partially extended.
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">  *
+</span><span style="color:#65737e;">  * The method / UI interacting with the bolt lock
+</span><span style="color:#65737e;">  * Depending on the method originator may or may not be available
+</span><span style="color:#65737e;">  *
+</span><span style="color:#65737e;">  */
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">enum </span><span style="color:#eff1f5;">BoltLockActorMethod {
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_UNSPECIFIED </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by an unspecified entity that doesn&#39;t fall into one of the defined categories below
+</span><span style="color:#65737e;">      *  - Who may not be present
+</span><span style="color:#65737e;">      *  - Expected to be correlated with an event
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_OTHER </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// On-device actor methods
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by the physical interaction on the lock but with no PIN entered (Typically for locking or unlocking with the thumb turn)
+</span><span style="color:#65737e;">      *  - Who MUST NOT be present
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_PHYSICAL </span><span>= </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by the physical keypad by typing in a PIN
+</span><span style="color:#65737e;">      *  - Who MUST be present
+</span><span style="color:#65737e;">      *  - Expected to be correlated with an event that represents &quot;keypad pin entered successfully&quot; (see PinCodeInputTrait for an example event)
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_KEYPAD_PIN </span><span>= </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by the device internally. For instance, if the device has a mechanisim to automatically lock
+</span><span style="color:#65737e;">      * after a period of time.
+</span><span style="color:#65737e;">      * - Who may not be present.
+</span><span style="color:#65737e;">    */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_LOCAL_IMPLICIT </span><span>= </span><span style="color:#d08770;">4</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// App actor methods
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by a user using the app
+</span><span style="color:#65737e;">      *  - Who may not be present
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_REMOTE_USER_EXPLICIT </span><span>= </span><span style="color:#d08770;">5</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by a user with implicit intent
+</span><span style="color:#65737e;">      * ex. Toggling structure mode with the app mode switcher
+</span><span style="color:#65737e;">      *  - Who may not be present
+</span><span style="color:#65737e;">      *  - Expected to be correlated with a structure mode change event?
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_REMOTE_USER_IMPLICIT </span><span>= </span><span style="color:#d08770;">6</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by a user that does not fit in one of the
+</span><span style="color:#65737e;">      * other app remote categories
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_REMOTE_USER_OTHER </span><span>= </span><span style="color:#d08770;">7</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// Other actor methods
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced by a remote service with no user intent (ex: Goose)
+</span><span style="color:#65737e;">      *  - Who may not be present
+</span><span style="color:#65737e;">      *  - Expected to be correlated with an event (???)
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_REMOTE_DELEGATE </span><span>= </span><span style="color:#d08770;">8</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Lock will (???) on its own before a critically low battery shutdown
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_LOW_POWER_SHUTDOWN </span><span>= </span><span style="color:#d08770;">9</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">      * Change produced through a voice assistant based surface
+</span><span style="color:#65737e;">      */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCK_ACTOR_METHOD_VOICE_ASSISTANT </span><span>= </span><span style="color:#d08770;">10 </span><span style="color:#eff1f5;">[(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">enumvalue</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">compatibility</span><span style="color:#eff1f5;">: {</span><span style="color:#bf616a;">min_version</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">}}];
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">   * Common construction of &#39;blames&#39;.
+</span><span style="color:#65737e;">   * How an action was taken and by whom.
+</span><span style="color:#65737e;">   *
+</span><span style="color:#65737e;">   */
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">message </span><span style="color:#ebcb8b;">BoltLockActorStruct </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">message_type</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#d08770;">STRUCT</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// how an action was taken
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">BoltLockActorMethod method </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// originator of the action, if available
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">common</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ResourceId originator </span><span>= </span><span style="color:#d08770;">2 </span><span style="color:#eff1f5;">[(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">prop</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">nullable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">}];
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// Resource that took action on behalf of the originator
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">weave</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">common</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ResourceId agent </span><span>= </span><span style="color:#d08770;">3 </span><span style="color:#eff1f5;">[(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">prop</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">nullable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">compatibility</span><span style="color:#eff1f5;">: {</span><span style="color:#bf616a;">min_version</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">}}];
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">   * The current actuator state
+</span><span style="color:#65737e;">   * Implementors of this trait must at a minimum be able to report:
+</span><span style="color:#65737e;">   * - BOLT_ACTUATOR_STATE_OK
+</span><span style="color:#65737e;">   * - BOLT_ACTUATOR_STATE_LOCKING
+</span><span style="color:#65737e;">   * - BOLT_ACTUATOR_STATE_UNLOCKING
+</span><span style="color:#65737e;">   * - BOLT_ACTUATOR_STATE_MOVING
+</span><span style="color:#65737e;">   */
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">enum </span><span style="color:#eff1f5;">BoltActuatorState {
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_UNSPECIFIED </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_OK </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;         </span><span style="color:#65737e;">/// Actuator is not moving and is in a fully settled position.  If its not settled use BOLT_ACTUATOR_STATE_MOVING
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_LOCKING </span><span>= </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;    </span><span style="color:#65737e;">/// Actuator is attempting to lock
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_UNLOCKING </span><span>= </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">;  </span><span style="color:#65737e;">/// Actuator is attempting to unlock
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/** Actuator is moving though it’s not necessarily clear the intended direction
+</span><span style="color:#65737e;">     * This is typically used when the user is physically manipulating the bolt
+</span><span style="color:#65737e;">     */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_MOVING </span><span>= </span><span style="color:#d08770;">4</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_JAMMED_LOCKING </span><span>= </span><span style="color:#d08770;">5</span><span style="color:#eff1f5;">;     </span><span style="color:#65737e;">/// Actuator jammed while the device was locking and cannot move.
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_JAMMED_UNLOCKING </span><span>= </span><span style="color:#d08770;">6</span><span style="color:#eff1f5;">;   </span><span style="color:#65737e;">/// Actuator jammed while the device was unlocking and cannot move.
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_ACTUATOR_STATE_JAMMED_OTHER </span><span>= </span><span style="color:#d08770;">7</span><span style="color:#eff1f5;">;       </span><span style="color:#65737e;">/// Actuator jammed and cannot move. The direction the lock was moving was not provided.
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">   * The current locked state of the bolt lock as a whole
+</span><span style="color:#65737e;">   * This state takes into account the resource&#39;s best ability to determine how physically secure
+</span><span style="color:#65737e;">   * the resource is with respect to this bolt lock
+</span><span style="color:#65737e;">   *
+</span><span style="color:#65737e;">   * Implementors of this trait must at a minimum be able to report:
+</span><span style="color:#65737e;">   * - LOCKED_STATE_UNKNOWN
+</span><span style="color:#65737e;">   */
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">enum </span><span style="color:#eff1f5;">BoltLockedState {
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCKED_STATE_UNSPECIFIED </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/** The lock as a whole is not locked to the best knowledge of the implementor.
+</span><span style="color:#65737e;">     * i.e. the door that this lock is attached to can be opened
+</span><span style="color:#65737e;">     */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCKED_STATE_UNLOCKED </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/** The lock as a whole is locked to the best knowledge of the implementor.
+</span><span style="color:#65737e;">     *  i.e. the door that this lock is attached to cannot be opened
+</span><span style="color:#65737e;">     */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCKED_STATE_LOCKED </span><span>= </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/** The implementor is not able to determine whether the door is locked or unlocked.
+</span><span style="color:#65737e;">     *  i.e. &quot;Locked&quot; sensing is based on a history of readings and that history is now gone or lost
+</span><span style="color:#65737e;">     */
+</span><span style="color:#eff1f5;">    </span><span style="color:#d08770;">BOLT_LOCKED_STATE_UNKNOWN </span><span>= </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">// ----------- PROPERTIES ----------- //
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">properties</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">extendable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">reserved_tag_min</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">reserved_tag_max</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">31
+</span><span style="color:#eff1f5;">  };
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// The current state of the bolt itself
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// Remember this only tells you about the bolt state not about the locked state of the lock as a whole
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// The lock as a whole is only fully secure if bolt_state == BOLT_STATE_EXTENDED AND locked_state == LOCKED_STATE_LOCKED
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">///
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// If state == BOLT_STATE_RETRACTED
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// - actuator_state must be BOLT_ACTUATOR_STATE_OK or BOLT_ACTUATOR_STATE_JAMMED
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// - locked_state must be LOCKED_STATE_UNLOCKED or LOCKED_STATE_UNKNOWN
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// If state == BOLT_STATE_EXTENDED
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// - actuator_state may be any value
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// - locked_state may be any
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">BoltState state </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// The current state of the bolt&#39;s actuator
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">BoltActuatorState actuator_state </span><span>= </span><span style="color:#d08770;">2 </span><span style="color:#eff1f5;">[(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">prop</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">writable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">READ_ONLY</span><span style="color:#eff1f5;">}];
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// The current state of how secure the lock is as whole
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">BoltLockedState locked_state </span><span>= </span><span style="color:#d08770;">3 </span><span style="color:#eff1f5;">[(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">prop</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">writable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">READ_ONLY</span><span style="color:#eff1f5;">}];
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// Describes who/what last caused the bolt actuator state to change and how they did it.
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// Should be updated together whenever locked_state is changed, i.e. via BoltLockChangeRequest
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">BoltLockActorStruct bolt_lock_actor </span><span>= </span><span style="color:#d08770;">4 </span><span style="color:#eff1f5;">[(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">prop</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">writable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">READ_ONLY</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">nullable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">ephemeral</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">}];
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// The time at which the lock state was changed.
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/// Updated together with locked_state
+</span><span style="color:#eff1f5;">  </span><span style="color:#bf616a;">google</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">protobuf</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Timestamp locked_state_last_changed_at </span><span>= </span><span style="color:#d08770;">5 </span><span style="color:#eff1f5;">[(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">prop</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">writable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">READ_ONLY</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">                                                        </span><span style="color:#bf616a;">timestamp_constraints</span><span style="color:#eff1f5;">: {</span><span style="color:#bf616a;">signed</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">                                                        </span><span style="color:#bf616a;">precision</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">0.001</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">width</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">64</span><span style="color:#eff1f5;">},
+</span><span style="color:#eff1f5;">                                                        </span><span style="color:#bf616a;">nullable</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">                                                        </span><span style="color:#bf616a;">ephemeral</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">}];
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">// ----------- COMMANDS ----------- //
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">   * Command to request a change to bolt state
+</span><span style="color:#65737e;">   * Should be used when with explicit or implicit user intent
+</span><span style="color:#65737e;">   * Returns success when execution of the command has begun
+</span><span style="color:#65737e;">   * Returns error if the command cannot be started
+</span><span style="color:#65737e;">   */
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">message </span><span style="color:#ebcb8b;">BoltLockChangeRequest </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">message_type</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#d08770;">COMMAND</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">command</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">id</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">0x01</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">    };
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// New requested state of the bolt
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">BoltState state </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// Describes who/what is sending the BoltLockChangeRequest and reason for the request.
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">BoltLockActorStruct bolt_lock_actor </span><span>= </span><span style="color:#d08770;">4</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">// ----------- EVENTS ----------- //
+</span><span style="color:#eff1f5;">  </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">   * Event that is sent whenever actuator_state changes
+</span><span style="color:#65737e;">   * See BoltLockActorMethod enum above for information on when to fill in &quot;who&quot; below and potential
+</span><span style="color:#65737e;">   * correlated events
+</span><span style="color:#65737e;">   */
+</span><span style="color:#eff1f5;">  </span><span style="color:#b48ead;">message </span><span style="color:#ebcb8b;">BoltActuatorStateChangeEvent </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">message_type</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#d08770;">EVENT</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">option </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">wdl</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">event</span><span style="color:#eff1f5;">) </span><span>= </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">id</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">event_importance</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">EVENT_IMPORTANCE_PRODUCTION_CRITICAL
+</span><span style="color:#eff1f5;">    };
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// See BoltLockTrait for description
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">BoltState state </span><span>= </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// See BoltLockTrait for description
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">BoltActuatorState actuator_state </span><span>= </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// See BoltLockTrait for description
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">BoltLockedState locked_state </span><span>= </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// Describes who/what last caused the bolt actuator state to change and how they did it.
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// Should be updated together whenever locked_state is changed, i.e. via BoltLockChangeRequest
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">BoltLockActorStruct bolt_lock_actor </span><span>= </span><span style="color:#d08770;">4</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">  }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>You can see here the different things that the trait manages like the state of the bolt actuator and the user and sets out hooks for how to request that the
+lock opens and closes.</p>
+<p>The nice thing about the WDL language is that you can start to build out libraries of traits and interfaces that
+can be reused and shared amongst developers.</p>
+<p>My internship work was on the component which really makes Weave powerful, <code>wdlc</code>. <code>wdlc</code> let's users take a device schema and generate embedded C++ code
+that will serve as the hooks for Weave to interface with the device. You can see here the code that gets generated from the schema.</p>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span style="color:#65737e;">/*
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Copyright (c) 2019 Google LLC.
+</span><span style="color:#65737e;"> *    All rights reserved.
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+</span><span style="color:#65737e;"> *    you may not use this file except in compliance with the License.
+</span><span style="color:#65737e;"> *    You may obtain a copy of the License at
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *        http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#65737e;"> *
+</span><span style="color:#65737e;"> *    Unless required by applicable law or agreed to in writing, software
+</span><span style="color:#65737e;"> *    distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+</span><span style="color:#65737e;"> *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color:#65737e;"> *    See the License for the specific language governing permissions and
+</span><span style="color:#65737e;"> *    limitations under the License.
+</span><span style="color:#65737e;"> */
+</span><span>
+</span><span style="color:#b48ead;">#ifndef</span><span> _WEAVE_TRAIT_SECURITY__BOLT_LOCK_TRAIT_H_
+</span><span style="color:#b48ead;">#define </span><span>_WEAVE_TRAIT_SECURITY__BOLT_LOCK_TRAIT_H_
+</span><span>
+</span><span style="color:#b48ead;">#include </span><span>&lt;</span><span style="color:#a3be8c;">Weave/Profiles/data-management/DataManagement.h</span><span>&gt;
+</span><span style="color:#b48ead;">#include </span><span>&lt;</span><span style="color:#a3be8c;">Weave/Support/SerializationUtils.h</span><span>&gt;
+</span><span>
+</span><span>
+</span><span>
+</span><span style="color:#b48ead;">namespace </span><span>Schema {
+</span><span style="color:#b48ead;">namespace </span><span>Weave {
+</span><span style="color:#b48ead;">namespace </span><span>Trait {
+</span><span style="color:#b48ead;">namespace </span><span>Security {
+</span><span style="color:#b48ead;">namespace </span><span>BoltLockTrait {
+</span><span>
+</span><span style="color:#b48ead;">extern const</span><span> nl::Weave::Profiles::DataManagement::TraitSchemaEngine TraitSchema;
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>{
+</span><span>      </span><span style="color:#d08770;">kWeaveProfileId </span><span>= (</span><span style="color:#d08770;">0x0</span><span style="color:#b48ead;">U </span><span>&lt;&lt; </span><span style="color:#d08770;">16</span><span>) | </span><span style="color:#d08770;">0xe02</span><span style="color:#b48ead;">U
+</span><span>};
+</span><span>
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// Properties
+</span><span style="color:#65737e;">//
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>{
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_Root </span><span>= </span><span style="color:#d08770;">1</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//---------------------------------------------------------------------------------------------------------------------------//
+</span><span>    </span><span style="color:#65737e;">//  Name                                IDL Type                            TLV Type           Optional?       Nullable?     //
+</span><span>    </span><span style="color:#65737e;">//---------------------------------------------------------------------------------------------------------------------------//
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  state                               BoltState                            int               NO              NO
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_State </span><span>= </span><span style="color:#d08770;">2</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  actuator_state                      BoltActuatorState                    int               NO              NO
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_ActuatorState </span><span>= </span><span style="color:#d08770;">3</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  locked_state                        BoltLockedState                      int               NO              NO
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_LockedState </span><span>= </span><span style="color:#d08770;">4</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  bolt_lock_actor                     BoltLockActorStruct                  structure         NO              YES
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_BoltLockActor </span><span>= </span><span style="color:#d08770;">5</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  method                              BoltLockActorMethod                  int               NO              NO
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_BoltLockActor_Method </span><span>= </span><span style="color:#d08770;">6</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  originator                          weave.common.ResourceId              bytes             NO              YES
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_BoltLockActor_Originator </span><span>= </span><span style="color:#d08770;">7</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  agent                               weave.common.ResourceId              bytes             NO              YES
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_BoltLockActor_Agent </span><span>= </span><span style="color:#d08770;">8</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">//  locked_state_last_changed_at        google.protobuf.Timestamp            int64 millisecondsNO              YES
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kPropertyHandle_LockedStateLastChangedAt </span><span>= </span><span style="color:#d08770;">9</span><span>,
+</span><span>
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#65737e;">// Enum for last handle
+</span><span>    </span><span style="color:#65737e;">//
+</span><span>    </span><span style="color:#d08770;">kLastSchemaHandle </span><span>= </span><span style="color:#d08770;">9</span><span>,
+</span><span>};
+</span><span>
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// Event Structs
+</span><span style="color:#65737e;">//
+</span><span>
+</span><span style="color:#b48ead;">struct </span><span>BoltLockActorStruct
+</span><span>{
+</span><span>    int32_t method;
+</span><span>    nl::SerializedByteString originator;
+</span><span>    </span><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">SetOriginatorNull</span><span>(</span><span style="color:#b48ead;">void</span><span>);
+</span><span>    </span><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">SetOriginatorPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>);
+</span><span style="color:#b48ead;">#if</span><span> WEAVE_CONFIG_SERIALIZATION_ENABLE_DESERIALIZATION
+</span><span>    </span><span style="color:#b48ead;">bool </span><span style="color:#8fa1b3;">IsOriginatorPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>);
+</span><span style="color:#b48ead;">#endif
+</span><span>    nl::SerializedByteString agent;
+</span><span>    </span><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">SetAgentNull</span><span>(</span><span style="color:#b48ead;">void</span><span>);
+</span><span>    </span><span style="color:#b48ead;">void </span><span style="color:#8fa1b3;">SetAgentPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>);
+</span><span style="color:#b48ead;">#if</span><span> WEAVE_CONFIG_SERIALIZATION_ENABLE_DESERIALIZATION
+</span><span>    </span><span style="color:#b48ead;">bool </span><span style="color:#8fa1b3;">IsAgentPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>);
+</span><span style="color:#b48ead;">#endif
+</span><span>    uint8_t __nullified_fields__[</span><span style="color:#d08770;">2</span><span>/</span><span style="color:#d08770;">8 </span><span>+ </span><span style="color:#d08770;">1</span><span>];
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">static const</span><span> nl::SchemaFieldDescriptor FieldSchema;
+</span><span>
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">struct </span><span>BoltLockActorStruct_array {
+</span><span>    uint32_t num;
+</span><span>    BoltLockActorStruct *buf;
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">inline void </span><span>BoltLockActorStruct::</span><span style="color:#8fa1b3;">SetOriginatorNull</span><span>(</span><span style="color:#b48ead;">void</span><span>)
+</span><span>{
+</span><span>    </span><span style="color:#bf616a;">SET_FIELD_NULLIFIED_BIT</span><span>(__nullified_fields__, </span><span style="color:#d08770;">0</span><span>);
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">inline void </span><span>BoltLockActorStruct::</span><span style="color:#8fa1b3;">SetOriginatorPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>)
+</span><span>{
+</span><span>    </span><span style="color:#bf616a;">CLEAR_FIELD_NULLIFIED_BIT</span><span>(__nullified_fields__, </span><span style="color:#d08770;">0</span><span>);
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">#if</span><span> WEAVE_CONFIG_SERIALIZATION_ENABLE_DESERIALIZATION
+</span><span style="color:#b48ead;">inline bool </span><span>BoltLockActorStruct::</span><span style="color:#8fa1b3;">IsOriginatorPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>)
+</span><span>{
+</span><span>    </span><span style="color:#b48ead;">return </span><span>(!</span><span style="color:#bf616a;">GET_FIELD_NULLIFIED_BIT</span><span>(__nullified_fields__, </span><span style="color:#d08770;">0</span><span>));
+</span><span>}
+</span><span style="color:#b48ead;">#endif
+</span><span style="color:#b48ead;">inline void </span><span>BoltLockActorStruct::</span><span style="color:#8fa1b3;">SetAgentNull</span><span>(</span><span style="color:#b48ead;">void</span><span>)
+</span><span>{
+</span><span>    </span><span style="color:#bf616a;">SET_FIELD_NULLIFIED_BIT</span><span>(__nullified_fields__, </span><span style="color:#d08770;">1</span><span>);
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">inline void </span><span>BoltLockActorStruct::</span><span style="color:#8fa1b3;">SetAgentPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>)
+</span><span>{
+</span><span>    </span><span style="color:#bf616a;">CLEAR_FIELD_NULLIFIED_BIT</span><span>(__nullified_fields__, </span><span style="color:#d08770;">1</span><span>);
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">#if</span><span> WEAVE_CONFIG_SERIALIZATION_ENABLE_DESERIALIZATION
+</span><span style="color:#b48ead;">inline bool </span><span>BoltLockActorStruct::</span><span style="color:#8fa1b3;">IsAgentPresent</span><span>(</span><span style="color:#b48ead;">void</span><span>)
+</span><span>{
+</span><span>    </span><span style="color:#b48ead;">return </span><span>(!</span><span style="color:#bf616a;">GET_FIELD_NULLIFIED_BIT</span><span>(__nullified_fields__, </span><span style="color:#d08770;">1</span><span>));
+</span><span>}
+</span><span style="color:#b48ead;">#endif
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// Events
+</span><span style="color:#65737e;">//
+</span><span style="color:#b48ead;">struct </span><span>BoltActuatorStateChangeEvent
+</span><span>{
+</span><span>    int32_t state;
+</span><span>    int32_t actuatorState;
+</span><span>    int32_t lockedState;
+</span><span>    Schema::Weave::Trait::Security::BoltLockTrait::BoltLockActorStruct boltLockActor;
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">static const</span><span> nl::SchemaFieldDescriptor FieldSchema;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// Statically-known Event Struct Attributes:
+</span><span>    </span><span style="color:#b48ead;">enum </span><span>{
+</span><span>            </span><span style="color:#d08770;">kWeaveProfileId </span><span>= (</span><span style="color:#d08770;">0x0</span><span style="color:#b48ead;">U </span><span>&lt;&lt; </span><span style="color:#d08770;">16</span><span>) | </span><span style="color:#d08770;">0xe02</span><span style="color:#b48ead;">U</span><span>,
+</span><span>        </span><span style="color:#d08770;">kEventTypeId </span><span>= </span><span style="color:#d08770;">0x1</span><span style="color:#b48ead;">U
+</span><span>    };
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">static const</span><span> nl::Weave::Profiles::DataManagement::EventSchema Schema;
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">struct </span><span>BoltActuatorStateChangeEvent_array {
+</span><span>    uint32_t num;
+</span><span>    BoltActuatorStateChangeEvent *buf;
+</span><span>};
+</span><span>
+</span><span>
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// Commands
+</span><span style="color:#65737e;">//
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>{
+</span><span>    </span><span style="color:#d08770;">kBoltLockChangeRequestId </span><span>= </span><span style="color:#d08770;">0x1</span><span>,
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>BoltLockChangeRequestParameters {
+</span><span>    </span><span style="color:#d08770;">kBoltLockChangeRequestParameter_State </span><span>= </span><span style="color:#d08770;">1</span><span>,
+</span><span>    </span><span style="color:#d08770;">kBoltLockChangeRequestParameter_BoltLockActor </span><span>= </span><span style="color:#d08770;">4</span><span>,
+</span><span>};
+</span><span>
+</span><span style="color:#65737e;">//
+</span><span style="color:#65737e;">// Enums
+</span><span style="color:#65737e;">//
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>BoltState {
+</span><span>    BOLT_STATE_RETRACTED = </span><span style="color:#d08770;">1</span><span>,
+</span><span>    BOLT_STATE_EXTENDED = </span><span style="color:#d08770;">2</span><span>,
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>BoltLockActorMethod {
+</span><span>    BOLT_LOCK_ACTOR_METHOD_OTHER = </span><span style="color:#d08770;">1</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_PHYSICAL = </span><span style="color:#d08770;">2</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_KEYPAD_PIN = </span><span style="color:#d08770;">3</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_LOCAL_IMPLICIT = </span><span style="color:#d08770;">4</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_REMOTE_USER_EXPLICIT = </span><span style="color:#d08770;">5</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_REMOTE_USER_IMPLICIT = </span><span style="color:#d08770;">6</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_REMOTE_USER_OTHER = </span><span style="color:#d08770;">7</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_REMOTE_DELEGATE = </span><span style="color:#d08770;">8</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_LOW_POWER_SHUTDOWN = </span><span style="color:#d08770;">9</span><span>,
+</span><span>    BOLT_LOCK_ACTOR_METHOD_VOICE_ASSISTANT = </span><span style="color:#d08770;">10</span><span>,
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>BoltActuatorState {
+</span><span>    BOLT_ACTUATOR_STATE_OK = </span><span style="color:#d08770;">1</span><span>,
+</span><span>    BOLT_ACTUATOR_STATE_LOCKING = </span><span style="color:#d08770;">2</span><span>,
+</span><span>    BOLT_ACTUATOR_STATE_UNLOCKING = </span><span style="color:#d08770;">3</span><span>,
+</span><span>    BOLT_ACTUATOR_STATE_MOVING = </span><span style="color:#d08770;">4</span><span>,
+</span><span>    BOLT_ACTUATOR_STATE_JAMMED_LOCKING = </span><span style="color:#d08770;">5</span><span>,
+</span><span>    BOLT_ACTUATOR_STATE_JAMMED_UNLOCKING = </span><span style="color:#d08770;">6</span><span>,
+</span><span>    BOLT_ACTUATOR_STATE_JAMMED_OTHER = </span><span style="color:#d08770;">7</span><span>,
+</span><span>};
+</span><span>
+</span><span style="color:#b48ead;">enum </span><span>BoltLockedState {
+</span><span>    BOLT_LOCKED_STATE_UNLOCKED = </span><span style="color:#d08770;">1</span><span>,
+</span><span>    BOLT_LOCKED_STATE_LOCKED = </span><span style="color:#d08770;">2</span><span>,
+</span><span>    BOLT_LOCKED_STATE_UNKNOWN = </span><span style="color:#d08770;">3</span><span>,
+</span><span>};
+</span><span>
+</span><span>} </span><span style="color:#65737e;">// namespace BoltLockTrait
+</span><span>} </span><span style="color:#65737e;">// namespace Security
+</span><span>} </span><span style="color:#65737e;">// namespace Trait
+</span><span>} </span><span style="color:#65737e;">// namespace Weave
+</span><span>} </span><span style="color:#65737e;">// namespace Schema
+</span><span style="color:#b48ead;">#endif </span><span style="color:#65737e;">// _WEAVE_TRAIT_SECURITY__BOLT_LOCK_TRAIT_H_
+</span></code></pre>
+<p>In addition to generating the embedded core, the compiler will also generate the cloud services
+code that will allow the cloud to interface with a device in the HAN via a Thread/WiFi Border Router, a device that will
+be both on the WiFi and Thread networks and serving as a bridge between the two. Finally, the compiler can also
+generate the Swift and Java code to hook the interfaces defined in the schema to UIs in a mobile app. For Nest this means
+that for any device they create or a partner creates they just need to have the Weave Schema and the actual device to
+fully integrate a new device into the Weave Network and show up in the Nest App. No frontend, or cloud development needed.
+This lets developers focus on the device itself and less on the infrastructure.</p>
+<p>To show off my work, I created a couple Weave devices on
+top of Nest's internal development platform. This device simulated a door lock, turning an LED on and off when the user tries to unlock or lock the device.
+I by myself was able to write the embedded code, and stand up a full end to end smart lock service integrated into the existing
+Nest app in less than a week.</p>
+<p>Weave is a strong choice for the protocol that will truly unify IoT ecosystems. Weave has the potential not just to make device
+implementation easy but also could allow developers to make virtual devices. Developers could say describe an intercom system which in
+might use a microphone and speakers. You could setup a weave device schema which says for the intercom interface you need a microphone trait and
+multiple speaker traits. Then some physical device could query the HAN to find some devices that have a speaker trait or a mic trait then recruit them
+to come together in this new intercom virtual device. So you could use the microphone on a Nest Cam and the speakers in Nest smoke detectors and
+now have an in house intercom system without needed to buy any new hardware.</p>
+<p>Nest was and Google is now committed to opening up weave to all sorts of developers by open sourcing Weave, WDL and the WDL compiler. Nest also open sourced Thread.
+Thread has been adopted by companies like Eero / Amazon and Apple so maybe OpenWeave will come next.</p>
+<p><img src="https://www.narendasan.com/blog/open-weave/imgs/ow.png" alt="ow" /></p>
+<ul>
+<li>WDL Compiler: <a href="https://github.com/openweave/openweave-wdlc">https://github.com/openweave/openweave-wdlc</a></li>
+<li>OpenWeave: <a href="https://github.com/openweave">https://github.com/openweave</a></li>
+<li>OpenThread: <a href="https://github.com/openthread">https://github.com/openthread</a></li>
+</ul>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/embedded">#embedded</a>
+        
+<a href="/tags/compilers">#compilers</a>
+        
+<a href="/tags/open-source">#open source</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+

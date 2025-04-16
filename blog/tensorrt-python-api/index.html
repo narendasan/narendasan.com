@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="TensorRT Python API">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="Making NVIDIA&#x27;s Neural Network Optimizer accessible to the everyday data scientist">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/tensorrt-python-api/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="TensorRT Python API">
+    
+    
+        <meta property="og:description" content="Making NVIDIA&#x27;s Neural Network Optimizer accessible to the everyday data scientist">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/tensorrt-python-api/">
+        
+        <meta property="twitter:title" content="TensorRT Python API">
+        
+        
+        <meta property="twitter:description" content="Making NVIDIA&#x27;s Neural Network Optimizer accessible to the everyday data scientist">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/tensorrt-python-api/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"Making NVIDIA's Neural Network Optimizer accessible to the everyday data scientist",
+                "url":"https://www.narendasan.com/blog/tensorrt-python-api/",
+                "@type":"WebSite",
+                "headline":"TensorRT Python API",
+                "name":"TensorRT Python API",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;tensorrt-python-api</p>
+<p class="post-meta"><time datetime="2017-09-27">September 27, 2017</time></p>
+<h1>TensorRT Python API</h1>
+<i>Making NVIDIA&#x27;s Neural Network Optimizer accessible to the everyday data scientist</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<p>When one thinks of neural networks, probably the first thing they think of is a deep learning framework like Tensorflow or PyTorch. The creation of deep learning frameworks were crucial to the adoption of deep learning in the products we use every day. Instead of having to write your own CUDA kernels to leverage the parallelization power of a GPU, you can easily structure components together into a graph and managed the training of that graph all in python, letting the frameworks handle all the hard parts. But this is only half of the solution to making deep learning a viable tool to do useful work.</p>
+<p>Once the weights have been finalized and the training completed you are left with something that while may be good at its particular task, is far less efficient than it could be. Many people when deploying neural network models, take the extra step to optimize their model before deploying it so as to get the maximum throughput through the network. There are a couple projects that look to be the Tensorflow or PyTorch of this deployment phase (also known as the inference phase). Those include Facebook's GLOW compiler, DLVM, ONNC, nGraph, TVM and XLA. NVIDIA creates one specifically for optimizing networks on their GPUs for inference called TensorRT. If you want to know more about the optimizations that TensorRT does, take a look at these blog posts: <a href="https://devblogs.nvidia.com/tag/tensorrt/">https://devblogs.nvidia.com/tag/tensorrt/</a>.</p>
+<p>In January of 2017 when I joined NVIDIA for a 8 month co-op, TensorRT 2.1 just came out. At the time for a user to optimize a network they had a couple of options, all of which required setting up a large C++ infrastructure around the model ingest.
+At the time the only supported &quot;parser&quot; was for Caffe Models, and everyone else would have to manually extract weights and read them into a network definition API. Here was a minimal example from around then:</p>
+<p>The user would start by creating an ingest system that would take a Caffe model, parse it then create an engine.</p>
+<h4 id="tensorrt-engine-builder">TensorRT Engine Builder</h4>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span>IBuilder* builder = </span><span style="color:#bf616a;">createInferBuilder</span><span>(</span><span style="color:#bf616a;">gLogger</span><span>);
+</span><span>​
+</span><span style="color:#65737e;">// parse the caffe model to populate the network, then set the outputs
+</span><span>INetworkDefinition* network = builder-&gt;</span><span style="color:#bf616a;">createNetwork</span><span>();
+</span><span>​
+</span><span>CaffeParser parser;
+</span><span style="color:#b48ead;">auto</span><span> blob_name_to_tensor = parser.</span><span style="color:#bf616a;">parse</span><span>(“deploy.</span><span style="color:#bf616a;">prototxt</span><span>”,
+</span><span>​                                        trained_file.</span><span style="color:#bf616a;">c_str</span><span>(),
+</span><span>​                                        *network,
+</span><span>​                                        DataType::</span><span style="color:#d08770;">kFLOAT</span><span>);
+</span><span>​
+</span><span style="color:#65737e;">// specify which tensors are outputs
+</span><span>network-&gt;</span><span style="color:#bf616a;">markOutput</span><span>(*blob_name_to_tensor-&gt;</span><span style="color:#bf616a;">find</span><span>(&quot;</span><span style="color:#a3be8c;">prob</span><span>&quot;));
+</span><span>​
+</span><span style="color:#65737e;">// Build the engine
+</span><span>builder-&gt;</span><span style="color:#bf616a;">setMaxBatchSize</span><span>(</span><span style="color:#d08770;">1</span><span>);
+</span><span>builder-&gt;</span><span style="color:#bf616a;">setMaxWorkspaceSize</span><span>(</span><span style="color:#d08770;">1 </span><span>&lt;&lt; </span><span style="color:#d08770;">30</span><span>);
+</span><span>ICudaEngine* engine = builder-&gt;</span><span style="color:#bf616a;">buildCudaEngine</span><span>(*network);
+</span></code></pre>
+<p>Then using the engine they would setup an inference pipeline, that would manage transferring data to the GPU and results back.</p>
+<h4 id="tensorrt-engine-executor">TensorRT Engine Executor</h4>
+<pre data-lang="c++" style="background-color:#2b303b;color:#c0c5ce;" class="language-c++ "><code class="language-c++" data-lang="c++"><span style="color:#65737e;">// The execution context is responsible for launching the
+</span><span style="color:#65737e;">// compute kernels
+</span><span>IExecutionContext *context = engine-&gt;</span><span style="color:#bf616a;">createExecutionContext</span><span>();
+</span><span>
+</span><span style="color:#65737e;">// In order to bind the buffers, we need to know the names of the
+</span><span style="color:#65737e;">// input and output tensors.
+</span><span style="color:#b48ead;">int</span><span> inputIndex = engine-&gt;</span><span style="color:#bf616a;">getBindingIndex</span><span>(INPUT_LAYER_NAME),
+</span><span style="color:#b48ead;">int</span><span> outputIndex = engine-&gt;</span><span style="color:#bf616a;">getBindingIndex</span><span>(OUTPUT_LAYER_NAME);
+</span><span>
+</span><span style="color:#65737e;">// Allocate GPU memory for Input / Output data
+</span><span style="color:#b48ead;">void</span><span>* buffers = </span><span style="color:#96b5b4;">malloc</span><span>(engine-&gt;</span><span style="color:#bf616a;">getNbBindings</span><span>() * sizeof(</span><span style="color:#b48ead;">void</span><span>*));
+</span><span style="color:#bf616a;">cudaMalloc</span><span>(&amp;buffers[inputIndex], batchSize * size_of_single_input);
+</span><span style="color:#bf616a;">cudaMalloc</span><span>(&amp;buffers[outputIndex], batchSize * size_of_single_output);
+</span><span>
+</span><span style="color:#65737e;">// Use CUDA streams to manage the concurrency of copying and executing
+</span><span>cudaStream_t stream;
+</span><span style="color:#bf616a;">cudaStreamCreate</span><span>(&amp;stream);
+</span><span>
+</span><span style="color:#65737e;">// Copy Input Data to the GPU
+</span><span style="color:#bf616a;">cudaMemcpyAsync</span><span>(buffers[inputIndex], input,
+</span><span>​                batchSize * size_of_single_input,
+</span><span>​                cudaMemcpyHostToDevice, stream);
+</span><span>
+</span><span style="color:#65737e;">// Launch an instance of the GIE compute kernel
+</span><span>context.</span><span style="color:#bf616a;">enqueue</span><span>(batchSize, buffers, stream, </span><span style="color:#d08770;">nullptr</span><span>);
+</span><span>
+</span><span style="color:#65737e;">// Copy Output Data to the Host
+</span><span style="color:#bf616a;">cudaMemcpyAsync</span><span>(output, buffers[outputIndex],
+</span><span>​                batchSize * size_of_single_output,
+</span><span>​                cudaMemcpyDeviceToHost, stream);
+</span><span>
+</span><span style="color:#65737e;">// It is possible to have multiple instances of the code above
+</span><span style="color:#65737e;">// in flight on the GPU in different streams.
+</span><span style="color:#65737e;">// The host can then sync on a given stream and use the results
+</span><span style="color:#bf616a;">cudaStreamSynchronize</span><span>(stream);
+</span></code></pre>
+<p>For people who had the resources to develop this sort of infrastructure it was entirely worth it to get the performance benefits, but to say the least it was in accessible for prototyping and light applications.</p>
+<h2 id="enter-the-tensorrt-python-api">Enter the TensorRT Python API</h2>
+<p>For actual deployments C++ is fine, if not preferable to Python,  especially in the embedded settings I was working in. However, there is still quite a bit of development work to be done between having a  trained model and putting it out in the world. One example is quantization.</p>
+<h4 id="a-quick-primer-on-quantization">A Quick Primer on Quantization</h4>
+<p>Typically (at least in 2017), neural networks are trained at FP32 precision. This is mostly due to the hardware available at that time specializing in FP32 math. But this precision has a lot more granularity than is necessary and ultimately you can get significant performance improvements by lowering the precision (to FP16 or INT8 or INT9 for example). For INT8 in particular, you need to go through a process called quantization that maps the range of weights onto an 8bit space.</p>
+<p>In TensorRT there are APIs that help do this quantization for you in a way that hopefully minimizes the precision lost by using this less granular representation. This and other advanced features are usually what need to be experimented with before deploying a model but having to set up quantization infrastructure in C++ just for experiments is a lot of work.</p>
+<h3 id="wrapping-a-c-library">Wrapping a C++ Library</h3>
+<p>So instead of having to rewrite a library in Python there are APIs and tools you can use to wrap an existing library and expose a python interface. This is in fact the approach that libraries like PyTorch and Tensorflow use, a C++ core with a Python Frontend. There are couple tools that people use that automate the process of wrapping a library, one is SWIG which is able to auto generate an interface based on a header file and an interface file and PyBind11 a newer library that takes more work to define an interface but is lighter weight. For easy of prototyping and the shear amount of code to wrap I chose to use SWIG in my initial versions of the Python API for TensorRT but in later versions this was ported to PyBind11.</p>
+<p>TensorRT also requires directly interfacing with the CUDA Device API to transfer over data to a GPU and manage that memory through inference. There are a few python libraries that provide this capability. The one used officially with the TensorRT API is PyCUDA, but effort was put in to make sure other libraries such as CuPy (or even PyTorch) also work.</p>
+<p>If you are going through the trouble to make a nice python API you should also try to abstract out a lot of the boilerplate that comes with a library targeted at C++ which I did in the <code>utils</code> sub package so as to maintain as much similarity between the C++ and Python APIs in the main package but allow for higher level features else where.</p>
+<p>At this point I was able to do a lot of the basic work you'd want to do with TensorRT in Python:</p>
+<h4 id="tensorrt-engine-builder-in-python">TensorRT Engine Builder in Python</h4>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#b48ead;">import </span><span>tensorrt </span><span style="color:#b48ead;">as </span><span>trt
+</span><span style="color:#b48ead;">import </span><span>uff
+</span><span style="color:#b48ead;">from </span><span>tensorrt.parsers </span><span style="color:#b48ead;">import </span><span>caffeparser
+</span><span style="color:#bf616a;">G_LOGGER </span><span>= trt.infer.</span><span style="color:#bf616a;">ConsoleLogger</span><span>(trt.infer.LogSeverity.</span><span style="color:#bf616a;">ERROR</span><span>)
+</span><span style="color:#bf616a;">OUTPUT_LAYERS </span><span>= [&#39;</span><span style="color:#a3be8c;">prob</span><span>&#39;]
+</span><span style="color:#bf616a;">MODEL_PROTOTXT </span><span>= &#39;</span><span style="color:#a3be8c;">./data/mnist/mnist.prototxt</span><span>&#39;
+</span><span style="color:#bf616a;">CAFFE_MODEL </span><span>= &#39;</span><span style="color:#a3be8c;">./data/mnist/mnist.caffemodel</span><span>&#39;
+</span><span>engine = trt.utils.</span><span style="color:#bf616a;">caffe_to_trt_engine</span><span>(</span><span style="color:#bf616a;">G_LOGGER</span><span>,
+</span><span>                                       </span><span style="color:#bf616a;">MODEL_PROTOTXT</span><span>,
+</span><span>                                       </span><span style="color:#bf616a;">CAFFE_MODEL</span><span>,
+</span><span>                                       </span><span style="color:#d08770;">1</span><span>,
+</span><span>                                       </span><span style="color:#d08770;">1 </span><span>&lt;&lt; </span><span style="color:#d08770;">20</span><span>,
+</span><span>                                       </span><span style="color:#bf616a;">OUTPUT_LAYERS</span><span>,
+</span><span>                                       trt.infer.DataType.</span><span style="color:#bf616a;">FLOAT</span><span>)
+</span></code></pre>
+<h4 id="tensorrt-engine-executor-in-python">TensorRT Engine Executor in Python</h4>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span>runtime = trt.infer.</span><span style="color:#bf616a;">create_infer_runtime</span><span>(</span><span style="color:#bf616a;">G_LOGGER</span><span>)
+</span><span>context = engine.</span><span style="color:#bf616a;">create_execution_context</span><span>()
+</span><span>img = img.</span><span style="color:#bf616a;">astype</span><span>(np.float32)
+</span><span>output = np.</span><span style="color:#bf616a;">empty</span><span>(</span><span style="color:#d08770;">10</span><span>, </span><span style="color:#bf616a;">dtype </span><span>= np.float32)
+</span><span>
+</span><span>d_input = cuda.</span><span style="color:#bf616a;">mem_alloc</span><span>(</span><span style="color:#d08770;">1 </span><span>* img.size * img.dtype.itemsize)
+</span><span>d_output = cuda.</span><span style="color:#bf616a;">mem_alloc</span><span>(</span><span style="color:#d08770;">1 </span><span>* output.size * output.dtype.itemsize)
+</span><span>bindings = [</span><span style="color:#bf616a;">int</span><span>(d_input), </span><span style="color:#bf616a;">int</span><span>(d_output)]
+</span><span>
+</span><span>stream = cuda.</span><span style="color:#bf616a;">Stream</span><span>()
+</span><span>cuda.</span><span style="color:#bf616a;">memcpy_htod_async</span><span>(d_input, img, stream)
+</span><span>context.</span><span style="color:#bf616a;">enqueue</span><span>(</span><span style="color:#d08770;">1</span><span>, bindings, stream.handle, </span><span style="color:#d08770;">None</span><span>)
+</span><span>cuda.</span><span style="color:#bf616a;">memcpy_dtoh_async</span><span>(output, d_output, stream)
+</span><span>stream.</span><span style="color:#bf616a;">synchronize</span><span>()
+</span><span style="color:#96b5b4;">print </span><span>(&quot;</span><span style="color:#a3be8c;">Prediction: </span><span>&quot; + </span><span style="color:#bf616a;">str</span><span>(np.</span><span style="color:#bf616a;">argmax</span><span>(output)))
+</span></code></pre>
+<h3 id="leveraging-the-python-ecosystem">Leveraging the Python Ecosystem</h3>
+<p>There are some great things about python that make life a lot easier. Data manipulation with NumPy for one is a massive benefit, so is being able to directly interface with other deep learning frameworks and tools. So one of the first things I added as soon as the library was wrapped was NumPy compatibility. This means that you can use NumPy arrays not only for your data, but also to transfer your weights around. This allows people using libraries like PyTorch (<em>note: this was before ONNX came out</em>) to extract their weights into NumPy arrays and then load them into TensorRT all in Python.</p>
+<h4 id="importing-a-pytorch-model-manually">Importing a PyTorch Model Manually</h4>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#65737e;"># Given a net
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Net</span><span style="color:#eff1f5;">(</span><span style="color:#a3be8c;">nn.Module</span><span style="color:#eff1f5;">):
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#96b5b4;">__init__</span><span>(</span><span style="color:#bf616a;">self</span><span>):
+</span><span>        </span><span style="color:#96b5b4;">super</span><span>(Net, </span><span style="color:#bf616a;">self</span><span>).</span><span style="color:#96b5b4;">__init__</span><span>()
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.conv1 = nn.</span><span style="color:#bf616a;">Conv2d</span><span>(</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">20</span><span>, </span><span style="color:#bf616a;">kernel_size</span><span>=</span><span style="color:#d08770;">5</span><span>)
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.conv2 = nn.</span><span style="color:#bf616a;">Conv2d</span><span>(</span><span style="color:#d08770;">20</span><span>, </span><span style="color:#d08770;">50</span><span>, </span><span style="color:#bf616a;">kernel_size</span><span>=</span><span style="color:#d08770;">5</span><span>)
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.conv2_drop = nn.</span><span style="color:#bf616a;">Dropout2d</span><span>()
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.fc1 = nn.</span><span style="color:#bf616a;">Linear</span><span>(</span><span style="color:#d08770;">800</span><span>, </span><span style="color:#d08770;">500</span><span>)
+</span><span>        </span><span style="color:#bf616a;">self</span><span>.fc2 = nn.</span><span style="color:#bf616a;">Linear</span><span>(</span><span style="color:#d08770;">500</span><span>, </span><span style="color:#d08770;">10</span><span>)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">forward</span><span>(</span><span style="color:#bf616a;">self</span><span>, </span><span style="color:#bf616a;">x</span><span>):
+</span><span>        x = F.</span><span style="color:#bf616a;">max_pool2d</span><span>(</span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">conv1</span><span>(x), </span><span style="color:#bf616a;">kernel_size</span><span>=</span><span style="color:#d08770;">2</span><span>, </span><span style="color:#bf616a;">stride</span><span>=</span><span style="color:#d08770;">2</span><span>)
+</span><span>        x = F.</span><span style="color:#bf616a;">max_pool2d</span><span>(</span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">conv2</span><span>(x), </span><span style="color:#bf616a;">kernel_size</span><span>=</span><span style="color:#d08770;">2</span><span>, </span><span style="color:#bf616a;">stride</span><span>=</span><span style="color:#d08770;">2</span><span>)
+</span><span>        x = x.</span><span style="color:#bf616a;">view</span><span>(-</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">800</span><span>)
+</span><span>        x = F.</span><span style="color:#bf616a;">relu</span><span>(</span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">fc1</span><span>(x))
+</span><span>        x = </span><span style="color:#bf616a;">self</span><span>.</span><span style="color:#bf616a;">fc2</span><span>(x)
+</span><span>        </span><span style="color:#b48ead;">return </span><span>F.</span><span style="color:#bf616a;">log_softmax</span><span>(x)
+</span><span>
+</span><span>model = </span><span style="color:#bf616a;">Net</span><span>()
+</span><span>weights = model.</span><span style="color:#bf616a;">state_dict</span><span>()
+</span><span>
+</span><span style="color:#bf616a;">G_LOGGER </span><span>= trt.infer.</span><span style="color:#bf616a;">ConsoleLogger</span><span>(trt.infer.LogSeverity.</span><span style="color:#bf616a;">ERROR</span><span>)
+</span><span>builder = trt.infer.</span><span style="color:#bf616a;">create_infer_builder</span><span>(</span><span style="color:#bf616a;">G_LOGGER</span><span>)
+</span><span>
+</span><span>network = builder.</span><span style="color:#bf616a;">create_network</span><span>()
+</span><span>
+</span><span style="color:#65737e;">#Name for the input layer, data type, tuple for dimension
+</span><span>data = network.</span><span style="color:#bf616a;">add_input</span><span>(&quot;</span><span style="color:#a3be8c;">data</span><span>&quot;, trt.infer.DataType.</span><span style="color:#bf616a;">FLOAT</span><span>, (</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">28</span><span>, </span><span style="color:#d08770;">28</span><span>))
+</span><span style="color:#b48ead;">assert</span><span>(data)
+</span><span>
+</span><span style="color:#65737e;">#-------------
+</span><span>conv1_w = weights[&#39;</span><span style="color:#a3be8c;">conv1.weight</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>conv1_b = weights[&#39;</span><span style="color:#a3be8c;">conv1.bias</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>conv1 = network.</span><span style="color:#bf616a;">add_convolution</span><span>(data, </span><span style="color:#d08770;">20</span><span>, (</span><span style="color:#d08770;">5</span><span>,</span><span style="color:#d08770;">5</span><span>),  conv1_w, conv1_b)
+</span><span style="color:#b48ead;">assert</span><span>(conv1)
+</span><span>conv1.</span><span style="color:#bf616a;">set_stride</span><span>((</span><span style="color:#d08770;">1</span><span>,</span><span style="color:#d08770;">1</span><span>))
+</span><span>
+</span><span style="color:#65737e;">#-------------
+</span><span>pool1 = network.</span><span style="color:#bf616a;">add_pooling</span><span>(conv1.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>), trt.infer.PoolingType.</span><span style="color:#bf616a;">MAX</span><span>, (</span><span style="color:#d08770;">2</span><span>,</span><span style="color:#d08770;">2</span><span>))
+</span><span style="color:#b48ead;">assert</span><span>(pool1)
+</span><span>pool1.</span><span style="color:#bf616a;">set_stride</span><span>((</span><span style="color:#d08770;">2</span><span>,</span><span style="color:#d08770;">2</span><span>))
+</span><span>
+</span><span style="color:#65737e;">#-------------
+</span><span>conv2_w = weights[&#39;</span><span style="color:#a3be8c;">conv2.weight</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>conv2_b = weights[&#39;</span><span style="color:#a3be8c;">conv2.bias</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>conv2 = network.</span><span style="color:#bf616a;">add_convolution</span><span>(pool1.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>), </span><span style="color:#d08770;">50</span><span>, (</span><span style="color:#d08770;">5</span><span>,</span><span style="color:#d08770;">5</span><span>), conv2_w, conv2_b)
+</span><span style="color:#b48ead;">assert</span><span>(conv2)
+</span><span>conv2.</span><span style="color:#bf616a;">set_stride</span><span>((</span><span style="color:#d08770;">1</span><span>,</span><span style="color:#d08770;">1</span><span>))
+</span><span>
+</span><span style="color:#65737e;">#-------------
+</span><span>pool2 = network.</span><span style="color:#bf616a;">add_pooling</span><span>(conv2.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>), trt.infer.PoolingType.</span><span style="color:#bf616a;">MAX</span><span>, (</span><span style="color:#d08770;">2</span><span>,</span><span style="color:#d08770;">2</span><span>))
+</span><span style="color:#b48ead;">assert</span><span>(pool2)
+</span><span>pool2.</span><span style="color:#bf616a;">set_stride</span><span>((</span><span style="color:#d08770;">2</span><span>,</span><span style="color:#d08770;">2</span><span>))
+</span><span>
+</span><span style="color:#65737e;">#-------------
+</span><span>fc1_w = weights[&#39;</span><span style="color:#a3be8c;">fc1.weight</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>fc1_b = weights[&#39;</span><span style="color:#a3be8c;">fc1.bias</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>fc1 = network.</span><span style="color:#bf616a;">add_fully_connected</span><span>(pool2.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>), </span><span style="color:#d08770;">500</span><span>, fc1_w, fc1_b)
+</span><span style="color:#b48ead;">assert</span><span>(fc1)
+</span><span>
+</span><span style="color:#65737e;">#-------------
+</span><span>relu1 = network.</span><span style="color:#bf616a;">add_activation</span><span>(fc1.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>), trt.infer.ActivationType.</span><span style="color:#bf616a;">RELU</span><span>)
+</span><span style="color:#b48ead;">assert</span><span>(relu1)
+</span><span>
+</span><span style="color:#65737e;">#-------------
+</span><span>fc2_w = weights[&#39;</span><span style="color:#a3be8c;">fc2.weight</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>fc2_b = weights[&#39;</span><span style="color:#a3be8c;">fc2.bias</span><span>&#39;].</span><span style="color:#bf616a;">cpu</span><span>().</span><span style="color:#bf616a;">numpy</span><span>().</span><span style="color:#bf616a;">reshape</span><span>(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>fc2 = network.</span><span style="color:#bf616a;">add_fully_connected</span><span>(relu1.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>), </span><span style="color:#d08770;">10</span><span>, fc2_w, fc2_b)
+</span><span style="color:#b48ead;">assert</span><span>(fc2)
+</span><span>
+</span><span>fc2.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>).</span><span style="color:#bf616a;">set_name</span><span>(&quot;</span><span style="color:#a3be8c;">prob</span><span>&quot;)
+</span><span>network.</span><span style="color:#bf616a;">mark_output</span><span>(fc2.</span><span style="color:#bf616a;">get_output</span><span>(</span><span style="color:#d08770;">0</span><span>))
+</span><span>
+</span><span>builder.</span><span style="color:#bf616a;">set_max_batch_size</span><span>(</span><span style="color:#d08770;">1</span><span>)
+</span><span>builder.</span><span style="color:#bf616a;">set_max_workspace_size</span><span>(</span><span style="color:#d08770;">1 </span><span>&lt;&lt; </span><span style="color:#d08770;">20</span><span>)
+</span><span>
+</span><span>engine = builder.</span><span style="color:#bf616a;">build_cuda_engine</span><span>(network)
+</span><span>network.</span><span style="color:#bf616a;">destroy</span><span>()
+</span><span>builder.</span><span style="color:#bf616a;">destroy</span><span>()
+</span></code></pre>
+<p>This was a new capability introduced by the Python API because of Python and NumPy.</p>
+<p>We can also use NumPy and other tools like SciPy to do some of the data preprocessing required for inference and the quantization pipeline.</p>
+<h4 id="quantization-with-tensorrt-python">Quantization with TensorRT Python</h4>
+<p>This blog post describes using the Python API to do the majority of the work for INT8 Quantization and deploying on a embedded platform:</p>
+<p><a href="https://devblogs.nvidia.com/int8-inference-autonomous-vehicles-tensorrt/?utm_content=buffer46af6&amp;utm_medium=social&amp;utm_source=twitter.com&amp;utm_campaign=buffer%5D">https://devblogs.nvidia.com/int8-inference-autonomous-vehicles-tensorrt/?utm_content=buffer46af6&amp;utm_medium=social&amp;utm_source=twitter.com&amp;utm_campaign=buffer</a></p>
+<h3 id="higher-level-apis">Higher level APIs</h3>
+<p>Using Python allows for a lot of abstracted work. One of the things introduced in the Python API is the Lite API a essentially one liner to create an engine and run it.</p>
+<pre data-lang="py" style="background-color:#2b303b;color:#c0c5ce;" class="language-py "><code class="language-py" data-lang="py"><span style="color:#65737e;">#Post Processing Callback, Should take a 5D Tensor, run post processing and return a single object
+</span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">analyze</span><span>(</span><span style="color:#bf616a;">output_data</span><span>):
+</span><span>    </span><span style="color:#65737e;">#Results from the engine are returned as a list of 5D numpy arrays:
+</span><span>    </span><span style="color:#65737e;">#        (Number of Batches x Batch Size x C x H x W)
+</span><span>    output = output_data.</span><span style="color:#bf616a;">reshape</span><span>(</span><span style="color:#96b5b4;">len</span><span>(</span><span style="color:#bf616a;">LABELS</span><span>))
+</span><span>    </span><span style="color:#65737e;"># Get result
+</span><span>    top = np.</span><span style="color:#bf616a;">argmax</span><span>(output)
+</span><span>    top = </span><span style="color:#bf616a;">LABELS</span><span>[top]
+</span><span>    </span><span style="color:#65737e;"># Get top5
+</span><span>    top5 = np.</span><span style="color:#bf616a;">argpartition</span><span>(output, -</span><span style="color:#d08770;">5</span><span>, </span><span style="color:#bf616a;">axis</span><span>=-</span><span style="color:#d08770;">1</span><span>)[-</span><span style="color:#d08770;">5</span><span>:]
+</span><span>    top5 = top5[np.</span><span style="color:#bf616a;">argsort</span><span>(output[top5])][::-</span><span style="color:#d08770;">1</span><span>]`
+</span><span>    top5_classes = []
+</span><span>    </span><span style="color:#b48ead;">for </span><span>i </span><span style="color:#b48ead;">in </span><span>top5:
+</span><span>        top5_classes.</span><span style="color:#bf616a;">append</span><span>((</span><span style="color:#bf616a;">LABELS</span><span>[i], output[i]))
+</span><span>    </span><span style="color:#b48ead;">return </span><span>[top, top5_classes]
+</span><span>
+</span><span style="color:#65737e;">#Arguments to create lite engine
+</span><span>network = {&quot;</span><span style="color:#a3be8c;">framework</span><span>&quot;:&quot;</span><span style="color:#a3be8c;">tf</span><span>&quot;,                                     </span><span style="color:#65737e;">#Source framework
+</span><span>           &quot;</span><span style="color:#a3be8c;">path</span><span>&quot;:</span><span style="color:#bf616a;">DATA</span><span>+&quot;</span><span style="color:#a3be8c;">/resnet50/resnet50-infer-5.pb</span><span>&quot;,          </span><span style="color:#65737e;">#Path to frozen model
+</span><span>           &quot;</span><span style="color:#a3be8c;">input_nodes</span><span>&quot;:{&quot;</span><span style="color:#a3be8c;">input</span><span>&quot;:(</span><span style="color:#d08770;">3</span><span>,</span><span style="color:#d08770;">224</span><span>,</span><span style="color:#d08770;">224</span><span>)},                  </span><span style="color:#65737e;">#Dictionary of input nodes and their associated dimensions
+</span><span>           &quot;</span><span style="color:#a3be8c;">output_nodes</span><span>&quot;:[&quot;</span><span style="color:#a3be8c;">GPU_0/tower_0/Softmax</span><span>&quot;],             </span><span style="color:#65737e;">#List of output nodes
+</span><span>           &quot;</span><span style="color:#a3be8c;">logger_severity</span><span>&quot;:LogSeverity.</span><span style="color:#bf616a;">INFO</span><span>,                   </span><span style="color:#65737e;">#Debugging info
+</span><span>           &quot;</span><span style="color:#a3be8c;">postprocessors</span><span>&quot;:{&quot;</span><span style="color:#a3be8c;">GPU_0/tower_0/Softmax</span><span>&quot;:analyze}}   </span><span style="color:#65737e;">#Postprocessor function table
+</span><span>
+</span><span>engine = </span><span style="color:#bf616a;">Engine</span><span>(**network)
+</span></code></pre>
+<p>And that defines a full pipeline with pre/post processing allowing for integration with other apps easily. The lite api also supports a variety of batching formats automatically so its pretty easy to just throw data at it and get results out.</p>
+<p>Take a look at the examples in the TensorRT distribution for demonstrations of this.</p>
+<h2 id="enabling-other-applications">Enabling other applications</h2>
+<p>Since it's now easy to integrate TensorRT its pretty straightforward to include optimized deep learning models in your projects. This enables a lot of cool new applications in spaces such as smart cities, robotics and web applications.</p>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/cv">#cv</a>
+        
+<a href="/tags/ai">#ai</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+

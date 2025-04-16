@@ -1,0 +1,815 @@
+last_updated: 06/28/23
+sections:
+  - name: Academia
+    sites:
+      - name: ArXiv Vanity
+        url: https://www.arxiv-vanity.com/
+        rss_feed:
+        kind: web
+
+      - name: Semantic Scholar
+        url: https://www.semanticscholar.org/
+        rss_feed:
+        kind: web
+
+  - name: Architecture
+    sites:
+      - name: ArchDaily
+        url: https://www.archdaily.com/
+        rss_feed: http://feeds.feedburner.com/Archdaily
+        kind: web
+
+      - name: Archis
+        url: https://archis.org
+        rss_feed: https://archis.org/feed
+        kind: web
+
+      - name: Architects' Journal
+        url: https://www.architectsjournal.co.uk/
+        rss_feed: https://www.architectsjournal.co.uk/XmlServers/navsectionRSS.aspx?navsectioncode=13628
+        kind: web
+
+      - name: BLDGBLOG
+        url: http://www.bldgblog.com/
+        rss_feed: http://www.bldgblog.com/feed/
+        kind: web
+
+      - name: Deezen
+        url: https://www.dezeen.com/
+        rss_feed: https://www.dezeen.com/feed/
+        kind: web
+
+      - name: Metropolis Magazine
+        url: https://www.metropolismag.com/
+        rss_feed: https://www.metropolismag.com/rss
+        kind: web
+
+  - name: Art
+    sites:
+      - name: The Art Assignment
+        url: https://www.youtube.com/user/theartassignment
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCmQThz1OLYt8mb2PU540LOA
+        kind: video
+
+      - name: It's Nice That
+        url: https://www.itsnicethat.com/
+        rss_feed: https://feeds2.feedburner.com/itsnicethat/SlXC
+        kind: web
+
+      - name: MCA Denver
+        url: https://mcadenver.org/blog
+        rss_feed: https://mcadenver.org/rss.xml
+        kind: web
+
+      - name: MoMA
+        url: https://www.moma.org/magazine/
+        rss_feed:
+        kind: web
+
+      - name: Tate
+        url: https://www.youtube.com/user/tate
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC2isDei-lrNSrgGYE4Np3PA
+        kind: video
+
+      - name: Triple Canopy
+        url: https://www.canopycanopycanopy.com/
+        rss_feed: https://www.canopycanopycanopy.com/feed
+        kind: web
+
+  - name: Artifical Intellegence
+    sites:
+      - name: Approximately Correct
+        url: http://approximatelycorrect.com/
+        rss_feed: http://approximatelycorrect.com/feed
+        kind: web
+
+      - name: ArXiv (cs.ML / cs.LR / cs.RL etc.)
+        url: https://arxiv.org
+        rss_feed:
+        kind: web
+
+      - name: BAIR
+        url: https://bair.berkeley.edu/
+        rss_feed: https://bair.berkeley.edu/blog/feed.xml
+        kind: web
+
+      - name: DeepMind
+        url: https://deepmind.com/research
+        rss_feed: https://deepmind.com/blog/feed/basic/
+        kind: web
+
+      - name: Distill
+        url: https://distill.pub/
+        rss_feed: https://distill.pub/rss.xml
+        kind: web
+
+      - name: FAIR
+        url: https://ai.facebook.com/
+        rss_feed: https://research.fb.com/feed/
+        kind: web
+
+      - name: Google AI Research
+        url: https://ai.googleblog.com/
+        rss_feed: http://feeds.feedburner.com/blogspot/gJZg
+        kind: web
+
+      - name: The Gradient
+        url: https://thegradient.pub/
+        rss_feed: https://thegradient.pub/rss/
+        kind: web
+
+      - name: Gradient Science
+        url: http://gradientscience.org/
+        rss_feed: https://gradientscience.org/feed.xml
+        kind: web
+
+      - name: LcZero Blog
+        url: https://blog.lczero.org/
+        rss_feed: http://blog.lczero.org/feeds/posts/default
+        kind: web
+
+      - name: Leverhulme Centre for the Future of Intellegence
+        url: http://lcfi.ac.uk/
+        rss_feed: http://lcfi.ac.uk/news/feed
+        kind: web
+
+      - name: Off the Convex Path
+        url: http://www.offconvex.org/
+        rss_feed: http://www.offconvex.org/feed.xml
+        kind: web
+
+      - name: OpenAI
+        url: https://openai.com/blog/
+        rss_feed: https://blog.openai.com/rss/
+        kind: web
+
+      - name: Skynet Today
+        url: https://www.skynettoday.com/
+        rss_feed:
+        kind: web
+
+      - name: Synced
+        url: https://syncedreview.com/
+        rss_feed: https://syncedreview.com/feed/
+        kind: web
+
+  - name: Biking
+    sites:
+      - name: BKXC
+        url: https://www.youtube.com/channel/UC3DFdy_qc-cqgKCyQTHLGzA
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC3DFdy_qc-cqgKCyQTHLGzA
+        kind: video
+
+      - name: Bike Magazine
+        url: https://www.bikemag.com/
+        rss_feed: https://www.bikemag.com/rss
+        kind: web
+
+      - name: Cycling Tips
+        url: https://cyclingtips.com/
+        rss_feed: http://feeds.feedburner.com/cyclingtipsblog/TJog
+        kind: web
+
+      - name: Freehub Magazine
+        url: https://www.youtube.com/channel/UCtM1UDC8bvtt9scMMdLD_nQ
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCtM1UDC8bvtt9scMMdLD_nQ
+        kind: video
+
+      - name: GCN
+        url: https://www.youtube.com/user/globalcyclingnetwork
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCuTaETsuCOkJ0H_GAztWt0Q
+        kind: video
+
+      - name: GMBN
+        url: https://www.youtube.com/user/globalmtb
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC_A--fhX5gea0i4UtpD99Gg
+        kind: video
+
+      - name: EF Education First Pro Cycling
+        url: https://www.youtube.com/user/slipstreamsportsllc
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCc1lFRTifsxsW3-QzFN-Eaw
+        kind: video
+
+      - name: Jordan Boostmaster
+        url: https://www.youtube.com/user/JordanBoostmaster
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCRXcXvZt9NZHpZYIX8B8Qnw
+        kind: video
+
+      - name: Mahalo My Dude
+        url: https://www.youtube.com/channel/UCeWaURbVb0kEFTpN2pB38cw
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCeWaURbVb0kEFTpN2pB38cw
+        kind: video
+
+      - name: Nate Hills
+        url: https://www.youtube.com/channel/UCywMHpWJsb9GXD0lakYf6WA
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCywMHpWJsb9GXD0lakYf6WA
+        kind: video
+
+      - name: Pinkbike
+        url: https://www.pinkbike.com/
+        rss_feed: https://www.pinkbike.com/pinkbike_xml_feed.php
+        kind: web
+
+      - name: Rapha Films
+        url: https://www.youtube.com/user/raphafilms
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCXYXxfVjxMppZY64-5baOsw
+        kind: video
+
+      - name: Rocky Mountain Bicycles
+        url: https://www.youtube.com/user/watchrockymountain
+        rss_feed: https://www.youtube.com/user/watchrockymountain
+        kind: video
+
+      - name: Seth's Bike Hacks
+        url: https://www.youtube.com/channel/UCu8YylsPiu9XfaQC74Hr_Gw
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCu8YylsPiu9XfaQC74Hr_Gw
+        kind: video
+
+      - name: The Singletrack Sampler
+        url: https://www.youtube.com/channel/UCfUGBBnxQYezwJM9wi3F-Lg
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCfUGBBnxQYezwJM9wi3F-Lg
+        kind: video
+
+      - name: The Syndicate
+        url: https://www.youtube.com/channel/UCCb8I3PHEUFPV0Jds0-_eig
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCCb8I3PHEUFPV0Jds0-_eig
+        kind: video
+
+      - name: Yeti Cycles
+        url: https://www.youtube.com/user/yeticycles
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC0Rix1DQ766jsYpj5Kfd_Yg
+        kind: video
+
+  - name: Business
+    sites:
+      - name: Stratechery
+        url: https://stratechery.com/
+        rss_feed: http://stratechery.com/feed/
+        kind: web
+
+  - name: Colorado
+    sites:
+      - name: Colorado Sun
+        url: https://coloradosun.com/
+        rss_feed: https://coloradosun.com/feed
+        kind: web
+
+      - name: CPR News
+        url: https://www.cpr.org/news/
+        rss_feed:
+        kind: web
+
+      - name: The Daily Camera
+        url: https://www.dailycamera.com/
+        rss_feed: https://www.dailycamera.com/feed/
+        kind: web
+
+      - name: "5280"
+        url: https://www.5280.com
+        rss_feed: https://www.5280.com/rss
+        kind: web
+
+  - name: Comics
+    sites:
+      - name: The Boondocks
+        url: https://www.comicsrss.com/preview/boondocks
+        rss_feed: https://www.comicsrss.com/rss/boondocks.rss
+        kind: web
+
+      - name: Calvin and Hobbes
+        url: http://www.ucomics.com/calvinandhobbes
+        rss_feed: http://wdr1.com/block/calvin_and_hobbes.rdf
+        kind: web
+
+      - name: Diesel Sweeties
+        url: http://dieselsweeties.com
+        rss_feed: http://dieselsweeties.com/ds-unifeed.xml
+        kind: web
+
+      - name: Dinosaur Comics!
+        url: https://qwantz.com
+        rss_feed: https://qwantz.com/rssfeed.php
+        kind: web
+
+      - name: The Farside
+        url: https://www.thefarside.com
+        rss_feed: "https://dyn.tedder.me/rss/farside/daily.json"
+        kind: web
+
+      - name: The Nib
+        url: https://thenib.tumblr.com/
+        rss_feed: https://thenib.tumblr.com/rss
+        kind: web
+
+      - name: Non Sequiter
+        url: https://www.comicsrss.com/preview/nonsequiter
+        rss_feed: https://www.comicsrss.com/rss/nonsequiter.rss
+        kind: web
+
+      - name: octopus pie
+        url: http://www.octopuspie.com
+        rss_feed: http://www.octopuspie.com/feed
+        kind: web
+
+      - name: The Perry Bible Fellowship
+        url: https://pbfcomics.com
+        rss_feed: https://pbfcomics.com/feed
+        kind: web
+
+      - name: Scenes From A Multiverse
+        url: http://amultiverse.com
+        rss_feed: http://amultiverse.com/feed
+        kind: web
+
+      - name: Saturday Morning Breakfast Cereal
+        url: https://www.smbc-comics.com
+        rss_feed: https://www.smbc-comics.com/comic/rss
+        kind: web
+
+      - name: XKCD
+        url: https://xkcd.com
+        rss_feed: https://xkcd.com/rss.xml
+        kind: web
+
+  - name: Computer Science
+    sites:
+      - name: The Morning Paper
+        url: https://blog.acolyer.org/
+        rss_feed: https://blog.acolyer.org/feed/
+        kind: web
+
+      - name: Computerphile
+        url: https://www.youtube.com/user/Computerphile
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA
+        kind: video
+
+  - name: Design
+    sites:
+      - name: ArsElectronica
+        url: https://ars.electronica.art/news/en/
+        rss_feed: https://ars.electronica.art/aeblog/en/feed
+        kind: web
+
+      - name: Co.Design
+        url: https://www.fastcompany.com/co-design
+        rss_feed: http://feeds.feedburner.com/fastcodesign/feed?format=xml
+        kind: web
+
+      - name: Dezeen
+        url: https://www.dezeen.com/
+        rss_feed: https://www.dezeen.com/feed/
+        kind: web
+
+      - name: Clever
+        url: http://www.cleverpodcast.com/
+        rss_feed: http://clever.libsyn.com/rss
+        kind: podcast
+
+      - name: Cooper Hewitt
+        url: https://www.cooperhewitt.org/
+        rss_feed: https://www.cooperhewitt.org/blog/rss
+        kind: web
+
+      - name: Design Week
+        url: https://www.designweek.co.uk/
+        rss_feed: https://www.designweek.co.uk/feed
+        kind: web
+
+      - name: Frog Design
+        url: https://www.frogdesign.com/
+        rss_feed:
+        kind: web
+
+      - name: Experiments with Google
+        url: https://experiments.withgoogle.com/
+        rss_feed:
+        kind: web
+
+      - name: IDEO
+        url: https://www.ideo.com/
+        rss_feed:
+        kind: web
+
+      - name: Journal of Design Science
+        url: https://jods.mitpress.mit.edu/
+        rss_feed: https://jods.mitpress.mit.edu/rss.xml
+        kind: web
+
+      - name: 99% Invisible
+        url: https://99percentinvisible.org/
+        rss_feed: http://feeds.99percentinvisible.org/99percentinvisible
+        kind: podcast
+
+  - name: Film & TV
+    sites:
+      - name: FilmJoy
+        url: https://www.youtube.com/user/chainsawsuitoriginal
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCEtB-nx5ngoNJWEzYa-yXBg
+        kind: video
+
+      - name: Every Frame a Painting
+        url: https://www.youtube.com/user/everyframeapainting
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCjFqcJQXGZ6T6sxyFB-5i6A
+        kind: video
+
+      - name: KaptianKristian
+        url: https://www.youtube.com/channel/UCuPgdqQKpq4T4zeqmTelnFg
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCuPgdqQKpq4T4zeqmTelnFg
+        kind: video
+
+      - name: Nerdwriter
+        url: https://www.youtube.com/user/Nerdwriter1
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCJkMlOu7faDgqh4PfzbpLdg
+        kind: video
+
+      - name: Now You See It
+        url: https://www.youtube.com/channel/UCWTFGPpNQ0Ms6afXhaWDiRw
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCWTFGPpNQ0Ms6afXhaWDiRw
+        kind: video
+
+      - name: Royal Ocean Film Society
+        url: https://www.youtube.com/channel/UCWq-qJSudqKrzquTVep9Jwg
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCWq-qJSudqKrzquTVep9Jwg
+        kind: video
+
+      - name: Patrick (H) Willems
+        url: https://www.youtube.com/user/patrickhwillems
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCF1fG3gT44nGTPU2sVLoFWg
+        kind: video
+
+      - name: Soderblog
+        url: https://extension765.com/blogs/soderblog
+        rss_feed:
+        kind: web
+
+      - name: The Take
+        url: https://www.youtube.com/channel/UCVjsbqKtxkLt7bal4NWRjJQ
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCVjsbqKtxkLt7bal4NWRjJQ
+        kind: video
+
+  - name: Food
+    sites:
+      - name: Alex
+        url: https://www.youtube.com/user/FrenchGuyCooking
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCPzFLpOblZEaIx2lpym1l1A
+        kind: video
+
+      - name: Bon Appetit
+        url: https://www.youtube.com/user/BonAppetitDotCom
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCbpMy0Fg74eXXkvxJrtEn3w
+        kind: video
+
+      - name: Vino Farm
+        url: https://www.youtube.com/channel/UC-xczyljpDKuM00-45OUrvg
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC-xczyljpDKuM00-45OUrvg
+        kind: video
+
+  - name: Friends' Sites
+    sites:
+      - name: Andrew Kuznetsov
+        url: http://www.andrewkuz.net/
+        rss_feed:
+        kind: web
+
+      - name: Ben Congdon
+        url: https://benjamincongdon.me/
+        rss_feed: https://benjamincongdon.me/blog/feed.xml
+        kind: web
+
+      - name: Josh Dunigan
+        url: https://www.joshdunigan.com/about-me
+        rss_feed: https://www.joshdunigan.com/feed.rss
+        kind: web
+
+      - name: Tyler Kim
+        url: https://tyler.kim/
+        rss_feed: https://tyler.kim/feed.rss
+        kind: web
+
+      - name: Rauhul Varma
+        url: https://rauhul.me/
+        rss_feed: https://rauhul.me/feed.rss
+        kind: web
+
+  - name: Hockey
+    sites:
+      - name: Bar Down
+        url: https://www.youtube.com/playlist?list=PL6ndzuHRRemBEnM3E6tozi8NoB9iRs7vS
+        rss_feed: https://www.youtube.com/feeds/videos.xml?playlist_id=PL6ndzuHRRemBEnM3E6tozi8NoB9iRs7vS
+        kind: video
+
+  - name: Illinois
+    sites:
+      - name: Illinois News Bureau
+        url: https://news.illinois.edu/view/6367#
+        rss_feed: https://news.illinois.edu/xml/6367/rss.xml
+        kind: web
+
+  - name: Literature
+    sites:
+      - name: Neil Gaiman's Journal
+        url: http://journal.neilgaiman.com/
+        rss_feed: http://www.neilgaiman.com/feed/journal/
+        kind: web
+
+      - name: Imaginary Worlds
+        url: https://www.imaginaryworldspodcast.org/
+        rss_feed: https://rss.art19.com/imaginary-worlds
+        kind: podcast
+
+  - name: Mathematics
+    sites:
+      - name: The Institute for Advanced Study
+        url: https://www.ias.edu/
+        rss_feed:
+        kind: web
+
+      - name: Numberphile
+        url: https://www.youtube.com/channel/UCoxcjq-8xIDTYp3uz647V5A
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A
+        kind: video
+
+      - name: Terrence Tao's Blog
+        url: https://terrytao.wordpress.com/
+        rss_feed: https://terrytao.wordpress.com/feed/
+        kind: web
+
+      - name: Tibees
+        url: https://www.youtube.com/user/tibees
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC52kszkc08-acFOuogFl5jw
+        kind: video
+
+      - name: Quanta Magazine
+        url: https://www.quantamagazine.org/
+        rss_feed: https://api.quantamagazine.org/feed/
+        kind: web
+
+      - name: 3Blue1Brown
+        url: https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw
+        kind: video
+
+  - name: Making
+    sites:
+      - name: Simone Giertz
+        url: https://www.youtube.com/channel/UC3KEoMzNz8eYnwBC34RaKCQ
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC3KEoMzNz8eYnwBC34RaKCQ
+        kind: video
+
+  - name: Music
+    sites:
+      - name: Broken Record
+        url: https://brokenrecordpodcast.com/
+        rss_feed: https://feeds.megaphone.fm/broken-record
+        kind: podcast
+
+      - name: JAZZIZ Magazine
+        url: https://www.jazziz.com/
+        rss_feed: https://www/jazziz.com/feed
+        kind: web
+
+      - name: Meet the Composer
+        url: https://www.newsounds.org/shows/meet-composer
+        rss_feed: http://feeds.wnyc.org/wqxr-meetthecomposer
+        kind: podcast
+
+      - name: Middle 8
+        url: https://www.youtube.com/channel/UCfeppgcy70ERp4gQrsYijsg
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCfeppgcy70ERp4gQrsYijsg
+        kind: video
+
+      - name: Polyphonic
+        url: https://www.youtube.com/channel/UCXkNod_JcH7PleOjwK_8rYQ
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCXkNod_JcH7PleOjwK_8rYQ
+        kind: video
+
+      - name: Resident Advisior
+        url: https://www.residentadvisor.net/
+        rss_feed:
+        kind: web
+
+      - name: Sideways
+        url: https://www.youtube.com/channel/UCi7l9chXMljpUft67vw78qw
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCi7l9chXMljpUft67vw78qw
+        kind: video
+
+      - name: Song Exploder
+        url: http://songexploder.net/
+        rss_feed: http://feed.songexploder.net/songexploder
+        kind: podcast
+
+  - name: Outdoors
+    sites:
+      - name: The North Face
+        url: https://www.youtube.com/user/TheNorthFaceVideo
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCNfWDbERpf34FsSWIpqGD0Q
+        kind: video
+
+      - name: Patagonia
+        url: https://www.youtube.com/user/patagoniavideo
+        rss_feed: https://www.youtube.com/user/patagoniavideo
+        kind: video
+
+  - name: Philosophy
+    sites:
+      - name: Aeon
+        url: https://aeon.co/
+        rss_feed: https://aeon.co/feed
+        kind: web
+
+      - name: Philosophize This
+        url: https://philosophizethis.org/
+        rss_feed: http://philosophizethis.libsyn.com/rss
+        kind: podcast
+
+      - name: Aesthetics for Birds
+        url: https://aestheticsforbirds.com
+        rss_feed: https://aestheticsforbirds.com/feed
+        kind: web
+
+      - name: Wisecrack
+        url: https://www.youtube.com/channel/UC6-ymYjG0SU0jUWnWh9ZzEQ
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC6-ymYjG0SU0jUWnWh9ZzEQ
+        kind: video
+
+  - name: Politics
+    sites:
+      - name: The Fifth Column
+        url: http://wethefifth.com/
+        rss_feed: https://feed.pippa.io/public/shows/wethefifth
+        kind: podcast
+
+  - name: Rugby
+    sites:
+      - name: Off The Ball
+        url: https://www.youtube.com/channel/UCfGDs3EEl0RHUwgdEGeCL_A
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCfGDs3EEl0RHUwgdEGeCL_A
+        kind: video
+
+      - name: Squidge Rugby
+        url: https://www.youtube.com/channel/UCu2oaGQ6Dds6g9lqfexUFbQ
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCu2oaGQ6Dds6g9lqfexUFbQ
+        kind: video
+
+      - name: The 1014 Rugby
+        url: https://www.youtube.com/channel/UCvv-9nUY-6zssj0uw4PrFKg
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCvv-9nUY-6zssj0uw4PrFKg
+        kind: video
+
+  #- name: San Fransisco
+  #  sites:
+
+  - name: Science
+    sites:
+      - name: Inference - International Review of Science
+        url: https://inference-review.com/
+        rss_feed:
+        kind: web
+
+      - name: Nautilus
+        url: http://nautil.us/
+        rss_feed: http://nautil.us/rss/all
+        kind: web
+
+      - name: Symmetry Magazine
+        url: https://www.symmetrymagazine.org/
+        rss_feed: https://www.symmetrymagazine.org/feed
+        kind: web
+
+      - name: Supercluster
+        url: https://www.supercluster.com
+        rss_feed: https://www.supercluster.com/rss.xml
+        kind: web
+
+  - name: Society & Culture
+    sites:
+      - name: This American Life
+        url: https://www.thisamericanlife.org/
+        rss_feed: http://feed.thisamericanlife.org/talpodcast
+        kind: podcast
+
+      - name: CCCB Lab
+        url: http://lab.cccb.org/en/
+        rss_feed: http://lab.cccb.org/en/feed/
+        kind: web
+
+      - name: The Conversation
+        url: https://theconversation.com/
+        rss_feed: https://theconversation.com/articles.atom?language=en
+        kind: web
+
+      - name: Edge
+        url: https://www.edge.org/
+        rss_feed:
+        kind: web
+
+      - name: The Ezra Klein Show
+        url: https://www.vox.com/ezra-klein-show-podcast
+        rss_feed: https://feeds.megaphone.fm/theezrakleinshow
+        kind: podcast
+
+      - name: Hello Internet
+        url: http://www.hellointernet.fm/
+        rss_feed: http://www.hellointernet.fm/podcast?format=rss
+        kind: podcast
+
+      - name: Intellegence Squared
+        url: https://www.youtube.com/user/iqsquared
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UCaqcvH8EvUtePORpN03jLMg
+        kind: video
+
+      - name: Looks Like New on KGNU
+        url: https://news.kgnu.org/category/looks-like-new/
+        rss_feed: https://news.kgnu.org/category/looks-like-new/feed/
+        kind: podcast
+
+      - name: Logic
+        url: https://logicmag.io/
+        rss_feed: https://logicmag.io/rss.xml
+        kind: web
+
+      - name: The Marginalian
+        url: https://www.themarginalian.org
+        rss_feed: http://feeds.feedburner.com/brainpickings/rss
+        kind: web
+
+      - name: Palladium
+        url: https://palladiummag.com/
+        rss_feed: https://palladiummag.com/feed
+        kind: web
+
+      - name: The Pudding
+        url: https://pudding.cool
+        rss_feed: https://pudding.cool/feed/index.xml
+        kind: web
+
+      - name: Reply All
+        url: https://gimletmedia.com/shows/reply-all
+        rss_feed: https://feeds.megaphone.fm/replyall
+        kind: podcast
+
+      - name: Radiolab
+        url: https://www.wnycstudios.org/podcasts/radiolab
+        rss_feed: http://feeds.wnyc.org/radiolab
+        kind: podcast
+
+      - name: The Walrus
+        url: https://thewalrus.ca/
+        rss_feed: https://thewalrus.ca/feed
+        kind: web
+
+      - name: 1843 Magazine
+        url: https://www.1843magazine.com/
+        rss_feed: https://www.1843magazine.com/rss/content
+        kind: web
+
+  - name: Technology
+    sites:
+      - name: ArsTechnica
+        url: https://arstechnica.com/
+        rss_feed: https://arstechnica.com/feed/
+        kind: web
+
+      - name: LinusTechTips
+        url: https://www.youtube.com/user/LinusTechTips
+        rss_feed: https://www.youtube.com/user/LinusTechTips
+        kind: video
+
+      - name: MIT Media Lab
+        url: https://www.media.mit.edu/
+        rss_feed: http://news.mit.edu/rss/topic/media
+        kind: web
+
+      - name: MIT Technology Review
+        url: https://www.technologyreview.com/
+        rss_feed: https://www.technologyreview.com/stories.rss
+        kind: web
+
+      - name: The Observation Deck
+        url: http://dtrace.org/blogs/bmc/
+        rss_feed: http://dtrace.org/blogs/bmc/feed/
+        kind: web
+
+      - name: The Verge
+        url: https://www.theverge.com/
+        rss_feed: https://www.theverge.com/rss/index.xml
+        kind: web
+
+      - name: Uber Engineering
+        url: https://eng.uber.com/
+        rss_feed: https://eng.uber.com/rss
+        kind: web
+
+  - name: Urbanism
+    sites:
+      - name: CityLab
+        url: https://www.citylab.com/
+        rss_feed: https://www.citylab.com/feeds/posts/
+        kind: web
+
+  - name: Other
+    sites:
+      - name: CGPGrey
+        url: https://www.youtube.com/user/CGPGrey
+        rss_feed: https://www.youtube.com/feeds/videos.xml?channel_id=UC2C_jShtL725hvbm1arSV9w
+        kind: video

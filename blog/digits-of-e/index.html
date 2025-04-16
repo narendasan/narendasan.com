@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+<title>Naren Dasan</title>
+
+
+    
+        <meta name="title" content="Finding the First 10 Digits Prime Number in the Digits of e">
+    
+    
+        <meta name="author" content="Naren Dasan">
+    
+    
+        <meta name="description" content="The classic Google Billboard problem, find the first 10 digit prime number in the digits of e">
+    
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.narendasan.com/blog/digits-of-e/">
+    
+        <meta property="og:site_name" content="">
+    
+    
+        <meta property="og:title" content="Finding the First 10 Digits Prime Number in the Digits of e">
+    
+    
+        <meta property="og:description" content="The classic Google Billboard problem, find the first 10 digit prime number in the digits of e">
+    
+    
+        <meta property="og:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+    
+
+    
+    
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://www.narendasan.com/blog/digits-of-e/">
+        
+        <meta property="twitter:title" content="Finding the First 10 Digits Prime Number in the Digits of e">
+        
+        
+        <meta property="twitter:description" content="The classic Google Billboard problem, find the first 10 digit prime number in the digits of e">
+        
+        
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;www.narendasan.com&#x2F;img&#x2F;favicon.ico">
+        
+    
+
+        <link rel="canonical" href="https://www.narendasan.com/blog/digits-of-e/">
+    
+        <link rel="shortcut icon" type="image/x-icon" href="https://www.narendasan.com/img/favicon.ico">
+    
+        <script type="application/ld+json">
+            {
+                "description":"The classic Google Billboard problem, find the first 10 digit prime number in the digits of e",
+                "url":"https://www.narendasan.com/blog/digits-of-e/",
+                "@type":"WebSite",
+                "headline":"Finding the First 10 Digits Prime Number in the Digits of e",
+                "name":"Finding the First 10 Digits Prime Number in the Digits of e",
+                "author":{
+                    "@type":"Person",
+                    "name":"Naren Dasan"
+                },
+                "@context":"https://schema.org"
+            }
+        </script>
+
+
+
+        <link rel="stylesheet" href="https://www.narendasan.com/style.css"/>
+
+        <script>
+            MathJax = {
+              tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+              },
+              svg: {
+                fontCache: 'global'
+              }
+            };
+            </script>
+        <script type="text/javascript" id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                <a href="/">
+                    <img src="/img/naren_logo_transparent.png" class="logo-img invertable" alt="About Nielsen Ramon header image">
+                </a>
+
+                <nav class="header-nav">
+    
+                    <a href="/about" >about</a>
+    
+                    <a href="/pubs" >publications</a>
+    
+                    <a href="/dir" >directory</a>
+    
+                    <a href="/blog" >blog</a>
+    
+                    <a href="/photos" >photos</a>
+    
+                    <a href="/rps" >reposts</a>
+    
+                </nav>
+
+
+<p><a href=".."><-</a>&ensp;digits-of-e</p>
+<p class="post-meta"><time datetime="2013-12-20">December 20, 2013</time></p>
+<h1>Finding the First 10 Digits Prime Number in the Digits of e</h1>
+<i>The classic Google Billboard problem, find the first 10 digit prime number in the digits of e</i>
+<hr>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+
+
+
+
+<blockquote>
+<p>Transcription of my IB Math HL Paper from 2013</p>
+</blockquote>
+<p>Google being a leading company in the technology industry in order to remain competitive needs to find the best talent in computer science, mathematics and the hard sciences. However pure recruitment does not always find the best and the brightest. In an effort to attract driven and curious people to work for Google, the company released this billboard ad.</p>
+<p><img src="https://www.narendasan.com/blog/digits-of-e/imgs/problem.jpg" alt="original billboard" /></p>
+<p>Personally, this problem is of interests as it is an seemingly simple computer science problem, yet it is used by a company with high standards to screen talent. Therefore it is a good problem to measure ones skills. Though it seems simple, with closer inspection, this problem begins to examine not only a mathematical curiosity but with a little pursuit of elegance also examines number theory, the frequency of primes within a set of digits and efficiency of algorithms. Computer science itself is an interesting extension of a variety of fields including mathematics and engineering. Computer science has enabled mathematics, scientists, engineers and even high school students to explore the curiosities and patterns of mathematics and science and to create new things. Algorithms in computer science start to become very similar to fields in mathematics like combinatorics, probability and number theory. While looking at algorithms, it is interesting to see where the two fields overlap. For instance, for loops and recursive methods in many programming languages are comparable to summations and factorials.</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">public static int </span><span style="color:#bf616a;">factorial</span><span>(</span><span style="color:#b48ead;">int</span><span> num) {
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(num == </span><span style="color:#d08770;">0</span><span>) {
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">1</span><span>;
+</span><span>    } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>        </span><span style="color:#65737e;">//recursive (calls itself again)
+</span><span>        num * </span><span style="color:#bf616a;">factorial</span><span>((num -  </span><span style="color:#d08770;">1</span><span>));
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">return</span><span> temp;
+</span><span>}
+</span></code></pre>
+<p>At first glance, a brute force method of checking if each ten digit number $i$ is divisible by any of the numbers from $2$ to $x - 1$ should not take that long. However, It is unclear though how far into the digits of $e$ the program would have to go. Eventhough it may take one iteration 10 seconds, 100 iterations could take 10000 and so on. Therefore a more feasible approach to this problem may be in order.</p>
+<h2 id="discussion-of-the-problem-in-depth">Discussion of the Problem In-depth</h2>
+<p>From a high level this problem has two parts. Part one is to develop a sufficiently precise definition of $e$ to test for the prime in question. The odds are extremely low that the answer would occur in the standard definition of $e$ of most programming languages. Part two is to develop a algorithm that will test numbers for primarily since a brute force method is not scalable.</p>
+<p>$e$ as it is defined in Java’s java.lang.Math class is $2.718281828459045$. Java is a object oriented programming language that is meant to be compatible across different computers.The decision to use Java will be explained later In the majority of computer science problems, this definition is sufficient, however as this problem is to find the first ten digit prime, in this definitions there are six ten digit possible numbers to test. The likelihood that the prime exists in these digits are fairly low and therefore it would be useful to generate a more precise definition. $e$ can be calculated in a variety of ways, the first of which would be the method used by Bernoulli:</p>
+<p>$$\lim_{n\to\infty} (1 + \frac{1}{n})^n$$</p>
+<p>This is a method that is really easy to understand and is therefore the first definition of $e$ many students learn, yet is not very practical in a computational sense as limits are not very easily implemented. Others issues like the lack of control of the precision of the number since the number’s precision does not change linearly. It is therefore hard to predict a point at which the number is sufficiently large and the program can terminate.</p>
+<p><img src="https://www.narendasan.com/blog/digits-of-e/imgs/fraction.png" alt="fraction" /></p>
+<p>Finally, the third method and the one chosen was the Taylor series definition of $e$:</p>
+<p>$$e = \sum_{n=1}^{\infty} \frac{1}{n!}$$</p>
+<p>The Taylor series definition is easy to understand and the most elegant to implement as it is simply a while loop continually adding the next element to the sum of the previous ones. An implementation is below:</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">public static double </span><span style="color:#bf616a;">e_taylor_series</span><span>() {
+</span><span>    </span><span style="color:#b48ead;">double</span><span> temp = </span><span style="color:#d08770;">1</span><span>;
+</span><span>    </span><span style="color:#b48ead;">int</span><span> iteration = </span><span style="color:#d08770;">1</span><span>;
+</span><span>    </span><span style="color:#b48ead;">while</span><span>(</span><span style="color:#d08770;">1 </span><span>== </span><span style="color:#d08770;">1</span><span>) {
+</span><span>        temp = temp + (</span><span style="color:#d08770;">1</span><span>/</span><span style="color:#bf616a;">factorial</span><span>(iteration))
+</span><span>        </span><span style="color:#65737e;">//see factorial function above
+</span><span>        iteration++;
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">return</span><span> temp;
+</span><span>}
+</span></code></pre>
+<p>Of course this method would create and infinite loop, but it would calculate the true value of $e$. Simply changing the while loop to a for loop and selecting a number of iterations allows the program to be terminated at the desired level of precision:</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">public static double </span><span style="color:#bf616a;">e_taylor_series</span><span>() {
+</span><span>    </span><span style="color:#b48ead;">double</span><span> temp = </span><span style="color:#d08770;">1</span><span>;
+</span><span>    </span><span style="color:#b48ead;">for</span><span>(</span><span style="color:#b48ead;">int</span><span> i = </span><span style="color:#d08770;">1</span><span>; i &lt;= </span><span style="color:#d08770;">500</span><span>; i++) {
+</span><span>        temp = temp + (</span><span style="color:#d08770;">1</span><span>/</span><span style="color:#bf616a;">factorial</span><span>(i))
+</span><span>        </span><span style="color:#65737e;">//see factorial function above
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">return</span><span> temp;
+</span><span>}
+</span></code></pre>
+<p>However a new issue arises that has not to do with mathematics but with computer science. The primitive <code>double</code> which is used by computers to store large decimals as defined by IEEE is a primitive with 52 bits available for fraction storage and 11 bits for exponents. This means that the smallest number that can stored in a <code>double</code> $4.94065645841246544e-324$ with 18 digits of significant figures. If $e$ was calculated using a double primitive the program could only test 7 possible values which does not improve the test set very much over the language’s definition. This is where the choice of the correct programming language can make the program very simple or very complicated. The run time of the program is very important since the precise location of the first prime is not yet known. If this program is to be scalable the runtime should not require hours. Using a language like C which is an extremely low level language will increase speed significantly since C is run without very many peripheral activities, but a solution in C because of the lack of data types other than the standard float and double for decimals would require parsing decimals into large integer arrays and adding those together in the right locations which is very difficult to implement without errors and a large amount of time committed to debugging. Meanwhile, a higher level language like Java may be slightly slower since all of its commands are run through essentially another computer called the Java Virtual Machine (JVM) which increases compatibility (also a positive for writing scalable code). However, defined in the <code>java.lang</code> library is a class bigDecimal that allows for more digits to be stored solving this issue easily. The algorithm for $e$ is as follows:</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">public static </span><span style="color:#ebcb8b;">BigDecimal </span><span style="color:#bf616a;">calc_e</span><span>() {
+</span><span>    </span><span style="color:#ebcb8b;">BigDecimal</span><span> e = </span><span style="color:#ebcb8b;">BigDecimal</span><span>.</span><span style="color:#d08770;">ONE</span><span>;
+</span><span>    </span><span style="color:#65737e;">//the definition of e, big decimal object is required to hold the value
+</span><span>    </span><span style="color:#ebcb8b;">BigDecimal</span><span> factorial = </span><span style="color:#ebcb8b;">BigDecimal</span><span>.</span><span style="color:#d08770;">ONE</span><span>;
+</span><span>    </span><span style="color:#65737e;">//factorial object, must be the same type as e to be able to use the big decimal
+</span><span>    </span><span style="color:#65737e;">// methods add and divide
+</span><span>    </span><span style="color:#b48ead;">for</span><span>(</span><span style="color:#b48ead;">int</span><span> i = </span><span style="color:#d08770;">1</span><span>; i &lt; </span><span style="color:#d08770;">500</span><span>; i++) {
+</span><span>        </span><span style="color:#65737e;">//summation of the taylor series definition of e for the first 500 iterations /
+</span><span>        </span><span style="color:#65737e;">// 1/1+1/1+1/2....+1/499+1/500
+</span><span>        factorial = factorial.</span><span style="color:#bf616a;">multiply</span><span>(</span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">BigDecimal</span><span>(i * </span><span style="color:#d08770;">1.0 </span><span>+ &quot;&quot;));
+</span><span>        e = e.</span><span style="color:#bf616a;">add</span><span>(</span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">BigDecimal</span><span>(</span><span style="color:#d08770;">1.0 </span><span>+ “”).</span><span style="color:#bf616a;">divide</span><span>(factorial, </span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">MathContext</span><span>(</span><span style="color:#d08770;">10000</span><span>)));
+</span><span>    }
+</span><span>    </span><span style="color:#65737e;">/* String eString = (e + &quot;&quot;);
+</span><span style="color:#65737e;">       supposed to print out e, computing resources run out of memory
+</span><span style="color:#65737e;">       long eDef = Long.parseLong(eString);
+</span><span style="color:#65737e;">       System.out.println(&quot;e = &quot; +eDef); */
+</span><span>    </span><span style="color:#b48ead;">return</span><span> e;
+</span><span>}
+</span></code></pre>
+<p>Now that a sufficiently precise value of $e$ has be generated, it is now necessary to develop a way to test numbers for their primality. A computer could easily given sufficient time test for a number $n$ every number from $2$ to $n - 1$ for divisibility. A slightly more efficient method would be to check each number from $2$ to $\sqrt{n}$ as shown below:</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">public static boolean </span><span style="color:#bf616a;">isPrime </span><span>(</span><span style="color:#b48ead;">long</span><span> n) {
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(n &lt;= </span><span style="color:#d08770;">1</span><span>){
+</span><span>        </span><span style="color:#65737e;">//if the number is less than 1 it cannot be prime
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(n % </span><span style="color:#d08770;">2 </span><span>== </span><span style="color:#d08770;">0</span><span>) {
+</span><span>         </span><span style="color:#65737e;">//if the number is divisable by 2 then is cannot be prime
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span>;
+</span><span>    }
+</span><span>    </span><span style="color:#b48ead;">long</span><span> m = (</span><span style="color:#b48ead;">long</span><span>) </span><span style="color:#ebcb8b;">Math</span><span>.</span><span style="color:#bf616a;">sqrt</span><span>(n);
+</span><span>    </span><span style="color:#65737e;">//there is no need to test past the square root of a number
+</span><span>    </span><span style="color:#65737e;">//since the square root is always a divisor of a number
+</span><span>    </span><span style="color:#b48ead;">for </span><span>(</span><span style="color:#b48ead;">long</span><span> i = </span><span style="color:#d08770;">3</span><span>; i &lt;= m; i += </span><span style="color:#d08770;">2</span><span>) {
+</span><span>        </span><span style="color:#65737e;">//tests every number from three to the square root of n
+</span><span>        </span><span style="color:#b48ead;">if </span><span>(n % i == </span><span style="color:#d08770;">0</span><span>) {
+</span><span>            </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span>;
+</span><span>        }
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">true</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>However, this is not scalable. A successful program should be able to find the first 20 digit or 40 digit prime number, (provided enough memory) in a reasonable time. Therefore, it is necessary to examine some other methods of determining primality of a number. A method that is quite popular is <em>Wilson’s Theorem</em>. <em>Wilson’s Theorem</em> states that:</p>
+<p>$$ (n - 1) \equiv - 1 \ (mod \ n) $$</p>
+<p>or that a number $n$ is prime if and only if the factorial of $(n - 1)$ is exactly 1 less that a multiple of $n$. This is an extremely powerful statement and one that is extremely easy to implement in code.</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">public static boolean </span><span style="color:#bf616a;">prime</span><span>(</span><span style="color:#b48ead;">int</span><span> n) {
+</span><span>    </span><span style="color:#b48ead;">int</span><span> test = </span><span style="color:#bf616a;">factorial</span><span>(n-</span><span style="color:#d08770;">1</span><span>) + </span><span style="color:#d08770;">1</span><span>;
+</span><span>    </span><span style="color:#65737e;">//Calculate the test number
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(test % n == </span><span style="color:#d08770;">0</span><span>) {
+</span><span>        </span><span style="color:#65737e;">// check divisibility
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">true</span><span>;
+</span><span>    } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p><em>Wilson’s Theorem</em> is very easy to prove and is as follows:</p>
+<h3 id="proof-of-wilson-s-theorem">Proof of Wilson’s Theorem</h3>
+<p>The when $p = 2, 3$ the result is obvious, therefore $p$ is an odd prime, $p &gt; 3$. If $p$ is a composite number then its divisors are in the set ${1,2,3,..., p - 1}$ and $((p - 1)!, p) &gt; 1$, therefore $(p - 1)! = -1 \ (mod \ p)$ for a composite number. If $p$ is prime, then each integers in the set relatively prime to $p$. Each of these integers a there is another $b$ such that $ab = 1 \ (mod \ p)$. It is important to note that this b is unique modulo $p$, and that since $p$ is prime, $a = b$ if and only if $a$ is $1$ or $p - 1$. Now if we omit $1$ and $p - 1$, then the others can be grouped into pairs whose product is one showing</p>
+<p>$$ 2 * 3 * 4 * \ ... * \ (p-2) = 1 \ (mod \ p) $$</p>
+<p>or</p>
+<p>$$ (p - 2)! = 1 \ (mod \ p) $$</p>
+<p>This equation multiplied by $(p - 1)$ proves the theorem.</p>
+<p>Though the implementation of the theorem was quite simple, an issue that arises is that the theorem requires factorials and the factorial of a ten digit number let a 30 or 50 digit one requires some serious computational power and this program should not depend on access to a supercomputer to successfully run.</p>
+<p>There is a a similar theorem to <em>Wilson’s Theorem</em> called <em>Fermat’s Little Theorem</em>.</p>
+<p>$$ a^{(p -1)} \equiv 1 \ (mod \ p) \ s.t. \ (a,p) = 1$$</p>
+<p>Fermat’s Little Theorem states that for a prime number $p$ and any number $a$ where the greatest common divisor is $1$ that a to the power of $p - 1$ is $1$ more than a multiple of $p$.
+A corollary to this theorem is</p>
+<p>$$a^p \equiv a \ (mod \ p)$$</p>
+<p>where a is any number and $p`$ is a prime. The proof of this theorem is as follows:</p>
+<h3 id="proof-of-the-fermat-s-little-theorem">Proof of the Fermat’s Little Theorem</h3>
+<h4 id="proof-by-induction">Proof By Induction</h4>
+<p><em>P0</em>. $0^p \equiv 0 \ (mod \ p)$ is true for all integers</p>
+<h4 id="lemma">Lemma</h4>
+<p>For any prime $p$, $(x + y)^p = x^P + y^p$ or $(x + y)^p \equiv x^P + y^p \ (mod \ p)$ for any $x$ and $y$ in the finite field $GF(p)$
+<em>To be proved later.</em></p>
+<p><em>P1</em>. Assume $kp \equiv k \ (mod \ p)$, and consider $p(k + 1)$</p>
+<p>Using the lemma $(k + 1)^p \equiv k^p + 1^p \ (mod \ p)$</p>
+<p>By the assumption, $kp \equiv k \ (mod \ p)$ -&gt; $1p = 1$. Thus $(k + 1)^p \equiv k^p + 1 \ (mod \ p)$</p>
+<h4 id="proof-of-lemma">Proof of Lemma</h4>
+<p>Using binomial theorem, the binomial coefficients are all integers and when $0 &lt; i &lt; p$, neither of the terms in the denominator includes a factor of $p$, leaving the coefficient itself to possess a prime factor of $p$ which must exist in the numerator, implying that $\binom{p}{i} \equiv 0 \ (mod \ p), \ 0 &lt; i &lt; p$</p>
+<p>Modulo $p$, this eliminates all but the first and last terms of the sum on the right-hand side of the binomial theorem for prime p. ∎</p>
+<p>The primality of p is essential to the lemma; otherwise, we have examples like $\binom{4}{2} = 6$ which is not divisible by 4.</p>
+<p><em>Fermat’s Little Theorem</em> also has a simple implementation. By using 2 for a the resources necessary for the program are minimized. note. an extra library is required: <code>java.lang.math</code>.</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span>    </span><span style="color:#b48ead;">public static boolean </span><span style="color:#bf616a;">prime</span><span>(</span><span style="color:#b48ead;">int</span><span> n) {
+</span><span>    </span><span style="color:#b48ead;">int</span><span> test = </span><span style="color:#ebcb8b;">Math</span><span>.</span><span style="color:#bf616a;">pow</span><span>(</span><span style="color:#d08770;">2</span><span>,n) - </span><span style="color:#d08770;">2</span><span>;
+</span><span>    </span><span style="color:#65737e;">//Calculate the test number
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(test % n == </span><span style="color:#d08770;">0</span><span>) {
+</span><span>        </span><span style="color:#65737e;">// check divisibility
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">true</span><span>;
+</span><span>    } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>This solution would be quite elegant if it were not for one caveat of <em>Fermat’s Little Theorem</em>. <em>Fermat’s Little Theorem</em> in addition to revealing primes reveals pseudoprimes or composite numbers that have a quality that primes have, namely fulfilling v. Though specific bases have specific pseudoprimes, a pseudoprime that is a pseudoprime for all values of base a is called a Carmichael number. Carmichael numbers are the set of all numbers that fulfill the following equation.</p>
+<p>$$({\sum_{a=1}^{p-1} a^{p-1}}, p) = 1 $$</p>
+<p>Meaning the greatest common divisor of the summation from $a$ to $p - 1$ of $a^{p-1}$ and $p$ is 1.</p>
+<p>While it would be easy to check for Carmichael numbers in the code, it would be difficult to check for all the other pseudoprimes not confined to the set of Carmichael numbers.
+A more robust form of Fermat’s Little Theorem called the Lucas Primality Test is probably the most scalable version of a primality test. The test states:</p>
+<p>$$a^{n-1} \equiv 1 \ (mod \ n)$$</p>
+<p>$$a^{(n-1)/q} \not\equiv 1 \ (mod \ n)$$</p>
+<p>If both of the above statements are true, where $q$ is each prime factor of $(n-1)$, the number is prime. This test gets rid of the false positives of <em>Fermat’s little theorem</em> of making it not necessity to include a test for Carmichael numbers and running the risk of getting a pseudoprime returned and could be implemented to check the output. The code implementation of the Lucas primality test is below.</p>
+<pre data-lang="java" style="background-color:#2b303b;color:#c0c5ce;" class="language-java "><code class="language-java" data-lang="java"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">prime </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public static boolean </span><span style="color:#8fa1b3;">prime</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">n</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;"> test </span><span>= </span><span style="color:#ebcb8b;">Math</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">pow</span><span style="color:#eff1f5;">(</span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">, (n </span><span>- </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">)) </span><span>- </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">//Calculate the test number
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(test </span><span>%</span><span style="color:#eff1f5;"> n </span><span>== </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">){
+</span><span style="color:#eff1f5;">            </span><span style="color:#65737e;">// check divisibility (for find_prime_factors() see below)
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">int[]</span><span style="color:#eff1f5;"> prime_factors </span><span>= </span><span style="color:#bf616a;">find_prime_factors</span><span style="color:#eff1f5;">(n);
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">for</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;"> i </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">; i </span><span>&lt;= </span><span style="color:#d08770;">40</span><span style="color:#eff1f5;">; i</span><span>++ </span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">if</span><span style="color:#eff1f5;">(prime_factors[i] </span><span>!= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">                    </span><span style="color:#65737e;">//make sure not to divide by zero
+</span><span style="color:#eff1f5;">                    </span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;"> carmichael </span><span>=  </span><span style="color:#ebcb8b;">Math</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">pow</span><span style="color:#eff1f5;">(</span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">,((n</span><span>-</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">)</span><span>/
+</span><span style="color:#eff1f5;">                    prime_factors[i])) </span><span>- </span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                    </span><span style="color:#b48ead;">if</span><span style="color:#eff1f5;">(carmichael </span><span>%</span><span style="color:#eff1f5;"> n </span><span>== </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">){
+</span><span style="color:#eff1f5;">                        </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                    }
+</span><span style="color:#eff1f5;">                }
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        } </span><span style="color:#b48ead;">else  </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private static int[] </span><span style="color:#8fa1b3;">find_prime_factors</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">n</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">int[]</span><span style="color:#eff1f5;"> factors </span><span>= </span><span style="color:#b48ead;">new int</span><span style="color:#eff1f5;">[</span><span style="color:#d08770;">40</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;"> x </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">//  #2 that divide n
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">while </span><span style="color:#eff1f5;">(n </span><span>% </span><span style="color:#d08770;">2 </span><span>== </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">            factors[x] </span><span>= </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            x</span><span>++</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            n </span><span>=</span><span style="color:#eff1f5;"> n </span><span>/ </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// n is odd a. can skip one test (Note i = i +2)
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">for </span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;"> i </span><span>= </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">; i </span><span>&lt;= </span><span style="color:#ebcb8b;">Math</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">sqrt</span><span style="color:#eff1f5;">(n); i </span><span>=</span><span style="color:#eff1f5;"> i </span><span>+ </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">            </span><span style="color:#65737e;">// While i divides n, print i and divide n
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">while </span><span style="color:#eff1f5;">(n </span><span>%</span><span style="color:#eff1f5;"> i </span><span>== </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">                factors[x] </span><span>=</span><span style="color:#eff1f5;"> i;
+</span><span style="color:#eff1f5;">                x</span><span>++</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                n </span><span>=</span><span style="color:#eff1f5;"> n </span><span>/</span><span style="color:#eff1f5;"> i;
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// final prime
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(n </span><span>&gt; </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">            factors[x] </span><span>=</span><span style="color:#eff1f5;"> n;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return</span><span style="color:#eff1f5;"> factors;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">    }
+</span><span style="background-color:#bf616a;color:#2b303b;">}</span><span>
+</span></code></pre>
+<h2 id="solution">Solution</h2>
+<p>With <em>Lucas’s Primality Test</em> all of the algorithms should be designed to find the first ten digit prime number in the digits of <em>e</em>. First a Taylor series will calculate a value of $e$ through 500 iterations of the series. Then using the <em>Lucas Primality Test</em> each ten consecutive digits will be sampled to test for primality. It is hard to tell if the arbitrary settings of 500 iterations and 40 prime factors will be sufficient to complete the program but since those are easily changeable, that is not a significant issue.</p>
+<p>There will be two programs included in this paper, one use the brute force method and the other the Lucas Test to test numbers for primality, both are included in Appendix A. This will check the answers against each other. Both programs work by calculating a value for $e$ and storing it in a <code>bigDecimal</code> object. This is then parsed into a <code>String</code> removing the first 2 and the decimal point for simplicity. Afterwards 10 character chunks are casted into a single integer and tested through the two prime tests. If the number is prime, the system prints it out with the number prime it is in the set and the digit after the decimal point at which the first digit appears.</p>
+<p>After running through the two programs I found that the first prime in the digits of $e$ is 7427466391 starting at digit 99 of the string or the 100th digit. This is a fairly surprising result since it is at such a significant digit. And, when navigating to the website described on the billboard, it turns out the website was taken down. Yet, many other sources have reported the same answer.</p>
+<h2 id="application-of-this-problem">Application of this Problem</h2>
+<p>Prime numbers are not just of interest because they are different from other numbers.
+Prime numbers are a mathematical singularity and therefore are of interest for research. In Pure Maths fields like Number Theory prime numbers play a huge role. Great figures in Mathematics devoted a lot of time to the pursuit of prime numbers such as Fermat, Euler and Wilson. But this problem is not just a novelty or just a point of interest. The frequency of prime numbers in irrational ones is of mathematical interest. Prime numbers are vital to the cryptography and security industry as prime numbers are used to seed encryption algorithms. Prime numbers are the basis of the up incoming currency called Bitcoins where computers solving an algorithm using prime numbers to seed the problem generate a currency. It is valued at over $200 per Bitcoin (lol tbt to 2013). Fermat’s Theorem itself is used to validate RSA’s encryption methods. Prime numbers are also a competitive endeavor. An extension of Lucas’s Primality Test is the Lucas–Lehmer primality test which is used to calculate larger primes that follow the form:</p>
+<p>$$M_{n} = 2^n - 1$$</p>
+<p>These are called Mersenne primes. These primes are calculated as tests for new supercomputers and are part of a competition to calculate the largest prime number since it is easier to calculate one of these primes than any given one. The most recent one was calculated January 25, 2013 and had 17,425,170 digits. $e$ is also used to test computer systems, NASA itself calculated 5 million digits with their system The algorithms outlined in this paper are standard in the realm of computer science as not only benchmark tests and competitions but as key parts of security, privacy and the economy.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This paper set out to find the first 10 digit prime number in the digits of $e$. This seems to be a trivial problem when one thinks about the steps. It is only to test each set of 10 consecutive digits for primality until the first one is found. However, issues with the inherent capabilities of computers force a more complex solution than expected. A more precise $e$ required to begin testing which itself requires special classes to be implemented. Then the actually testing can be done with brute force, yet a solution like that is not scalable to find longer and longer primes in a set. Therefore tests like Wilson’s Theorem, Fermat’s Little Theorem, and the Lucas Primality Test need to be examined for possible implantation. Ultimately a solution was found in a singularly surprising spot. At the 100th digit the prime 7427466391 was found. This problem shows the overlap between computer science and mathematics and gives an introduction into Number Theory and the practices of the cryptography and security. It also was a challenging programming challenge that can help companies like Google discover new talent.</p>
+<blockquote>
+<p>Link to Source code: <a href="https://github.com/narendasan/google_e">https://github.com/narendasan/google_e</a></p>
+</blockquote>
+
+
+            </main>
+        </div>
+    </body>
+    <footer>
+        
+<p class="taxonomies">
+    
+        
+<a href="/tags/math">#math</a>
+        
+<a href="/tags/number-theory">#number theory</a>
+        
+<a href="/tags/java">#java</a>
+        
+    
+</p>
+
+        <nav>
+        
+            
+                            <a href="/pdf/naren_dasan_resume_june_2021_with_citations.pdf" rel="me">cv</a>
+            
+                            <a href="https://scholar.google.com/citations?user=CDQ_1PQAAAAJ&hl=en" rel="me">google scholar</a>
+            
+                            <a href="https://twitter.com/narendasan" rel="me">twitter</a>
+            
+                            <a href="https://github.com/narendasan" rel="me">github</a>
+            
+                            <a href="https://sigmoid.social/@narendasan" rel="me">mastodon</a>
+            
+                            <a href="https://linkedin.com/in/narendasan" rel="me">linkedin</a>
+            
+                            <a href="mailto:naren@narendasan.com" rel="me">email</a>
+            
+        
+            <a href="/rss.xml" rel="me">feed</a>
+            <a href="/tags" rel="me">tags</a>
+        </nav>
+    </footer>
+</html>
+
